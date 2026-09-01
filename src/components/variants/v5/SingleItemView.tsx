@@ -20,6 +20,7 @@ export default function SingleItemView({ slug }: Props) {
   const mainRef = useRef<HTMLButtonElement>(null);
   const thumbStripRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const currentIndex = projects.findIndex((p) => p.id === slug);
   const total = projects.length;
@@ -48,11 +49,19 @@ export default function SingleItemView({ slug }: Props) {
     function onKey(e: KeyboardEvent) {
       if (e.key === "ArrowRight") navigate(next);
       if (e.key === "ArrowLeft") navigate(prev);
+      if (e.key === "ArrowDown" && hasMultipleImages) {
+        e.preventDefault();
+        setActiveImage((i) => Math.min(project.images.length - 1, i + 1));
+      }
+      if (e.key === "ArrowUp" && hasMultipleImages) {
+        e.preventDefault();
+        setActiveImage((i) => Math.max(0, i - 1));
+      }
       if (e.key === "Escape") router.push("/v5/gallery");
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, next, prev, router]);
+  }, [navigate, next, prev, router, hasMultipleImages, project.images.length]);
 
   if (!project) {
     return (
@@ -141,14 +150,27 @@ export default function SingleItemView({ slug }: Props) {
             aria-expanded={showDetails}
             onTouchStart={(e) => {
               touchStartX.current = e.touches[0].clientX;
+              touchStartY.current = e.touches[0].clientY;
             }}
             onTouchEnd={(e) => {
-              if (touchStartX.current == null) return;
+              if (touchStartX.current == null || touchStartY.current == null) return;
               const dx = e.changedTouches[0].clientX - touchStartX.current;
+              const dy = e.changedTouches[0].clientY - touchStartY.current;
+              touchStartX.current = null;
+              touchStartY.current = null;
+              if (Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
+                if (hasMultipleImages) {
+                  if (dy < 0) {
+                    setActiveImage((i) => Math.min(project.images.length - 1, i + 1));
+                  } else {
+                    setActiveImage((i) => Math.max(0, i - 1));
+                  }
+                }
+                return;
+              }
               if (Math.abs(dx) > 60) {
                 navigate(dx < 0 ? next : prev);
               }
-              touchStartX.current = null;
             }}
             className="relative w-full h-full max-h-[calc(100vh-5rem)] focus:outline-none group"
           >
@@ -291,7 +313,7 @@ export default function SingleItemView({ slug }: Props) {
       </div>
 
       <p className="hidden md:block absolute bottom-3 left-0 right-32 text-center font-body text-[10px] tracking-[0.3em] uppercase text-cream/50 pointer-events-none">
-        Tap image for details · swipe image for prev/next project
+        Tap image for details · swipe vertically for next image · swipe horizontally for prev/next project
       </p>
     </div>
   );
