@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newContext().then((c) => c.newPage());
+await p.setViewportSize({ width: 1366, height: 768 });
+await p.goto("http://localhost:3000/v5/gallery/melanin-finish-mahogany", { waitUntil: "domcontentloaded", timeout: 120000 });
+await p.waitForLoadState("networkidle", { timeout: 30000 }).catch(() => {});
+await p.waitForTimeout(500);
+await p.locator("[data-testid=image-toggle]").click();
+await p.waitForTimeout(700);
+const view = p.locator("[data-testid=single-item-view]");
+const texts = await view.locator("p").allInnerTexts();
+texts.forEach((t, i) => console.log(`p[${i}]: ${JSON.stringify(t)} (len=${t.length})`));
+await b.close();

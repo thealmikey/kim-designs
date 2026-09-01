@@ -1,0 +1,22 @@
+# Normalize line endings for cross-platform contributors
+* text=auto eol=lf
+
+# Markdown uses LF
+*.md text eol=lf
+
+# Shell scripts must use LF
+*.sh text eol=lf
+
+# Next.js build artifacts
+.next/ -diff -merge
+.turbo/ -diff -merge
+out/ -diff -merge
+build/ -diff -merge
+
+# Local config
+.env
+.env.local
+.env.*.local
+.vercel/
+*.log
+.DS_Store

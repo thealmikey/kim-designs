@@ -1,0 +1,55 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (NEVER commit — keep .env.example with no values instead)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Source / build inputs that should NEVER be committed.
+# The site serves images from `public/images/` (lowercase); the
+# root-level `images/` directory holds the same files with their
+# original WhatsApp filenames and is just a build input.
+# Uncomment if you want it gitignored; safe to leave if you don't.
+/images/
+/paka_pawa_cover.jpeg
+/paka_pawa.mp3
