@@ -26,6 +26,7 @@ export default function SingleItemView({ slug }: Props) {
   const total = projects.length;
   const prev = projects[(currentIndex - 1 + total) % total];
   const next = projects[(currentIndex + 1) % total];
+  const hasMultipleImages = project ? project.images.length > 1 : false;
 
   const navigate = useCallback(
     (target: (typeof projects)[number]) => {
@@ -46,12 +47,14 @@ export default function SingleItemView({ slug }: Props) {
   }, [slug]);
 
   useEffect(() => {
+    if (!project) return;
+    const p = project;
     function onKey(e: KeyboardEvent) {
       if (e.key === "ArrowRight") navigate(next);
       if (e.key === "ArrowLeft") navigate(prev);
       if (e.key === "ArrowDown" && hasMultipleImages) {
         e.preventDefault();
-        setActiveImage((i) => Math.min(project.images.length - 1, i + 1));
+        setActiveImage((i) => Math.min(p.images.length - 1, i + 1));
       }
       if (e.key === "ArrowUp" && hasMultipleImages) {
         e.preventDefault();
@@ -61,7 +64,7 @@ export default function SingleItemView({ slug }: Props) {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, next, prev, router, hasMultipleImages, project.images.length]);
+  }, [navigate, next, prev, router, hasMultipleImages, project]);
 
   if (!project) {
     return (
@@ -83,7 +86,6 @@ export default function SingleItemView({ slug }: Props) {
   }
 
   const selected = isSelected(project.id);
-  const hasMultipleImages = project.images.length > 1;
   const currentImageSrc = project.images[activeImage] ?? project.images[0];
 
   return (
