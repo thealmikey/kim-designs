@@ -209,7 +209,7 @@ export default function SingleItemView({ slug }: Props) {
             aria-label="Project thumbnails"
             className="md:w-28 lg:w-32 shrink-0 border-t md:border-t-0 md:border-l border-cream/10 bg-charcoal/40"
           >
-            <div className="hidden md:block h-full p-3">
+            <div className="hidden md:block h-full p-3 pt-20">
               <div
                 ref={thumbStripRef}
                 className="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide flex flex-col gap-2"

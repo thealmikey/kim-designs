@@ -53,3 +53,5 @@ next-env.d.ts
 /images/
 /paka_pawa_cover.jpeg
 /paka_pawa.mp3
+
+.vercel

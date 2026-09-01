@@ -61,36 +61,6 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden md:flex items-center gap-14">
-            <Link
-              href="/v2/work"
-              className={`font-body text-[10px] tracking-[0.3em] uppercase px-3 py-1.5 border transition-all duration-300 ${
-                scrolled || isOpen
-                  ? "border-aged-brass/40 text-aged-brass hover:bg-aged-brass hover:text-background"
-                  : "border-cream/30 text-cream/70 hover:border-cream hover:text-cream"
-              }`}
-            >
-              Archive
-            </Link>
-            <Link
-              href="/v3/work"
-              className={`font-body text-[10px] tracking-[0.3em] uppercase px-3 py-1.5 border transition-all duration-300 ${
-                scrolled || isOpen
-                  ? "border-aged-brass/40 text-aged-brass hover:bg-aged-brass hover:text-background"
-                  : "border-cream/30 text-cream/70 hover:border-cream hover:text-cream"
-              }`}
-            >
-              Viewing
-            </Link>
-            <Link
-              href="/v4/work"
-              className={`font-body text-[10px] tracking-[0.3em] uppercase px-3 py-1.5 border transition-all duration-300 ${
-                scrolled || isOpen
-                  ? "border-aged-brass/40 text-aged-brass hover:bg-aged-brass hover:text-background"
-                  : "border-cream/30 text-cream/70 hover:border-cream hover:text-cream"
-              }`}
-            >
-              Collision
-            </Link>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
