@@ -16,10 +16,12 @@ type Props = {
   compact?: boolean;
 };
 
+const BLUR_DATA_URL =
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMCAxMCI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjRjhGN0Y1Ii8+PC9zdmc+";
+
 export default function ProjectSlider({ projectId, compact = false }: Props) {
   const project = projectById(projectId);
   const [index, setIndex] = useState(0);
-  const [loaded, setLoaded] = useState<Record<number, boolean>>({});
   const sectionRef = useRef<HTMLElement | null>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
   const imgsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -44,6 +46,30 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
 
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
+
+  useEffect(() => {
+    if (!project || !multi) return;
+    const urls = [0, 1, 2, index, index - 1, index + 1]
+      .filter((i) => i >= 0 && i < project.images.length)
+      .map((i) => project.images[i]);
+    const seen = new Set<string>();
+    urls.forEach((src) => {
+      if (!seen.has(src)) {
+        seen.add(src);
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.href = src;
+        link.fetchPriority = "high";
+        document.head.appendChild(link);
+      }
+    });
+    return () => {
+      document.head.querySelectorAll('link[rel="preload"][as="image"]').forEach((n) => {
+        if (seen.has((n as HTMLLinkElement).href)) n.remove();
+      });
+    };
+  }, [index, project, multi]);
 
   useEffect(() => {
     if (!multi) return;
@@ -171,14 +197,10 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
       0
     );
     if (incomingImg) {
-      tl.to(
+      tl.fromTo(
         incomingImg,
-        {
-          scale: 1,
-          yPercent: 0,
-          duration: 2.2,
-          ease: "power2.out",
-        },
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: "power2.out" },
         0
       );
     }
@@ -241,7 +263,11 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
               aria-roledescription="slide"
               aria-label={`${project.title} — image ${i + 1} of ${total}`}
               aria-hidden={!isActive}
-              className="absolute inset-0 will-change-[clip-path,opacity]"
+              className={`absolute inset-0 will-change-[clip-path,opacity] ${
+                isActive
+                  ? "shadow-[inset_0_0_0_1px_rgba(166,138,100,0.25),0_0_40px_rgba(166,138,100,0.15)]"
+                  : ""
+              }`}
             >
               <div
                 className={`relative w-full overflow-hidden ${
@@ -258,22 +284,22 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
                     src={src}
                     alt={`${project.title} — ${i + 1}`}
                     fill
-                    priority={i < 2}
-                    fetchPriority={i < 2 ? "high" : "auto"}
-                    loading={i < 2 ? "eager" : "lazy"}
+                    priority={i < 3}
+                    fetchPriority={i < 3 ? "high" : "auto"}
+                    loading={i < 3 ? "eager" : "lazy"}
                     decoding="async"
                     sizes="(max-width: 768px) 100vw, 68vw"
-                    onLoad={() =>
-                      setLoaded((m) => (m[i] ? m : { ...m, [i]: true }))
-                    }
-                    className={`object-cover transition-opacity duration-700 ${
-                      loaded[i] ? "opacity-100" : "opacity-0"
-                    }`}
+                    className="object-cover transition-opacity duration-700"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
                     quality={75}
                   />
                 </div>
-                {!loaded[i] && (
-                  <div className="absolute inset-0 bg-stone/30 animate-pulse" />
+                {isActive && (
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-aged-brass md:hidden"
+                    aria-hidden="true"
+                  />
                 )}
               </div>
 
@@ -355,7 +381,7 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
                   onClick={() => goTo(i)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     active
-                      ? "w-8 bg-aged-brass"
+                      ? "w-8 bg-aged-brass shadow-[0_0_10px_rgba(166,138,100,0.5)]"
                       : "w-1.5 bg-foreground/25 hover:bg-foreground/50"
                   }`}
                 />
