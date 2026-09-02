@@ -9,7 +9,7 @@ import {
   Phone,
   MapPin,
   Facebook,
-  Twitter,
+  X,
   Instagram,
   ArrowUpRight,
   Check,
@@ -157,7 +157,7 @@ export default function ContactSection() {
                   aria-label="Winterior Design on X"
                   className="w-10 h-10 border border-foreground/25 flex items-center justify-center hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
                 >
-                  <Twitter size={16} strokeWidth={1.5} />
+                  <X size={16} strokeWidth={1.5} />
                 </a>
                 <a
                   href="https://instagram.com/winteriordesign"

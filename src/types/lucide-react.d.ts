@@ -15,7 +15,7 @@ declare module "lucide-react" {
   export const Phone: LucideIcon;
   export const MapPin: LucideIcon;
   export const Facebook: LucideIcon;
-  export const Twitter: LucideIcon;
+  export const X: LucideIcon;
   export const Instagram: LucideIcon;
   export const ArrowUpRight: LucideIcon;
   export const Check: LucideIcon;
