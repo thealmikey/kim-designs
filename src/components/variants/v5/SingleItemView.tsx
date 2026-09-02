@@ -17,10 +17,13 @@ export default function SingleItemView({ slug }: Props) {
   const { toggle, isSelected } = useSelection();
   const [activeImage, setActiveImage] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
+  const [edgeHover, setEdgeHover] = useState<"prev" | "next" | null>(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const mainRef = useRef<HTMLButtonElement>(null);
   const thumbStripRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+  const interactedRef = useRef(false);
 
   const currentIndex = projects.findIndex((p) => p.id === slug);
   const total = projects.length;
@@ -30,19 +33,17 @@ export default function SingleItemView({ slug }: Props) {
 
   const navigate = useCallback(
     (target: (typeof projects)[number]) => {
+      interactedRef.current = true;
+      setShowSwipeHint(false);
       router.push(`/v5/gallery/${target.id}`);
     },
     [router]
   );
 
   useEffect(() => {
-    // Sibling dynamic routes share the same component instance in the App
-    // Router, so we reset per-project UI state explicitly when the slug
-    // changes. Canonical exception to "no setState in effect".
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveImage(0);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowDetails(false);
+    setShowSwipeHint(!interactedRef.current);
     thumbStripRef.current?.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
@@ -93,7 +94,7 @@ export default function SingleItemView({ slug }: Props) {
       className="fixed inset-0 z-50 bg-charcoal text-cream overflow-hidden flex flex-col"
       data-testid="single-item-view"
     >
-      <div className="absolute top-0 left-0 right-0 z-20 px-4 md:px-8 py-4 md:py-6 flex items-center gap-3 md:gap-4 bg-gradient-to-b from-charcoal/80 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-30 px-4 md:px-8 py-4 md:py-6 flex items-center gap-3 md:gap-4 bg-gradient-to-b from-charcoal/80 to-transparent">
         <Link
           href="/v5/gallery"
           className="font-body text-[10px] tracking-[0.3em] uppercase text-cream/80 hover:text-cream flex items-center gap-2"
@@ -121,22 +122,6 @@ export default function SingleItemView({ slug }: Props) {
             }`}
           >
             {selected ? "✓ In selection" : "+ Select"}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(prev)}
-            className="w-9 h-9 border border-cream/30 text-cream/80 hover:border-cream hover:text-cream flex items-center justify-center"
-            aria-label="Previous project"
-          >
-            <span aria-hidden="true">‹</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(next)}
-            className="w-9 h-9 border border-cream/30 text-cream/80 hover:border-cream hover:text-cream flex items-center justify-center"
-            aria-label="Next project"
-          >
-            <span aria-hidden="true">›</span>
           </button>
         </div>
       </div>
@@ -180,7 +165,7 @@ export default function SingleItemView({ slug }: Props) {
               src={currentImageSrc}
               alt={`${project.title} — image ${activeImage + 1}`}
               fill
-              className="object-cover"
+              className="object-cover pointer-events-none"
               sizes="(max-width: 768px) 100vw, 70vw"
               priority
             />
@@ -192,6 +177,26 @@ export default function SingleItemView({ slug }: Props) {
             <span className="absolute top-3 right-3 font-body text-[10px] tracking-[0.3em] uppercase text-cream bg-charcoal/60 backdrop-blur-sm px-2 py-1">
               {project.category}
             </span>
+
+            {showSwipeHint && (
+              <div
+                className="pointer-events-none absolute inset-0 flex items-center justify-between px-6 md:px-10"
+                aria-hidden="true"
+              >
+                <div className="flex flex-col items-center gap-1 text-cream/70">
+                  <span className="text-2xl md:text-3xl font-light swipe-hint-left">‹</span>
+                  <span className="font-body text-[9px] tracking-[0.3em] uppercase">
+                    {prev.title}
+                  </span>
+                </div>
+                <div className="flex flex-col items-center gap-1 text-cream/70">
+                  <span className="text-2xl md:text-3xl font-light swipe-hint-right">›</span>
+                  <span className="font-body text-[9px] tracking-[0.3em] uppercase">
+                    {next.title}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <div
               className={`absolute inset-x-0 bottom-0 transition-all duration-500 ease-out ${
@@ -314,9 +319,88 @@ export default function SingleItemView({ slug }: Props) {
         )}
       </div>
 
-      <p className="hidden md:block absolute bottom-3 left-0 right-32 text-center font-body text-[10px] tracking-[0.3em] uppercase text-cream/50 pointer-events-none">
+      <button
+        type="button"
+        onClick={() => navigate(prev)}
+        onMouseEnter={() => setEdgeHover("prev")}
+        onMouseLeave={() => setEdgeHover(null)}
+        aria-label={`Previous project: ${prev.title}`}
+        className="group absolute left-0 top-16 md:top-20 bottom-0 w-16 md:w-28 z-20 flex items-center justify-start pl-2 md:pl-4 cursor-w-resize focus:outline-none"
+      >
+        <div
+          className={`flex flex-col items-center gap-1 md:gap-2 transition-all duration-300 ${
+            edgeHover === "prev" ? "opacity-100 translate-x-1" : "opacity-60"
+          }`}
+        >
+          <span
+            className={`w-10 h-10 md:w-12 md:h-12 border border-cream/40 group-hover:border-cream group-hover:bg-cream/10 flex items-center justify-center text-2xl md:text-3xl font-light text-cream/90 group-hover:text-cream transition-colors`}
+            aria-hidden="true"
+          >
+            ‹
+          </span>
+          <span className="hidden md:flex flex-col items-center max-w-[80px]">
+            <span className="font-body text-[9px] tracking-[0.3em] uppercase text-cream/50 group-hover:text-cream/80">
+              Previous
+            </span>
+            <span className="font-body text-[10px] tracking-[0.2em] uppercase text-cream/80 group-hover:text-cream truncate w-full text-center">
+              {prev.title}
+            </span>
+          </span>
+        </div>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => navigate(next)}
+        onMouseEnter={() => setEdgeHover("next")}
+        onMouseLeave={() => setEdgeHover(null)}
+        aria-label={`Next project: ${next.title}`}
+        className="group absolute right-0 top-16 md:top-20 bottom-0 w-16 md:w-28 z-20 flex items-center justify-end pr-2 md:pr-4 cursor-e-resize focus:outline-none"
+      >
+        <div
+          className={`flex flex-col items-center gap-1 md:gap-2 transition-all duration-300 ${
+            edgeHover === "next" ? "opacity-100 -translate-x-1" : "opacity-60"
+          }`}
+        >
+          <span
+            className={`w-10 h-10 md:w-12 md:h-12 border border-cream/40 group-hover:border-cream group-hover:bg-cream/10 flex items-center justify-center text-2xl md:text-3xl font-light text-cream/90 group-hover:text-cream transition-colors`}
+            aria-hidden="true"
+          >
+            ›
+          </span>
+          <span className="hidden md:flex flex-col items-center max-w-[80px]">
+            <span className="font-body text-[9px] tracking-[0.3em] uppercase text-cream/50 group-hover:text-cream/80">
+              Next
+            </span>
+            <span className="font-body text-[10px] tracking-[0.2em] uppercase text-cream/80 group-hover:text-cream truncate w-full text-center">
+              {next.title}
+            </span>
+          </span>
+        </div>
+      </button>
+
+      <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-none">
+        <span className="font-body text-[10px] tracking-[0.3em] uppercase text-cream/50">
+          ‹ {prev.title} · {next.title} ›
+        </span>
+      </div>
+
+      <p className="hidden md:block absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-center font-body text-[10px] tracking-[0.3em] uppercase text-cream/40 pointer-events-none">
         Tap image for details · swipe vertically for next image · swipe horizontally for prev/next project
       </p>
+
+      <style jsx>{`
+        @keyframes swipeHintLeft {
+          0%, 100% { transform: translateX(0); opacity: 0.6; }
+          50% { transform: translateX(-6px); opacity: 1; }
+        }
+        @keyframes swipeHintRight {
+          0%, 100% { transform: translateX(0); opacity: 0.6; }
+          50% { transform: translateX(6px); opacity: 1; }
+        }
+        .swipe-hint-left { animation: swipeHintLeft 2.4s ease-in-out infinite; }
+        .swipe-hint-right { animation: swipeHintRight 2.4s ease-in-out infinite; }
+      `}</style>
     </div>
   );
 }
