@@ -51,21 +51,23 @@ export default function SingleItemView({ slug }: Props) {
     if (!project) return;
     const p = project;
     function onKey(e: KeyboardEvent) {
-      if (e.key === "ArrowRight") navigate(next);
-      if (e.key === "ArrowLeft") navigate(prev);
-      if (e.key === "ArrowDown" && hasMultipleImages) {
+      if (e.key === "ArrowRight" && hasMultipleImages) {
         e.preventDefault();
+        interactedRef.current = true;
+        setShowSwipeHint(false);
         setActiveImage((i) => Math.min(p.images.length - 1, i + 1));
       }
-      if (e.key === "ArrowUp" && hasMultipleImages) {
+      if (e.key === "ArrowLeft" && hasMultipleImages) {
         e.preventDefault();
+        interactedRef.current = true;
+        setShowSwipeHint(false);
         setActiveImage((i) => Math.max(0, i - 1));
       }
       if (e.key === "Escape") router.push("/v5/gallery");
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, next, prev, router, hasMultipleImages, project]);
+  }, [router, hasMultipleImages, project]);
 
   if (!project) {
     return (
@@ -145,9 +147,11 @@ export default function SingleItemView({ slug }: Props) {
               const dy = e.changedTouches[0].clientY - touchStartY.current;
               touchStartX.current = null;
               touchStartY.current = null;
-              if (Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
+              if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+                interactedRef.current = true;
+                setShowSwipeHint(false);
                 if (hasMultipleImages) {
-                  if (dy < 0) {
+                  if (dx < 0) {
                     setActiveImage((i) => Math.min(project.images.length - 1, i + 1));
                   } else {
                     setActiveImage((i) => Math.max(0, i - 1));
@@ -176,20 +180,17 @@ export default function SingleItemView({ slug }: Props) {
 
             {showSwipeHint && (
               <div
-                className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-6 md:px-10"
+                className="pointer-events-none absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-4 text-cream/70"
                 aria-hidden="true"
               >
-                <div className="flex flex-col items-center gap-1 text-cream/70">
-                  <span className="text-2xl md:text-3xl font-light">‹</span>
-                  <span className="font-body text-[9px] tracking-[0.3em] uppercase">
-                    Tap for previous
-                  </span>
+                <div className="flex flex-col items-center gap-1 swipe-hint-left">
+                  <span className="text-2xl font-light">‹</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 text-cream/70">
-                  <span className="text-2xl md:text-3xl font-light">›</span>
-                  <span className="font-body text-[9px] tracking-[0.3em] uppercase">
-                    Tap for next
-                  </span>
+                <span className="font-body text-[10px] tracking-[0.3em] uppercase">
+                  Swipe to change image
+                </span>
+                <div className="flex flex-col items-center gap-1 swipe-hint-right">
+                  <span className="text-2xl font-light">›</span>
                 </div>
               </div>
             )}
@@ -377,12 +378,12 @@ export default function SingleItemView({ slug }: Props) {
 
       <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-none">
         <span className="font-body text-[10px] tracking-[0.3em] uppercase text-cream/50">
-          Tap image for details · swipe up/down for image
+          Tap image for details · swipe to change image
         </span>
       </div>
 
       <p className="hidden md:block absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-center font-body text-[10px] tracking-[0.3em] uppercase text-cream/40 pointer-events-none">
-        Tap image for details · swipe up/down to change image · use edges to switch project
+        Tap image for details · swipe horizontally to change image · use edges to switch project
       </p>
 
       <style jsx>{`
@@ -394,6 +395,8 @@ export default function SingleItemView({ slug }: Props) {
           0%, 100% { transform: translateX(0); opacity: 0.6; }
           50% { transform: translateX(6px); opacity: 1; }
         }
+        .swipe-hint-left { animation: swipeHintLeft 2.4s ease-in-out infinite; }
+        .swipe-hint-right { animation: swipeHintRight 2.4s ease-in-out infinite; }
       `}</style>
     </div>
   );
