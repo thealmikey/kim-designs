@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/lib/projects";
 
-const baseUrl = "https://kiminteriordesigns.co.ke";
+const baseUrl = "https://winteriordesign.co.ke";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

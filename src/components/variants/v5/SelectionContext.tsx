@@ -92,7 +92,7 @@ export function SelectionProvider({ children }: { children: ReactNode }) {
       process.env.NEXT_PUBLIC_SITE_URL ??
       (typeof window !== "undefined" ? window.location.origin : "");
     const lines = [
-      "Hello Kim Interior Designs,",
+      "Hello Winterior Design,",
       "",
       "I'd like to inquire about the following projects:",
       ...selectedProjects.map(

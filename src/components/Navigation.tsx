@@ -57,7 +57,7 @@ export default function Navigation() {
                 : "text-2xl md:text-3xl text-foreground"
             }`}
           >
-            KIM
+            WINTERIOR
           </Link>
 
           <div className="hidden md:flex items-center gap-14">
@@ -134,10 +134,10 @@ export default function Navigation() {
 
           <div className="absolute bottom-16 left-0 right-0 text-center">
             <p className="font-body text-sm text-warm-gray tracking-[0.3em] uppercase">
-              Kim Interior Designs
+              Winterior Design
             </p>
             <p className="font-body text-xs text-stone mt-3 tracking-widest">
-              Nairobi, Kenya
+              Enterprise Rd, Nairobi
             </p>
           </div>
         </div>

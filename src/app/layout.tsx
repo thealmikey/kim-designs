@@ -25,11 +25,11 @@ const dmSans = DM_Sans({
 });
 export const metadata: Metadata = {
   title: {
-    default: process.env.NEXT_PUBLIC_SITE_NAME ?? "Kim Interior Designs",
+    default: process.env.NEXT_PUBLIC_SITE_NAME ?? "WINTERIOR DESIGN",
     template: `%s`,
   },
   description:
-    "Bespoke interior design studio crafting exceptional spaces with precision, materiality, and contemporary African character.",
+    "Winterior Design — kitchen, wardrobe, and bath vanities centre in Nairobi. Elegant kitchens, modern bathrooms, vibrant shop fit-outs, and bespoke wardrobe designs.",
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL
     ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
     : undefined,

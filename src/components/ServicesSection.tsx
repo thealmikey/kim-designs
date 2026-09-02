@@ -10,27 +10,27 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     number: "01",
-    title: "Bespoke Cabinetry",
+    title: "Elegant Kitchen Designs",
     description:
-      "Custom wardrobes, kitchen units, and storage systems designed with precision joinery and refined materiality.",
+      "Bespoke kitchens in PVC foilwrap, high-gloss, melanin, mahogany, and spray-painted finishes — precision joinery, handleless compositions, and surfaces that age beautifully.",
   },
   {
     number: "02",
-    title: "Interior Finishes",
+    title: "Modern Bathroom Designs",
     description:
-      "Melanin finishes, spray paint, foilwrap, and high-gloss surfaces that define the character of a space.",
+      "Bath vanities designed for daily ritual and quiet luxury. Refined cabinetry, integrated storage, and material palettes that bring calm to the room.",
   },
   {
     number: "03",
-    title: "Material Consultation",
+    title: "Vibrant Shop Fit-Outs",
     description:
-      "Expert guidance on material selection, from solid hardwoods to modern composites, ensuring longevity and beauty.",
+      "Designing interiors for businesses — retail, hospitality, and commercial spaces that translate brand identity into spatial experience.",
   },
   {
     number: "04",
-    title: "Spatial Design",
+    title: "Amazing Wardrobe Designs",
     description:
-      "Complete interior compositions that balance proportion, light, and flow for residential and commercial spaces.",
+      "Custom wardrobes tailored to the rhythm of the room and the way you dress. From handleless built-ins to walk-in dressing suites.",
   },
 ];
 

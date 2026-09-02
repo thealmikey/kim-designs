@@ -61,31 +61,44 @@ export default function StudioSection() {
                 Philosophy
               </p>
               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-foreground tracking-tight leading-[1.1]">
-                Design is not decoration.
+                For a house to be successful,
                 <br />
-                <span className="italic text-foreground/70">It is intention made visible.</span>
+                <span className="italic text-foreground/70">
+                  the objects in it must communicate.
+                </span>
               </h2>
             </div>
 
             <div className="mt-10 md:mt-14 space-y-6">
               <p className="studio-text font-body text-base md:text-lg text-warm-gray leading-relaxed">
-                Kim Interior Designs is a Nairobi-based studio specialising in bespoke
-                cabinetry, refined finishes, and spatial compositions that honour both
-                material and memory.
+                Winterior Design is a Nairobi-based kitchen, wardrobe, and
+                bath vanities centre. We craft interiors where every surface,
+                fitting, and finish responds to the next — balancing
+                craftsmanship with the way you actually live.
               </p>
               <p className="studio-text font-body text-base md:text-lg text-warm-gray leading-relaxed">
-                Every project begins with listening. We study the way light moves through
-                a space, the way materials age, the way people actually live. From that
-                understanding, we craft interiors that feel inevitable rather than imposed.
+                We listen first. We study how light moves, how a room is used,
+                what the space is asking for. From that conversation we design
+                kitchens that feel inevitable, wardrobes that feel tailored,
+                and bathrooms that feel quietly luxurious.
               </p>
             </div>
 
             <div className="mt-12 md:mt-16">
               <p className="studio-materials font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-5">
-                Material Palette
+                What we work with
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Mahogany", "Melanin", "Brass", "Stone", "Plaster"].map((material) => (
+                {[
+                  "PVC Foilwrap",
+                  "High Gloss",
+                  "Melanin",
+                  "Mahogany",
+                  "Spray Paint",
+                  "Quartz",
+                  "Brass",
+                  "Stone",
+                ].map((material) => (
                   <span
                     key={material}
                     className="studio-materials font-body text-xs text-charcoal bg-cream/80 px-4 py-2 rounded-full"
