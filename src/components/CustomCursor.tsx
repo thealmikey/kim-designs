@@ -1,71 +1,103 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
+  const [isCoarse, setIsCoarse] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-    setIsVisible(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsVisible(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setIsCoarse(window.matchMedia("(pointer: coarse)").matches);
   }, []);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("mouseleave", handleMouseLeave);
+    if (isCoarse) return;
 
-    const handleHoverStart = () => setIsHovering(true);
-    const handleHoverEnd = () => setIsHovering(false);
+    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const ringPos = { x: pos.x, y: pos.y };
+    let raf = 0;
 
-    document.addEventListener("mouseenter", handleHoverStart);
-    document.addEventListener("mouseleave", handleHoverEnd);
+    const onMove = (e: MouseEvent) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${pos.x - 4}px, ${pos.y - 4}px, 0)`;
+      }
+      if (!isVisible) setIsVisible(true);
+    };
+
+    const onLeave = () => setIsVisible(false);
+    const onEnter = () => setIsVisible(true);
+
+    const onOver = (e: MouseEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (!t) return;
+      const interactive = t.closest(
+        "a, button, [role='button'], input, textarea, select, label, [data-cursor='hover']"
+      );
+      setIsHovering(Boolean(interactive));
+    };
+
+    const tick = () => {
+      ringPos.x += (pos.x - ringPos.x) * 0.18;
+      ringPos.y += (pos.y - ringPos.y) * 0.18;
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ringPos.x - 18}px, ${ringPos.y - 18}px, 0)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseleave", onLeave);
+    window.addEventListener("mouseenter", onEnter);
+    document.addEventListener("mouseover", onOver);
+    raf = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleHoverStart);
-      document.removeEventListener("mouseleave", handleHoverEnd);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("mouseenter", onEnter);
+      document.removeEventListener("mouseover", onOver);
+      cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isCoarse, isVisible]);
 
-  if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
-    return null;
-  }
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (isCoarse) {
+      document.documentElement.classList.remove("custom-cursor-active");
+    } else {
+      document.documentElement.classList.add("custom-cursor-active");
+    }
+  }, [isCoarse]);
+
+  if (isCoarse) return null;
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-3 h-3 bg-foreground rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-150 ease-out ${
-          isVisible ? "scale-100" : "scale-0"
+        ref={dotRef}
+        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-foreground pointer-events-none z-[9999] transition-opacity duration-200 ${
+          isVisible ? "opacity-100" : "opacity-0"
         }`}
-        style={{
-          transform: `translate(${mousePos.x - 6}px, ${mousePos.y - 6}px)`,
-        }}
+        style={{ willChange: "transform" }}
       />
       <div
-        className={`fixed top-0 left-0 w-12 h-12 border border-foreground rounded-full pointer-events-none z-[9998] mix-blend-difference transition-all duration-300 ease-out ${
-          isHovering ? "scale-150 border-aged-brass" : "scale-100"
+        ref={ringRef}
+        className={`fixed top-0 left-0 w-9 h-9 rounded-full border pointer-events-none z-[9998] transition-[opacity,transform,border-color,background-color] duration-200 ease-out ${
+          isVisible ? "opacity-100" : "opacity-0"
+        } ${
+          isHovering
+            ? "scale-50 border-aged-brass bg-aged-brass/10"
+            : "scale-100 border-foreground/40"
         }`}
-        style={{
-          transform: `translate(${mousePos.x - 24}px, ${mousePos.y - 24}px)`,
-        }}
+        style={{ willChange: "transform" }}
       />
-      {isHovering && (
-        <div
-          className="fixed top-0 left-0 pointer-events-none z-[9999] font-body text-xs text-foreground mix-blend-difference uppercase tracking-widest"
-          style={{
-            transform: `translate(${mousePos.x + 20}px, ${mousePos.y - 8}px)`,
-          }}
-        >
-          View
-        </div>
-      )}
     </>
   );
 }
+

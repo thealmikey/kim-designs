@@ -63,7 +63,7 @@ export default function SingleItemView({ slug }: Props) {
         setShowSwipeHint(false);
         setActiveImage((i) => Math.max(0, i - 1));
       }
-      if (e.key === "Escape") router.push("/v5/gallery");
+      if (e.key === "Escape") router.push("/");
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -78,10 +78,10 @@ export default function SingleItemView({ slug }: Props) {
           </p>
           <h1 className="font-display text-4xl italic mb-6">Missing entry</h1>
           <Link
-            href="/v5/gallery"
+            href="/"
             className="font-body text-xs tracking-[0.25em] uppercase border border-foreground/30 px-4 py-2 inline-block hover:bg-foreground hover:text-background transition-colors"
           >
-            ← Return to gallery
+            ← Return to home
           </Link>
         </div>
       </div>
@@ -98,11 +98,11 @@ export default function SingleItemView({ slug }: Props) {
     >
       <div className="absolute top-0 left-0 right-0 z-30 px-4 md:px-8 py-4 md:py-6 flex items-center gap-3 md:gap-4 bg-gradient-to-b from-charcoal/80 to-transparent">
         <Link
-          href="/v5/gallery"
+          href="/"
           className="font-body text-[10px] tracking-[0.3em] uppercase text-cream/80 hover:text-cream flex items-center gap-2"
-          aria-label="Back to gallery"
+          aria-label="Back to home"
         >
-          <span aria-hidden="true">←</span> Gallery
+          <span aria-hidden="true">←</span> Home
         </Link>
         <span className="text-cream/40">/</span>
         <span className="font-body text-[10px] tracking-[0.3em] uppercase text-cream truncate">

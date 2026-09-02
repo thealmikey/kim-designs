@@ -54,7 +54,7 @@ export default function Navigation() {
             className={`font-display font-semibold tracking-tight transition-all duration-500 ${
               scrolled || isOpen
                 ? "text-xl md:text-2xl text-foreground"
-                : "text-2xl md:text-3xl text-cream"
+                : "text-2xl md:text-3xl text-foreground"
             }`}
           >
             KIM
@@ -68,7 +68,7 @@ export default function Navigation() {
                 className={`font-body text-xs tracking-[0.25em] uppercase transition-all duration-300 relative py-2 ${
                   scrolled || isOpen
                     ? "text-warm-gray hover:text-foreground"
-                    : "text-cream/70 hover:text-cream"
+                    : "text-foreground/70 hover:text-foreground"
                 } ${
                   pathname === link.href ? "font-medium" : ""
                 }`}
@@ -77,7 +77,7 @@ export default function Navigation() {
                 {pathname === link.href && (
                   <span
                     className={`absolute -bottom-1 left-0 right-0 h-px transition-colors duration-300 ${
-                      scrolled || isOpen ? "bg-aged-brass" : "bg-cream"
+                      scrolled || isOpen ? "bg-aged-brass" : "bg-aged-brass"
                     }`}
                   />
                 )}
@@ -88,7 +88,7 @@ export default function Navigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`md:hidden relative w-11 h-11 flex items-center justify-center transition-colors duration-500 ${
-              scrolled || isOpen ? "text-foreground" : "text-cream"
+              scrolled || isOpen ? "text-foreground" : "text-foreground"
             }`}
             aria-label="Toggle menu"
           >

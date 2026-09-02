@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import AgentationToolbar from "@/components/AgentationToolbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import { SelectionProvider } from "@/components/variants/v5/SelectionContext";
 import SelectionBar from "@/components/variants/v5/SelectionBar";
 import "./globals.css";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Preloader />
+        <ScrollToTop />
         <CustomCursor />
         <Navigation />
         <SmoothScrollProvider>

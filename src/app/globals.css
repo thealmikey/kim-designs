@@ -19,6 +19,21 @@
   --font-body: var(--font-dm-sans);
 }
 
+html.custom-cursor-active,
+html.custom-cursor-active body {
+  cursor: none;
+}
+
+html.custom-cursor-active a,
+html.custom-cursor-active button,
+html.custom-cursor-active [role="button"],
+html.custom-cursor-active input,
+html.custom-cursor-active textarea,
+html.custom-cursor-active select,
+html.custom-cursor-active label {
+  cursor: none;
+}
+
 :root {
   --background: #FAF8F5;
   --foreground: #1A1A18;
