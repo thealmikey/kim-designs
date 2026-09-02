@@ -60,10 +60,10 @@ export default function OffersSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-limestone/20 border-y border-sand/30"
+      className="bg-limestone/20 border-y border-sand/30 md:min-h-[80vh] md:flex md:items-center"
       aria-labelledby="offers-heading"
     >
-      <div className="px-4 md:px-12 py-20 md:py-28">
+      <div className="px-4 md:px-12 py-20 md:py-28 w-full">
         <div className="offers-header mb-12 md:mb-16 max-w-3xl">
           <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-4">
             The Best Offers

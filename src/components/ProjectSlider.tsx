@@ -20,7 +20,6 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
   const project = projectById(projectId);
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
-  const [mounted, setMounted] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
   const imgsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -47,10 +46,6 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
     if (!multi) return;
     function onKey(e: KeyboardEvent) {
       const tag = (e.target as HTMLElement | null)?.tagName;
@@ -67,7 +62,7 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useLayoutEffect(() => {
-    if (!mounted || !project) return;
+    if (!project) return;
     if (slidesRef.current.length === 0) return;
 
     const slides = slidesRef.current.filter(Boolean) as HTMLDivElement[];
@@ -81,7 +76,7 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
       slides.forEach((el, i) => {
         gsap.set(el, { clearProps: "all", autoAlpha: i === 0 ? 1 : 0 });
       });
-      imgs.forEach((el, i) => {
+      imgs.forEach((el) => {
         gsap.set(el, { clearProps: "transform" });
       });
       return;
@@ -138,10 +133,10 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
     return () => {
       initialTimeline.kill();
     };
-  }, [mounted, project, compact, reducedMotion]);
+  }, [project, compact, reducedMotion]);
 
   useLayoutEffect(() => {
-    if (!mounted || reducedMotion) return;
+    if (reducedMotion) return;
     if (index === lastIndexRef.current) return;
 
     const from = lastIndexRef.current;
@@ -200,7 +195,7 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
     return () => {
       tl.kill();
     };
-  }, [index, mounted, reducedMotion, compact]);
+  }, [index, reducedMotion, compact]);
 
   if (!project || total === 0) return null;
 
