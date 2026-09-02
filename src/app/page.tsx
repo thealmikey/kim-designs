@@ -27,32 +27,12 @@ export default function Home() {
               communicate with one another, respond, and balance one
               another.&rdquo;
             </p>
-            <ul className="font-body text-sm md:text-[15px] text-foreground/80 leading-relaxed mt-4 space-y-1 list-none">
-              <li className="flex items-baseline gap-2">
-                <span className="text-aged-brass">·</span> Elegant Kitchen Designs
-              </li>
-              <li className="flex items-baseline gap-2">
-                <span className="text-aged-brass">·</span> Modern Bathroom Designs
-              </li>
-              <li className="flex items-baseline gap-2">
-                <span className="text-aged-brass">·</span> Vibrant Shop Fit-Outs
-              </li>
-              <li className="flex items-baseline gap-2">
-                <span className="text-aged-brass">·</span> Bespoke Wardrobe Designs
-              </li>
-            </ul>
             <div className="mt-6 flex flex-wrap items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-body">
-              <Link
-                href="/studio"
-                className="border border-foreground/30 px-3 py-2 hover:bg-foreground hover:text-background transition-colors"
-              >
-                Studio
-              </Link>
               <Link
                 href="/services"
                 className="border border-foreground/30 px-3 py-2 hover:bg-foreground hover:text-background transition-colors"
               >
-                Services
+                Our Services
               </Link>
               <Link
                 href="/contact"
