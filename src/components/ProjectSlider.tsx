@@ -6,9 +6,10 @@ import { projectById } from "@/lib/projects";
 
 type Props = {
   projectId: string;
+  compact?: boolean;
 };
 
-export default function ProjectSlider({ projectId }: Props) {
+export default function ProjectSlider({ projectId, compact = false }: Props) {
   const project = projectById(projectId);
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
@@ -64,9 +65,15 @@ export default function ProjectSlider({ projectId }: Props) {
           else prev();
         }
       }}
-      className="relative w-full bg-cream text-foreground"
+      className={`relative w-full ${compact ? "bg-transparent" : "bg-cream"} text-foreground`}
     >
-      <div className="relative h-[80vh] min-h-[560px] w-full overflow-hidden">
+      <div
+        className={`relative w-full overflow-hidden ${
+          compact
+            ? "h-[60vh] min-h-[420px] md:h-[64vh]"
+            : "h-[80vh] min-h-[560px]"
+        }`}
+      >
         {project.images.map((src, i) => {
           const isActive = i === index;
           return (
@@ -80,7 +87,13 @@ export default function ProjectSlider({ projectId }: Props) {
                 isActive ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
-              <div className="relative h-[55%] md:h-full w-full md:w-[68%]">
+              <div
+                className={`relative w-full ${
+                  compact
+                    ? "h-full"
+                    : "h-[55%] md:h-full md:w-[68%]"
+                }`}
+              >
                 <Image
                   src={src}
                   alt={`${project.title} — ${i + 1}`}
@@ -99,35 +112,37 @@ export default function ProjectSlider({ projectId }: Props) {
                 )}
               </div>
 
-              <div className="absolute inset-0 md:left-[68%] flex items-center">
-                <div className="w-full md:w-[32vw] md:max-w-[480px] px-6 md:px-10 lg:px-14 py-8 md:py-0">
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-3">
-                    {project.category} — {project.year}
-                  </p>
-                  <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-3">
-                    {project.title}
-                  </h2>
-                  <p className="font-display italic text-base md:text-lg text-foreground/70 mb-4">
-                    {project.subtitle}.
-                  </p>
-                  <p className="font-body text-sm md:text-[15px] text-foreground/75 leading-relaxed mb-5 line-clamp-4 md:line-clamp-6">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.materials.map((m) => (
-                      <span
-                        key={m}
-                        className="font-body text-[10px] tracking-[0.2em] uppercase text-foreground/80 border border-foreground/20 px-2.5 py-1"
-                      >
-                        {m}
-                      </span>
-                    ))}
+              {!compact && (
+                <div className="absolute inset-0 md:left-[68%] flex items-center">
+                  <div className="w-full md:w-[32vw] md:max-w-[480px] px-6 md:px-10 lg:px-14 py-8 md:py-0">
+                    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-3">
+                      {project.category} — {project.year}
+                    </p>
+                    <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-3">
+                      {project.title}
+                    </h2>
+                    <p className="font-display italic text-base md:text-lg text-foreground/70 mb-4">
+                      {project.subtitle}.
+                    </p>
+                    <p className="font-body text-sm md:text-[15px] text-foreground/75 leading-relaxed mb-5 line-clamp-4 md:line-clamp-6">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.materials.map((m) => (
+                        <span
+                          key={m}
+                          className="font-body text-[10px] tracking-[0.2em] uppercase text-foreground/80 border border-foreground/20 px-2.5 py-1"
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="hidden md:block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mt-6">
+                      {project.location}
+                    </p>
                   </div>
-                  <p className="hidden md:block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mt-6">
-                    {project.location}
-                  </p>
                 </div>
-              </div>
+              )}
             </div>
           );
         })}
@@ -142,7 +157,11 @@ export default function ProjectSlider({ projectId }: Props) {
       </div>
 
       {multi && (
-        <div className="flex items-center justify-center gap-6 md:gap-10 py-6 md:py-8">
+        <div
+          className={`flex items-center justify-center gap-6 md:gap-10 ${
+            compact ? "py-3 md:py-4" : "py-6 md:py-8"
+          }`}
+        >
           <button
             type="button"
             onClick={prev}
