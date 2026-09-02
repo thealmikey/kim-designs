@@ -9,6 +9,44 @@ import { projects } from "@/lib/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const process = [
+  {
+    n: "01",
+    title: "Listen",
+    body: "We start with a free consultation — on site, on the phone, or at our Enterprise Road studio. We listen to how you use the space, what you keep, and what frustrates you. We measure, photograph, and document.",
+    output: "Site visit · brief · initial measurements",
+  },
+  {
+    n: "02",
+    title: "Design",
+    body: "We translate that brief into a working drawing and a material palette — finishes, hardware, lighting, joinery details. You see the kitchen, wardrobe, or shop fit-out before a single sheet of MDF is cut.",
+    output: "Drawings · 3D · material samples",
+  },
+  {
+    n: "03",
+    title: "Craft",
+    body: "Our workshop builds every piece to drawing, with dust-aware off-site assembly where possible. Brass hinges, soft-close runners, and integrated lighting are installed with the precision you can feel every time you open a door.",
+    output: "Workshop build · quality checks",
+  },
+  {
+    n: "04",
+    title: "Install",
+    body: "Our installation team works to a clean, dust-aware process. We protect floors, walls, and existing finishes. Final door adjustments, snagging, and a walk-through handover before we leave the site.",
+    output: "On-site install · handover · aftercare",
+  },
+];
+
+const materials = [
+  "PVC Foilwrap",
+  "High Gloss",
+  "Melanin",
+  "Mahogany",
+  "Spray Paint",
+  "Quartz",
+  "Brass",
+  "Stone",
+];
+
 export default function StudioSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -27,15 +65,28 @@ export default function StudioSection() {
         { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
       )
         .fromTo(
-          ".studio-text",
+          ".studio-step",
           { y: 60, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: "power3.out" },
-          "-=0.6"
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.12,
+            ease: "power3.out",
+          },
+          "-=0.5"
         )
         .fromTo(
           ".studio-image",
-          { scale: 1.15, opacity: 0, y: 40 },
-          { scale: 1, opacity: 1, y: 0, duration: 1.4, stagger: 0.1, ease: "power2.out" },
+          { scale: 1.12, opacity: 0, y: 40 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 1.4,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
           "-=1"
         )
         .fromTo(
@@ -52,75 +103,46 @@ export default function StudioSection() {
   const featuredProjects = projects.slice(0, 3);
 
   return (
-    <section ref={sectionRef} className="bg-limestone/20 py-24 md:py-32">
-      <div className="px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-          <div>
+    <section ref={sectionRef} className="bg-limestone/20">
+      <div className="px-4 md:px-12 py-20 md:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="lg:col-span-7">
             <div className="studio-header">
-              <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-6">
+              <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-5">
                 Philosophy
               </p>
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-foreground tracking-tight leading-[1.1]">
-                For a house to be successful,
-                <br />
-                <span className="italic text-foreground/70">
-                  the objects in it must communicate.
-                </span>
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-foreground tracking-[-0.03em] leading-[1.1] max-w-2xl">
+                For a house to be successful, the objects in it must
+                <span className="italic text-foreground/70"> communicate.</span>
               </h2>
             </div>
 
-            <div className="mt-10 md:mt-14 space-y-6">
-              <p className="studio-text font-body text-base md:text-lg text-warm-gray leading-relaxed">
-                Winterior Design is a Nairobi-based kitchen, wardrobe, and
-                bath vanities centre. We craft interiors where every surface,
-                fitting, and finish responds to the next — balancing
-                craftsmanship with the way you actually live.
-              </p>
-              <p className="studio-text font-body text-base md:text-lg text-warm-gray leading-relaxed">
-                We listen first. We study how light moves, how a room is used,
-                what the space is asking for. From that conversation we design
-                kitchens that feel inevitable, wardrobes that feel tailored,
-                and bathrooms that feel quietly luxurious.
-              </p>
-            </div>
-
-            <div className="mt-12 md:mt-16">
-              <p className="studio-materials font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-5">
-                What we work with
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "PVC Foilwrap",
-                  "High Gloss",
-                  "Melanin",
-                  "Mahogany",
-                  "Spray Paint",
-                  "Quartz",
-                  "Brass",
-                  "Stone",
-                ].map((material) => (
-                  <span
-                    key={material}
-                    className="studio-materials font-body text-xs text-charcoal bg-cream/80 px-4 py-2 rounded-full"
-                  >
-                    {material}
+            <ol className="mt-12 md:mt-16 border-t border-foreground/15">
+              {process.map((step) => (
+                <li
+                  key={step.n}
+                  className="studio-step grid grid-cols-12 gap-4 md:gap-6 py-7 md:py-9 border-b border-foreground/15"
+                >
+                  <span className="col-span-2 md:col-span-1 font-body text-xs md:text-sm text-aged-brass tracking-[0.2em] tabular-nums pt-1">
+                    {step.n}
                   </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-12">
-              <Link
-                href="/services"
-                className="group inline-flex items-center gap-3 font-body text-xs text-warm-gray hover:text-foreground transition-colors tracking-[0.25em] uppercase"
-              >
-                <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground transition-colors" />
-                Our Process
-              </Link>
-            </div>
+                  <div className="col-span-10 md:col-span-11">
+                    <h3 className="font-display text-2xl md:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      {step.title}
+                    </h3>
+                    <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-3 max-w-2xl">
+                      {step.body}
+                    </p>
+                    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-foreground/55 mt-4">
+                      {step.output}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
 
-          <div className="relative">
+          <div className="lg:col-span-5 flex flex-col gap-8">
             <div className="grid grid-cols-12 gap-3 md:gap-4">
               {featuredProjects.map((project, i) => (
                 <div
@@ -138,11 +160,37 @@ export default function StudioSection() {
                     alt={project.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ))}
             </div>
+
+            <div>
+              <p className="studio-materials font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-5">
+                What we work with
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                {materials.map((material) => (
+                  <li
+                    key={material}
+                    className="studio-materials font-body text-xs text-charcoal bg-cream/80 px-4 py-2 rounded-full"
+                  >
+                    {material}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Link
+              href="/contact"
+              className="studio-materials group inline-flex items-center gap-3 font-body text-[10px] text-warm-gray hover:text-foreground transition-colors tracking-[0.3em] uppercase"
+            >
+              <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground group-hover:w-12 transition-all" />
+              Start a project
+            </Link>
           </div>
         </div>
       </div>
