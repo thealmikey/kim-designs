@@ -12,67 +12,80 @@ const offerings = [
 export default function ServicesPage() {
   return (
     <main>
-      <section className="pt-24 md:pt-28 px-4 md:px-12 pb-10 md:pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
-          <div className="md:col-span-5 lg:col-span-4 flex flex-col justify-center">
-            <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-4">
+      <section className="relative w-full h-[88vh] min-h-[640px] overflow-hidden">
+        <Image
+          src="/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg"
+          alt="Winterior Design — handleless high-gloss kitchen"
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover"
+          quality={85}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.30) 35%, rgba(20,20,20,0.65) 100%)",
+          }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 mix-blend-multiply"
+          style={{
+            background:
+              "linear-gradient(110deg, rgba(250,248,245,0.10) 0%, rgba(250,248,245,0) 60%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 h-full flex flex-col justify-between px-4 md:px-12 py-24 md:py-32 text-cream">
+          <div>
+            <p className="font-body text-[10px] text-cream/70 tracking-[0.4em] uppercase">
               Capabilities
             </p>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-foreground tracking-tight leading-[1.05]">
+          </div>
+
+          <div className="max-w-4xl">
+            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] font-light text-cream tracking-[-0.04em] leading-[0.95]">
               What we
               <br />
-              <span className="italic text-foreground/70">do.</span>
+              <span className="italic text-cream/80">do.</span>
             </h1>
-            <ul className="font-body text-sm md:text-[15px] text-foreground/80 leading-relaxed mt-5 space-y-1 list-none">
+            <ul className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2 max-w-2xl">
               {offerings.map((o) => (
-                <li key={o} className="flex items-baseline gap-2">
+                <li
+                  key={o}
+                  className="font-body text-sm md:text-[15px] text-cream/85 flex items-baseline gap-2"
+                >
                   <span className="text-aged-brass">·</span> {o}
                 </li>
               ))}
             </ul>
-            <p className="font-body text-sm md:text-[15px] text-foreground/70 leading-relaxed max-w-md mt-5">
-              We listen first. We study how light moves, how a room is used,
-              what the space is asking for. From that conversation we design
-              interiors that feel inevitable.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-body">
+            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-body">
               <Link
                 href="/contact"
-                className="border border-foreground/30 px-3 py-2 hover:bg-foreground hover:text-background transition-colors"
+                className="border border-cream/40 text-cream px-4 py-2 hover:bg-cream hover:text-charcoal transition-colors"
               >
                 Start a Project
               </Link>
               <Link
                 href="/work"
-                className="border border-foreground/30 px-3 py-2 hover:bg-foreground hover:text-background transition-colors"
+                className="border border-cream/40 text-cream px-4 py-2 hover:bg-cream hover:text-charcoal transition-colors"
               >
                 See Work
               </Link>
             </div>
           </div>
 
-          <div className="md:col-span-7 lg:col-span-8">
-            <div className="relative w-full h-[60vh] min-h-[420px] md:h-[64vh] overflow-hidden bg-foreground/5">
-              <Image
-                src="/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg"
-                alt="Winterior Design — a handleless high-gloss kitchen"
-                fill
-                priority
-                fetchPriority="high"
-                sizes="(max-width: 768px) 100vw, 68vw"
-                className="object-cover"
-                quality={80}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
-                <p className="font-body text-[10px] text-cream/70 tracking-[0.3em] uppercase">
-                  Featured
-                </p>
-                <p className="font-display text-xl md:text-2xl text-cream tracking-tight leading-tight mt-1">
-                  Foilwrap &amp; High Gloss Kitchen
-                </p>
-              </div>
-            </div>
+          <div className="flex items-end justify-between text-cream/60">
+            <p className="font-body text-[10px] tracking-[0.3em] uppercase">
+              Winterior Design · Nairobi
+            </p>
+            <p className="font-body text-[10px] tracking-[0.3em] uppercase hidden md:block">
+              Scroll
+            </p>
           </div>
         </div>
       </section>

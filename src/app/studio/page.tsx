@@ -1,4 +1,5 @@
 import StudioSection from "@/components/StudioSection";
+import WorkInProgress from "@/components/WorkInProgress";
 
 export default function StudioPage() {
   return (
@@ -21,6 +22,8 @@ export default function StudioPage() {
       </section>
 
       <StudioSection />
+
+      <WorkInProgress />
     </main>
   );
 }
