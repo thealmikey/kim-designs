@@ -64,10 +64,7 @@ export default function Home() {
           </div>
 
           <div className="md:col-span-7 lg:col-span-8">
-            <ProjectSlider
-              projectId="pvc-foilwrap-and-high-gloss-handless-kitchen"
-              compact
-            />
+            <ProjectSlider projectId="walk-in-closet" compact />
           </div>
         </div>
       </section>

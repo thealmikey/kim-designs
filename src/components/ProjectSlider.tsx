@@ -258,7 +258,10 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
                     src={src}
                     alt={`${project.title} — ${i + 1}`}
                     fill
-                    priority={i === 0}
+                    priority={i < 2}
+                    fetchPriority={i < 2 ? "high" : "auto"}
+                    loading={i < 2 ? "eager" : "lazy"}
+                    decoding="async"
                     sizes="(max-width: 768px) 100vw, 68vw"
                     onLoad={() =>
                       setLoaded((m) => (m[i] ? m : { ...m, [i]: true }))
@@ -266,6 +269,7 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
                     className={`object-cover transition-opacity duration-700 ${
                       loaded[i] ? "opacity-100" : "opacity-0"
                     }`}
+                    quality={75}
                   />
                 </div>
                 {!loaded[i] && (
