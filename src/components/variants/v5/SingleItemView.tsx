@@ -153,10 +153,6 @@ export default function SingleItemView({ slug }: Props) {
                     setActiveImage((i) => Math.max(0, i - 1));
                   }
                 }
-                return;
-              }
-              if (Math.abs(dx) > 60) {
-                navigate(dx < 0 ? next : prev);
               }
             }}
             className="relative w-full h-full max-h-[calc(100vh-5rem)] focus:outline-none group"
@@ -180,19 +176,19 @@ export default function SingleItemView({ slug }: Props) {
 
             {showSwipeHint && (
               <div
-                className="pointer-events-none absolute inset-0 flex items-center justify-between px-6 md:px-10"
+                className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-6 md:px-10"
                 aria-hidden="true"
               >
                 <div className="flex flex-col items-center gap-1 text-cream/70">
-                  <span className="text-2xl md:text-3xl font-light swipe-hint-left">‹</span>
+                  <span className="text-2xl md:text-3xl font-light">‹</span>
                   <span className="font-body text-[9px] tracking-[0.3em] uppercase">
-                    {prev.title}
+                    Tap for previous
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 text-cream/70">
-                  <span className="text-2xl md:text-3xl font-light swipe-hint-right">›</span>
+                  <span className="text-2xl md:text-3xl font-light">›</span>
                   <span className="font-body text-[9px] tracking-[0.3em] uppercase">
-                    {next.title}
+                    Tap for next
                   </span>
                 </div>
               </div>
@@ -381,12 +377,12 @@ export default function SingleItemView({ slug }: Props) {
 
       <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-none">
         <span className="font-body text-[10px] tracking-[0.3em] uppercase text-cream/50">
-          ‹ {prev.title} · {next.title} ›
+          Tap image for details · swipe up/down for image
         </span>
       </div>
 
       <p className="hidden md:block absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-center font-body text-[10px] tracking-[0.3em] uppercase text-cream/40 pointer-events-none">
-        Tap image for details · swipe vertically for next image · swipe horizontally for prev/next project
+        Tap image for details · swipe up/down to change image · use edges to switch project
       </p>
 
       <style jsx>{`
@@ -398,8 +394,6 @@ export default function SingleItemView({ slug }: Props) {
           0%, 100% { transform: translateX(0); opacity: 0.6; }
           50% { transform: translateX(6px); opacity: 1; }
         }
-        .swipe-hint-left { animation: swipeHintLeft 2.4s ease-in-out infinite; }
-        .swipe-hint-right { animation: swipeHintRight 2.4s ease-in-out infinite; }
       `}</style>
     </div>
   );
