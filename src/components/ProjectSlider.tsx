@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { gsap } from "gsap";
 import { projectById } from "@/lib/projects";
 
 type Props = {
@@ -13,7 +20,11 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
   const project = projectById(projectId);
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
+  const [mounted, setMounted] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imgsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const lastIndexRef = useRef(0);
   const touchStartX = useRef<number | null>(null);
 
   const total = project?.images.length ?? 0;
@@ -22,13 +33,22 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
   const goTo = useCallback(
     (i: number) => {
       if (!multi) return;
-      setIndex(Math.max(0, Math.min(total - 1, i)));
+      setIndex((prev) => {
+        const next = Math.max(0, Math.min(total - 1, i));
+        if (next === prev) return prev;
+        lastIndexRef.current = prev;
+        return next;
+      });
     },
     [multi, total]
   );
 
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!multi) return;
@@ -41,6 +61,146 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [prev, next, multi]);
+
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  useLayoutEffect(() => {
+    if (!mounted || !project) return;
+    if (slidesRef.current.length === 0) return;
+
+    const slides = slidesRef.current.filter(Boolean) as HTMLDivElement[];
+    const imgs = imgsRef.current.filter(Boolean) as HTMLDivElement[];
+    const slideDuration = compact ? 0.9 : 1.05;
+    const revealEase = "power3.inOut";
+    const kbFrom = compact ? 1.04 : 1.08;
+    const kbTo = 1.0;
+
+    if (reducedMotion) {
+      slides.forEach((el, i) => {
+        gsap.set(el, { clearProps: "all", autoAlpha: i === 0 ? 1 : 0 });
+      });
+      imgs.forEach((el, i) => {
+        gsap.set(el, { clearProps: "transform" });
+      });
+      return;
+    }
+
+    gsap.set(slides, {
+      autoAlpha: 0,
+      clipPath: "inset(0% 0% 100% 0%)",
+    });
+    gsap.set(imgs, { scale: kbFrom, yPercent: 0 });
+
+    const initialTimeline = gsap.timeline({
+      defaults: { ease: revealEase },
+    });
+    initialTimeline.to(slides[0], {
+      autoAlpha: 1,
+      clipPath: "inset(0% 0% 0% 0%)",
+      duration: slideDuration,
+    });
+    if (slides.length > 1) {
+      initialTimeline.to(
+        slides.slice(1),
+        {
+          autoAlpha: 1,
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: slideDuration,
+          stagger: 0.18,
+        },
+        "-=0.55"
+      );
+    }
+    initialTimeline.to(
+      imgs[0],
+      {
+        scale: kbTo,
+        duration: 2.4,
+        ease: "power2.out",
+      },
+      0
+    );
+    if (imgs.length > 1) {
+      initialTimeline.to(
+        imgs.slice(1),
+        {
+          scale: kbTo,
+          duration: 2.4,
+          ease: "power2.out",
+          stagger: 0.18,
+        },
+        0
+      );
+    }
+
+    return () => {
+      initialTimeline.kill();
+    };
+  }, [mounted, project, compact, reducedMotion]);
+
+  useLayoutEffect(() => {
+    if (!mounted || reducedMotion) return;
+    if (index === lastIndexRef.current) return;
+
+    const from = lastIndexRef.current;
+    const to = index;
+    const forward = to > from;
+    const outgoingEl = slidesRef.current[from];
+    const incomingEl = slidesRef.current[to];
+    const outgoingImg = imgsRef.current[from];
+    const incomingImg = imgsRef.current[to];
+    if (!outgoingEl || !incomingEl) return;
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+
+    tl.set(incomingEl, {
+      autoAlpha: 1,
+      clipPath: forward ? "inset(0% 0% 100% 0%)" : "inset(100% 0% 0% 0%)",
+    });
+    if (incomingImg) {
+      tl.set(
+        incomingImg,
+        { scale: compact ? 1.04 : 1.08, yPercent: forward ? 3 : -3 },
+        0
+      );
+    }
+
+    tl.to(
+      incomingEl,
+      {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: compact ? 0.85 : 1.0,
+      },
+      0
+    );
+    if (incomingImg) {
+      tl.to(
+        incomingImg,
+        {
+          scale: 1,
+          yPercent: 0,
+          duration: 2.2,
+          ease: "power2.out",
+        },
+        0
+      );
+    }
+    tl.to(
+      outgoingEl,
+      {
+        autoAlpha: 0,
+        duration: 0.45,
+        ease: "power2.in",
+      },
+      0.15
+    );
+
+    return () => {
+      tl.kill();
+    };
+  }, [index, mounted, reducedMotion, compact]);
 
   if (!project || total === 0) return null;
 
@@ -79,34 +239,40 @@ export default function ProjectSlider({ projectId, compact = false }: Props) {
           return (
             <div
               key={`${src}-${i}`}
+              ref={(el) => {
+                slidesRef.current[i] = el;
+              }}
               role="group"
               aria-roledescription="slide"
               aria-label={`${project.title} — image ${i + 1} of ${total}`}
               aria-hidden={!isActive}
-              className={`absolute inset-0 transition-opacity duration-700 ease-out ${
-                isActive ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
+              className="absolute inset-0 will-change-[clip-path,opacity]"
             >
               <div
-                className={`relative w-full ${
-                  compact
-                    ? "h-full"
-                    : "h-[55%] md:h-full md:w-[68%]"
+                className={`relative w-full overflow-hidden ${
+                  compact ? "h-full" : "h-[55%] md:h-full md:w-[68%]"
                 }`}
               >
-                <Image
-                  src={src}
-                  alt={`${project.title} — ${i + 1}`}
-                  fill
-                  priority={i === 0}
-                  sizes="(max-width: 768px) 100vw, 68vw"
-                  onLoad={() =>
-                    setLoaded((m) => (m[i] ? m : { ...m, [i]: true }))
-                  }
-                  className={`object-cover transition-opacity duration-700 ${
-                    loaded[i] ? "opacity-100" : "opacity-0"
-                  }`}
-                />
+                <div
+                  ref={(el) => {
+                    imgsRef.current[i] = el;
+                  }}
+                  className="absolute inset-0 will-change-transform"
+                >
+                  <Image
+                    src={src}
+                    alt={`${project.title} — ${i + 1}`}
+                    fill
+                    priority={i === 0}
+                    sizes="(max-width: 768px) 100vw, 68vw"
+                    onLoad={() =>
+                      setLoaded((m) => (m[i] ? m : { ...m, [i]: true }))
+                    }
+                    className={`object-cover transition-opacity duration-700 ${
+                      loaded[i] ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                </div>
                 {!loaded[i] && (
                   <div className="absolute inset-0 bg-stone/30 animate-pulse" />
                 )}
