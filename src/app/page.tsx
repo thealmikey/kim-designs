@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import GalleryGrid from "@/components/variants/v5/GalleryGrid";
+import ProjectSlider from "@/components/ProjectSlider";
 import Link from "next/link";
 
 export default function Home() {
@@ -44,6 +45,10 @@ export default function Home() {
             Contact
           </Link>
         </div>
+      </section>
+
+      <section className="py-24 md:py-32">
+        <ProjectSlider projectId="pvc-foilwrap-and-high-gloss-handless-kitchen" />
       </section>
 
       <section className="px-4 md:px-12 pb-32">
