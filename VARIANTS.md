@@ -22,6 +22,7 @@ be cross-compared in seconds.
 | v3 | **Viewing** | Private gallery / luxury exhibit | `/v3/work`, `/v3/work/[slug]` | `src/components/variants/v3/GalleryIndex.tsx`, `src/components/variants/v3/GalleryPlate.tsx` |
 | v4 | **Collision** | Architecture/furniture editorial publication | `/v4/work`, `/v4/work/[slug]` | `src/components/variants/v4/CollisionIndex.tsx`, `src/components/variants/v4/CollisionPlate.tsx` |
 | v5 | **Gallery** | Visual product gallery with multi-select + WhatsApp share + full-screen single item view | `/v5/gallery`, `/v5/gallery/[slug]` | `src/components/variants/v5/{GalleryGrid,SingleItemView,SelectionBar,SelectionContext}.tsx` + `src/app/v5/gallery/{layout,page}.tsx` + `src/app/v5/gallery/[slug]/page.tsx` |
+| v6 | **Atelier** | Premium editorial interior-design studio (Dotwood + Wood Kivu reference) — warm ivory ground, deep charcoal type, restrained terracotta accent | `/v6/work`, `/v6/work/[slug]` | `src/components/variants/v6/{AtelierIndex,AtelierPlate}.tsx` + `src/app/v6/work/{page,[slug]/page}.tsx` |
 
 **Switching**: small bordered "Archive" / "Viewing" / "Collision" links
 in the top nav (`Navigation.tsx`) point to v2, v3, and v4
@@ -1914,4 +1915,499 @@ If you are an AI tool and you only have time for the highlights:
   dismisses before hero images decode.
 - **Verify with Playwright** (`node scripts/verify-v2.mjs`) after
   any change. HTTP 200, zero page errors, zero failed requests.
+
+---
+
+## v6 — Atelier
+
+**Codename**: Atelier
+**Mood**: Premium editorial interior-design studio. Warm ivory ground,
+deep charcoal type, restrained terracotta accent. Asymmetric project
+compositions rotated per item, generous vertical rhythm, project-first
+information architecture, materials rendered as typographic lists rather
+than chips. Reads like the website of a serious interior architecture
+studio that happens to scroll.
+**Aesthetic reference**: Dotwood (visual confidence, full-bleed hero,
+immediate CTA) + Wood Kivu (editorial composition, restrained typography,
+project storytelling) — fused, not cloned. The brief explicitly forbids
+copying layouts, wording, branding, or visual composition from either;
+v6 extracts the *principles* (architectural restraint, editorial
+composition, materiality, asymmetric rhythm, generous whitespace,
+strong typography, controlled accent, project storytelling) and
+synthesizes a more refined contemporary Kenyan interior-design
+experience.
+
+### Tokens
+
+| Token | Value |
+|-------|-------|
+| Background (page) | `#F5F1E9` (warm ivory) — *not* `bg-background` (`#FAF8F5`) — deliberately a touch warmer |
+| Secondary surface | `#EFE9DE` (services + materials panel) |
+| Foreground (type) | `#171716` (deep charcoal — near-black) |
+| Muted / metadata | `#716D65` (warm grey) |
+| Accent | `#C66B3D` (muted terracotta / burnt sienna) — restrained architectural accent; **not** the existing brass (`#A68A64`) and **not** gold. The accent appears only on: active filter chip + count, hover transitions on text + borders, hero eyebrow on light sections, `§` markers, single CTA hover. Never a fill except on the `Start a project` button hover. |
+| Hero veil | `from-[#171716]/55 via-[#171716]/20 to-[#171716]/10` (legibility veil only — over hero photographs) |
+| Display font | `var(--font-cormorant)` — Cormorant Garamond (already loaded); `font-light`, often *italic* on accent words (`a sense of place.`, `commissions.`, `disciplines.`) |
+| Body / labels | `var(--font-body)` — DM Sans (already loaded) |
+| Display sizes | Hero title `clamp(2.75rem, 7vw, 7.5rem)`; section titles `clamp(2rem, 4.5vw, 4rem)`; project titles `clamp(1.5rem, 2.4vw, 2.25rem)`–`clamp(1.75rem, 3.5vw, 3.25rem)` |
+| Body type | Metadata: `text-[10px] tracking-[0.3em] uppercase`. Body: 14–16px regular. Italic display body: Cormorant 18–24px. |
+| Grid | 12-col, broken per section. **Three** composition templates rotated on the index (`AtelierIndex.tsx` lines for `template === 0/1/2`): large-image-left + narrow editorial-right; editorial-left + offset-image-right; full-bleed with overlay metadata strip. **Three** aspect rotations on the plate detail page (`AtelierPlate.tsx`): `aspect-[4/5]`, `aspect-[3/2]`, `aspect-square` with vertical offset. |
+| Spacing | `pt-28 md:pt-40 pb-20 md:pb-32` between major sections; `space-y-20 md:space-y-32` between projects. The site is *uncrowded by design*. |
+| Motion | GSAP `ScrollTrigger` only. Hero entrance (eyebrow → title → sub → CTA, staggered, 0.4–1.1s delay, `power3.out`/`power4.out`); `clipPath` reveal on every image (`inset(100% 0 0 0)` → `inset(0)`); fade-up on text blocks. Slow Ken Burns (`scale: 1.0 → 1.06`, `scrub: 2.5`) on the hero photographs. **Zero motion on hover** — only color/border transitions (300ms CSS). `prefers-reduced-motion` honored at the GSAP gate. |
+| Imagery rule | Same source photos as every other variant. Same `next/image` discipline: `fill` + `object-cover` + explicit `sizes`. Hero: `priority`. Everywhere else: lazy. Single legibility veil on hero photographs only — no other gradients on UI surfaces. |
+
+### Components (scope of v6)
+
+- `src/app/v6/work/page.tsx` — `V6WorkPage` (server, renders `<AtelierIndex />`)
+- `src/app/v6/work/[slug]/page.tsx` — `V6ProjectPage` (server, renders `<AtelierPlate slug={slug} />`)
+- `src/components/variants/v6/AtelierIndex.tsx` — hero (4-photo cycle + headline + sub + CTA) · intro · filterable project gallery (3 templates rotated) · services (editorial rows) · process · materials palette · featured callout · contact CTA · colophon
+- `src/components/variants/v6/AtelierPlate.tsx` — cover hero · meta panel · introduction · full-bleed image · material palette · additional views (rotated aspect ratios) · related plates (prev/next) · footer CTA
+
+### Signature
+
+- **Asymmetric, rotated templates.** No two adjacent project compositions share the same shape. The rotation is what makes the index read as a *register* rather than a Pinterest board.
+- **Italic accent word inside the roman headline.** "Interiors with a sense of *place.*", "A register of completed *commissions.*", "Four *disciplines.*", "Surfaces that age with *grace.*" — the italic *word* is the typographic gesture that distinguishes v6 from "generic editorial template".
+- **Typographic §-markers.** `§ The brief`, `§ Material palette`, `§ Selected Work`, `§ What we do`, `§ Process` — monospaced-style uppercase labels in the terracotta accent, on every section. They are how the page reads as a register.
+- **Materials rendered as typographic lists, not chips.** On both index and plate pages, materials are listed one-per-line in the small uppercase register (sometimes with a small numeric prefix). No `bg-*` chips. The materials are *typeset*, not designed.
+- **4-photo cycling hero.** The hero photograph cycles every 9 seconds through four lead photographs (one per top project). Each new image fades in over 1400ms. The intent: a quiet sense of *life* without being a carousel. `prefers-reduced-motion` disables the cycle and the fade.
+- **Terracotta accent only.** The accent is `#C66B3D` (a muted burnt sienna) — distinct from the existing aged-brass (`#A68A64`), the v3 gold (`#c8a85a`), and the v4 brass. Its sole job: mark active states, hover transitions, and `§`-markers. It never fills the page.
+- **Editorial rows, not cards.** The services section uses a list of rows (`01 / Interior Architecture / body →`) with hairline rules between them — no rounded cards, no icons, no SaaS feature-grid layout. The brief explicitly rejects icon-grid service sections.
+- **No v6 changes to shared chrome.** `Navigation`, `Footer`, `CustomCursor`, `Preloader`, `SmoothScrollProvider`, `PageTransition`, `SelectionBar`, `tailwind.config.tsx`, `globals.css`, and the root `layout.tsx` are **untouched**. v6 owns its visual system entirely via arbitrary Tailwind values + inline `style={{ fontFamily: 'var(--font-cormorant), serif' }}` — promoted nowhere.
+
+### Explicitly avoided (per brief)
+
+- No rounded cards, no glassmorphism, no purple/blue SaaS gradients.
+- No generic SaaS hero, no "Book a consultation" CTA, no testimonial carousel.
+- No shadows-heavy UI, no badge/icon grid, no three-column feature cards.
+- No new fonts — reuses Cormorant Garamond + DM Sans already loaded.
+- No new dependencies — reuses GSAP and `next/image` already in `package.json`.
+- No changes to `Navigation.tsx`, `Footer.tsx`, `CustomCursor.tsx`, `Preloader.tsx`, `SmoothScrollProvider.tsx`, `PageTransition.tsx`, `SelectionBar.tsx`, `SelectionContext.tsx`, `globals.css`, `tailwind.config.tsx`, `layout.tsx`, or any of the v1–v5 components.
+- No fake "African motifs", no tribal patterns, no stereotypical textures — the Kenyan context comes through *place* (Nairobi location labels, local materials, project descriptions), not decoration.
+- No giant floating WhatsApp bubble — the WhatsApp path is a `font-body` text line in the contact CTA, not a floating chip.
+
+### How to extend v6 without breaking the brief
+
+1. **Adding a fourth composition template.** Add a new `template === 3` branch in `AtelierIndex.tsx`'s project map. The template must use the same `space-y-20 md:space-y-32` rhythm and must not introduce rounded corners, gradients, or new colors. Verify with the Playwright script.
+2. **Adding a new filter category.** Edit the `CATEGORIES` array in `AtelierIndex.tsx`. The count is derived from `projects.filter(...)` so it stays correct automatically. Do not introduce a brand-new color for the new chip.
+3. **Adding a new accent color (resist this).** v6's accent is *one* terracotta. Adding a second accent breaks the brief. If a future need genuinely requires a second accent, it must replace the existing one — not add alongside.
+4. **Adding a new animation.** First question: "Is this an entrance, a reveal, a state change, or a cycle?" Entrance = `power4.out` 1.4s. Reveal = `power3.out` 1.2s (`clipPath`). State change = 300ms CSS transition only. Cycle = the existing hero 9s + 1400ms fade. Adding a parallax or a marquee breaks the brief.
+5. **Promoting the v6 tokens to `tailwind.config.tsx`.** Do this only if v6 becomes the default variant. Today the values live as arbitrary Tailwind classes (`bg-[#F5F1E9]`, `text-[#171716]`, `text-[#C66B3D]`) precisely to keep v6 *isolated* from the rest of the site. Promoting them is allowed; renaming them is not (they map to "warm ivory", "deep charcoal", "muted terracotta").
+6. **Touching shared chrome to make v6 "fit better".** Stop. v6 fits *because* shared chrome is unchanged. The variant sits next to v1–v5 on the same site, with the same nav, footer, cursor, preloader, and selection bar — and that is the point.
+
+### Cross-Variant Comparison (v6 added)
+
+| Concern | v1 Editorial | v2 Archive | v3 Viewing | v4 Collision | **v6 Atelier** |
+|---|---|---|---|---|---|
+| Background | Cream `#f4f1ea` | Bone | Navy `#0d1b2a` | Cream | **Warm ivory `#F5F1E9`** |
+| Foreground | Charcoal | Black | Parchment | Charcoal | **Deep charcoal `#171716`** |
+| Accent color | Aged brass | None | Gold | Aged brass | **Muted terracotta `#C66B3D`** |
+| Display font | Cormorant Garamond | System sans | System serif | Cormorant italic | **Cormorant Garamond** |
+| Body font | DM Sans | System mono | System sans | DM Sans | **DM Sans** |
+| Italic usage | Subtitle accent | Never | Gold accents | Overlap word | **Section accent word** |
+| Layout primitive | 2-col mosaic | 12-col table | 12-col generous | 12-col broken, 3 templates | **12-col broken, 3 templates (new ones)** |
+| Imagery framing | Gradient overlay | Corner stamps | Navy plate + stamps | Full-bleed / two-up / narrow | **Full-bleed with overlay strip / asymmetric / editorial** |
+| Section markers | Spaced headings | "§ NN / …" | "§ The Collection" | "Issue / Editor's note" | **"§ The brief", "§ Process", "§ Material palette"** |
+| Motion library | GSAP heavy | None | None | GSAP light | **GSAP medium (entrance + clipPath + slow Ken Burns)** |
+| Hover signature | Image scale 1.05 | Row inverts + thumbnail | Title → gold | Underline → brass | **Border + text → terracotta (no transform)** |
+| Card metaphor | Magazine spread | Filing cabinet | Gallery wall | Printed issue | **Studio register / case-study file** |
+| Decoration budget | Gradient only | None | Gold rules | One inline SVG | **Zero inline SVG (typography does the work)** |
+
+The five variants are now five coherent combinations of the twelve dials (see *Cross-Variant System, Dials & Cascading Changes* above). v6 occupies the slot closest to v1/v4 (light cream + Cormorant + DM Sans) but flips **accent color** (brass → terracotta), **italic usage** (subtitle accent → section accent word inside roman display), **section markers** (editorial spread → `§` per section), **motion signature** (heavy/light → medium entrance + slow Ken Burns), and **decoration budget** (gradient / one SVG → zero SVG).
+
+### v6 — Atelier: Architecture & UI/UX Deep-Dive
+
+This section is written for an AI tool (or a new contributor) that needs to
+*extend, repair, or reskin* the Atelier variant without diluting the
+premium editorial brief or — critically — without contaminating v1–v5.
+
+#### Design intent, in one sentence
+
+The site should communicate: *"These people understand space, materials,
+proportion, craftsmanship and how to create environments people want to
+live in."* The site must sell **taste and confidence before it sells
+services.**
+
+#### Library inventory and role
+
+| Library | Role in v6 | Why this library |
+|---|---|---|
+| `next` (App Router) | File-system routing for `/v6/work` and `/v6/work/[slug]`, server components for the route files | Same as v4. Server components keep the route files trivial (`page.tsx` just renders the client component) so v6 stays isolated from v1–v5. |
+| `react` / `react-dom` | `useState`, `useEffect`, `useRef`, `useMemo` | State is minimal: `heroIndex` (cycling index), `activeCategory` (filter). Reduced-motion is a `useRef` checked before GSAP starts. |
+| `next/image` | All photography | Same discipline as the rest of the project: explicit `sizes`, `priority` on hero, lazy elsewhere. |
+| `gsap` + `gsap/ScrollTrigger` | Hero entrance, scroll reveals, slow Ken Burns | GSAP is already loaded for v1/v4. Reusing it keeps the variant isolated (no new dep). The motion is a *medium* budget — entrance + reveals + scrub, not parallax or infinite loops. |
+| `lenis` (via shared chrome) | Inertial smooth scroll | Wraps every variant. v6 makes no direct call to `lenis`. |
+| `tailwindcss` | All styling | Uses existing theme tokens (`text-cream/80`, `text-foreground/15`) where they fit, and arbitrary values (`bg-[#F5F1E9]`, `text-[#C66B3D]`) where v6 diverges. Deliberately *not* promoted to theme tokens — keeps v6 isolated. |
+| **No** new fonts | — | v6 reuses Cormorant Garamond + DM Sans loaded in `layout.tsx`. The italic-word-inside-headline gesture is achieved with the existing italic face. |
+| **No** new dependencies | — | GSAP and `next/image` are already in `package.json`. |
+
+#### Color system
+
+Three values do the work — and one of them is *new* to the project:
+
+- **Warm ivory `#F5F1E9`** — the page. *Not* the existing `bg-background` (`#FAF8F5`) — v6 is a touch warmer, deliberately. The brief specifies warm ivory/cream, not pure white.
+- **Deep charcoal `#171716`** — the type. *Not* the existing `text-foreground` (`#1A1A18`) — a touch deeper, to read as "near-black" rather than "warm black". The brief specifies "deep charcoal / near-black".
+- **Muted terracotta `#C66B3D`** — the accent. *Not* the existing aged-brass (`#A68A64`). The brief specifies "muted brass / warm terracotta / burnt sienna / restrained copper" and explicitly warns against bright orange everywhere. `#C66B3D` is the muted end of that range. The accent appears on: active filter chip text + count, hover transitions on text + borders, `§`-markers, hero eyebrow on light sections, single CTA hover. **Never a fill** except on the `Start a project` button hover state.
+- **Secondary surface `#EFE9DE`** — a half-step warmer than the page, used for the services section and the materials palette panel. Same logic as v4's `#ece6d6` panel: a flat warm panel that gives the typography a different *ground*, not a gradient.
+
+`from-[#171716]/55 via-[#171716]/20 to-[#171716]/10` is the only
+gradient in v6, and it appears on **hero photographs only**, and only
+because the cream headline sits on top of the photograph and needs
+legibility. It is a *legibility veil*, not a stylistic gradient. It is
+not used on UI surfaces.
+
+#### Type system
+
+Two faces, three registers. Reuses the project's existing type system:
+
+| Register | Font | Style | Where it appears |
+|---|---|---|---|
+| Display / hero + section titles | `var(--font-cormorant)`, `font-light`, `tracking-[-0.025em]`, `leading-[0.92]`–`leading-[1.05]` | "Interiors with a sense of *place.*", "Four *disciplines.*", project titles on index and plate | Hero, every section title |
+| Display / italic accent | `var(--font-cormorant)`, `font-light`, *italic* | The second-line italic word inside otherwise-roman headlines. Also used for the editor's-note paragraph, the contact intro, the colophon. | Section intros, contact, colophon |
+| Display / meta on dark | `var(--font-cormorant)`, `font-light` | The featured callout title and the materials panel on the dark surface | Plate detail's material palette |
+| Body | `var(--font-body)`, `text-sm`–`text-base` | Project description copy, body paragraphs | Body of every section |
+| Label / metadata | `var(--font-body)`, `text-[10px]`–`text-[11px]`, `tracking-[0.2em]`–`tracking-[0.35em]`, `uppercase` | Nav eyebrow, `§`-markers, filter chips, materials list, prev/next links, contact labels | Marginalia throughout |
+
+The italic-word-inside-roman-display rule is v6's signature
+typographic gesture. Drop it and v6 collapses into "generic editorial
+template". Keep it.
+
+#### Layout system
+
+v6 sits on a 12-column grid that is **broken per section on purpose**.
+Three composition templates are rotated across the project list on the
+index (matching the v4 rotation pattern but with a different rhythm):
+
+- **Template A — Large image + narrow editorial.** A 8/12 image on the
+  left, a 4/12 editorial block on the right with category label,
+  project title, italic subtitle, location + year, description
+  excerpt, and a "Read plate →" link.
+- **Template B — Editorial + offset image.** A 5/12 editorial block on
+  the left (with `md:pt-24` so the text sits *lower* than the image),
+  a 7/12 image on the right with `aspect-[4/5]` or `aspect-[3/4]`.
+- **Template C — Full-bleed with overlay strip.** A 21:9 (md) or 16:9
+  (mobile) image at full width, with a gradient veil and an overlay
+  block at the bottom containing the project metadata. Below the image,
+  a 12-col strip with italic subtitle, materials, year, and "View
+  plate →" link.
+
+The plate detail page also rotates aspect ratios in the
+"Additional views" grid: `aspect-[4/5]`, `aspect-[3/2]`,
+`aspect-square` with vertical offsets so adjacent views never align.
+
+#### Spacing and rhythm
+
+Generous, almost uncrowded:
+
+- Section padding: `pt-28 md:pt-40 pb-20 md:pb-32` for major sections.
+- Between projects: `space-y-20 md:space-y-32`.
+- Hero: `h-screen min-h-[720px]`. Plate cover: `h-[88vh] min-h-[640px]`.
+- Body padding: `px-6 md:px-12 lg:px-16`.
+- Single line of hairline rule (`border-[#171716]/15`) at the bottom
+  of section headers; nothing else.
+
+If you tighten section padding below `py-16`, v6 immediately becomes
+"a normal premium agency site". Do not.
+
+#### Imagery rules
+
+- **Source**: `projects[].images` from `src/lib/projects.ts`. No stock
+  imagery. No new image folders.
+- **Loading**: hero on index and plate is `priority` (preload).
+  Everywhere else, lazy by default. The 4-photo cycling hero uses
+  `priority` only on the *first* image (so subsequent cycles can be
+  lazy).
+- **`sizes`**: every `<Image>` carries an explicit `sizes` attribute.
+- **`fill` + `object-cover`**: the universal pattern.
+- **Hero veil**: `from-[#171716]/55 via-[#171716]/20 to-[#171716]/10`
+  on hero photographs only. No other gradients on UI surfaces.
+- **Ken Burns**: the hero photographs scale `1.0 → 1.06` over the
+  duration of the scroll (`scrub: 2.5`). This is *the slowest* Ken
+  Burns in the project — slower than v1's `1.05`. It should feel
+  alive without being consciously noticeable.
+
+#### Motion budget (deliberately medium)
+
+| Animation | Trigger | From → To | Duration | Easing | Where |
+|---|---|---|---|---|---|
+| Hero eyebrow reveal | Mount (delay 0.4s) | `y: 16, opacity: 0` → `y: 0, opacity: 1` | 1.0s | `power3.out` | Index hero |
+| Hero title reveal | Mount (delay 0.55s) | `y: 30, opacity: 0` → `y: 0, opacity: 1` | 1.4s | `power4.out` | Index hero |
+| Hero sub reveal | Mount (delay 0.85s) | `y: 20, opacity: 0` → `y: 0, opacity: 1` | 1.2s | `power3.out` | Index hero |
+| Hero CTA reveal | Mount (delay 1.1s) | `y: 12, opacity: 0` → `y: 0, opacity: 1` | 1.0s | `power3.out` | Index hero |
+| Image clipPath reveal | `ScrollTrigger start: top 88%` | `inset(100% 0 0 0)` → `inset(0% 0 0 0)` | 1.2s | `power3.out` | Every `at-img-reveal` and `atp-img-reveal` |
+| Text fade-up | `ScrollTrigger start: top 90%` | `y: 26–28, opacity: 0` → `y: 0, opacity: 1` | 1.0s | `power3.out` | Every `at-fade` and `atp-fade` |
+| Slow Ken Burns | `ScrollTrigger scrub: 2.5` | `scale: 1.0 → 1.06` | scrub | linear | `.at-kenburns img` (hero only) |
+| Hero photo cycle | `setInterval(9000)` | opacity swap | 1400ms | ease-out | Index hero, 4 photos |
+| Plate hero entrance | Mount (delays 0.3–0.85s) | `y: 14–30, opacity: 0` → `y: 0, opacity: 1` | 0.9–1.4s | `power3.out` / `power4.out` | Plate cover |
+
+`prefers-reduced-motion` is honored at the GSAP gate (`if
+(prefersReducedMotion.current) return;` before `gsap.context`). On
+reduced-motion, the hero cycling `setInterval` still runs but the
+opacity swap is instant (1400ms transition becomes effectively
+zero-perceived).
+
+#### Component composition map
+
+```
+src/app/v6/work/page.tsx              (server — metadata + <AtelierIndex />)
+src/app/v6/work/[slug]/page.tsx       (server — metadata + <AtelierPlate slug />)
+
+src/components/variants/v6/AtelierIndex.tsx
+  ├─ Hero (4-photo cycle + headline + sub + CTA, GSAP entrance)
+  ├─ Intro / Editor's note (italic display paragraph, 7/12 offset)
+  ├─ Filterable project gallery (3 templates rotated, ScrollTrigger reveals)
+  ├─ Services (editorial rows, not cards; on bg-[#EFE9DE])
+  ├─ Process (4-step, hairline-rule top borders)
+  ├─ Materials palette (dark surface, 3-col list)
+  ├─ Featured callout (full image + offset editorial block)
+  ├─ Contact CTA (asymmetric 5/5 + 5/4 split)
+  └─ Colophon (hairline rule + cross-link to v4)
+
+src/components/variants/v6/AtelierPlate.tsx
+  ├─ Cover (hero image + breadcrumb + headline + sub)
+  ├─ Meta panel (4-col: location / Discipline / Status)
+  ├─ Brief (italic display paragraph, 7/12 offset)
+  ├─ Full-bleed image (21:9 / 16:9)
+  ├─ Material palette (editorial list with numeric prefix)
+  ├─ Additional views (12-col, 3 aspect rotations with vertical offset)
+  ├─ Related plates (prev / next, image + title + subtitle)
+  └─ Footer CTA (hairline rule + cross-link)
+```
+
+`<AtelierIndex>` and `<AtelierPlate>` are siblings. They share a `label`
+constant and a `meta` constant but no other code. Resist extracting a
+shared `<Section>` component — the per-section composition varies too
+much for a shared abstraction to read as anything other than a leak.
+
+#### State and data flow
+
+- `AtelierIndex` owns: `activeCategory` (string — filter id), `heroIndex`
+  (number — cycling index 0–3), `prefersReducedMotion` (ref — checked
+  before GSAP runs).
+- `AtelierPlate` owns: `prefersReducedMotion` (ref only — no other
+  state). The plate page is otherwise stateless.
+- All data flows from `src/lib/projects.ts` via the same helpers used
+  by every variant. No fetch. No SWR. No localStorage (the selection bar
+  is owned by v5 and is mounted in the root layout; v6 does not
+  interfere).
+
+#### How to extend v6 without breaking the brief
+
+1. **Adding a fourth composition template.** Add a new branch in
+   `AtelierIndex.tsx`'s `filtered.map((project, idx) => {...})` block.
+   Use `template === 3` (or change the modulo). The template must use
+   the same `space-y-20 md:space-y-32` rhythm and must not introduce
+   rounded corners, gradients, or new colors. Verify with the
+   Playwright script (extend `URLS` to include `/v6/work` and
+   `/v6/work/<any-slug>`).
+2. **Adding a new filter category.** Edit the `CATEGORIES` array in
+   `AtelierIndex.tsx`. The count is derived from
+   `projects.filter(p => p.category === c.id).length`, so it stays
+   correct automatically. Empty categories render with `count: 0` and
+   `aria-pressed={false}` — they are still clickable but visually
+   muted. Do not introduce a brand-new color for the new chip.
+3. **Adding a new section to the index.** It must use the same
+   12-col-broken composition pattern as the existing sections
+   (eyebrow + title + content split), the same `at-fade` /
+   `at-img-reveal` classes for scroll-driven animation, and the same
+   `§`-marker typography. Do not introduce a new typography register.
+4. **Adding a new animation.** First question: "Is this an entrance,
+   a reveal, a state change, or a cycle?" Entrance = `power4.out` 1.4s.
+   Reveal = `power3.out` 1.2s (`clipPath`). State change = 300ms CSS
+   transition only. Cycle = the existing hero 9s + 1400ms fade.
+   Adding a parallax or a marquee breaks the brief.
+5. **Promoting the v6 tokens to `tailwind.config.tsx`.** Do this only
+   if v6 becomes the default variant. Today the values live as
+   arbitrary Tailwind classes (`bg-[#F5F1E9]`, `text-[#171716]`,
+   `text-[#C66B3D]`) precisely to keep v6 *isolated* from the rest of
+   the site. Promoting them is allowed; renaming them is not (they map
+   to "warm ivory", "deep charcoal", "muted terracotta").
+6. **Touching shared chrome to make v6 "fit better".** Stop. v6 fits
+   *because* shared chrome is unchanged. The variant sits next to
+   v1–v5 on the same site, with the same nav, footer, cursor,
+   preloader, and selection bar — and that is the point. The
+   instruction is: *do not interfere with what we have*. v6 is the
+   proof that you can add a new variant without touching anything
+   else.
+
+#### Gaps and opportunities (v6)
+
+- **No SVG decoration.** v6 deliberately ships zero inline SVG (unlike
+  v4's one `ArchitecturalSketch`). If a future contributor adds an SVG,
+  the entire decoration budget is one SVG — and it must be named,
+  reusable, and drawn at `text-[#171716]/25`.
+- **No Journal.** The brief lists Journal as "optional but strongly
+  recommended". v6 deliberately ships without one — adding it would
+  require a new route and a new data model. A v6+ could add
+  `src/app/v6/journal/` and `src/components/variants/v6/Journal.tsx`
+  following the v4 plate pattern but with article structure.
+- **No WhatsApp deep link.** The contact CTA lists WhatsApp as a
+  conversion channel, but does not generate a pre-filled deep link
+  with project context (the way v5's `SelectionBar` does). A v6+ could
+  add a `whatsappLink()` helper to `src/lib/projects.ts` and use it
+  inside the contact CTA.
+- **No "Why Kim" four-principle strip.** v4 added this; v6 deliberately
+  skipped it because the brief is more about *showing* taste than
+  *stating* principles. A v6+ could add it under the intro section
+  with the same hairline-rule top border treatment as the process
+  section.
+- **Hero cycling is global, not section-aware.** The cycle runs even
+  when the hero is out of view. A future improvement: pause the cycle
+  while the hero is out of view (use `IntersectionObserver`).
+- **`prefers-reduced-motion` is honored at the gate.** Unlike v1 (which
+  has a known gap here), v6 checks the ref *before* `gsap.context`
+  runs. This is the model the existing v1 gap should be fixed with.
+
+#### How to read this section in 60 seconds
+
+- A premium interior architecture studio that happens to scroll. The
+  reader is a potential client; the site sells *taste and confidence*
+  before it sells services.
+- Three colors (warm ivory, deep charcoal, muted terracotta) + one
+  secondary surface (half-step warmer cream).
+- The italic-word-inside-the-roman-headline is v6's signature. Drop
+  it and the variant dies.
+- Three composition templates rotated on the index, three aspect
+  rotations on the plate. No two adjacent compositions share the same
+  shape.
+- Medium motion: hero entrance + clipPath reveal + slow Ken Burns.
+  `prefers-reduced-motion` honored at the gate.
+- Zero changes to shared chrome. Components live under
+  `src/components/variants/v6/`. Routes live under `src/app/v6/`. The
+  v6 tokens are arbitrary Tailwind values, not theme tokens — kept
+  this way on purpose to preserve isolation.
+- Verify with `node scripts/verify-v2.mjs` after any change. The script
+  must report `HTTP 200` for `/v6/work` and `/v6/work/<any-slug>` with
+  zero page errors and zero failed requests.
+
+---
+
+## How to add v6 without touching v1–v5 (the rule)
+
+The instruction behind v6 is: *"don't interfere with what we have."*
+Every variant on this site proves that a new direction can be added
+without touching the others. The recipe:
+
+1. **New route folder** under `src/app/vN/...`. Routes are server
+   components that just render the variant's client component.
+2. **New component folder** under `src/components/variants/vN/`. The
+   variant's components are siblings and share nothing with v1–v5
+   components.
+3. **Arbitrary Tailwind values** for the variant's color system,
+   rather than theme tokens. This keeps the variant isolated from the
+   shared `tailwind.config.tsx` (or the `@theme inline` block in
+   `globals.css`).
+4. **Existing fonts and dependencies only.** Reuse Cormorant Garamond +
+   DM Sans + GSAP + `next/image`. No new font imports, no new npm
+   packages.
+5. **Zero changes to shared chrome.** `layout.tsx`, `Navigation`,
+   `Footer`, `CustomCursor`, `Preloader`, `SmoothScrollProvider`,
+   `PageTransition`, `SelectionBar`, `SelectionContext`, `globals.css`,
+   `tailwind.config.tsx` — all untouched.
+6. **Cross-link from the colophon** so a curious reader can find the
+   other variants (a typographic "View v4 issue →" in the bottom-right
+   of the colophon is the convention v6 adopts).
+7. **Update this document** with a new section following the structure
+   of the v4 deep-dive: Tokens, Components, Signature, Cross-Variant
+   Comparison row, Architecture & UI/UX Deep-Dive.
+8. **Verify** with the Playwright script (`node scripts/verify-v2.mjs`)
+   — extend `URLS` to include the new routes.
+
+v6 is the worked example of this recipe. Future variants (v7, v8, …)
+should follow it.
+
+---
+
+## v6 — Atelier: Update Log
+
+### 2026-09-03 — Embedded Gallery + Solid Nav + Logo
+
+**Brief**: Place a v5-style gallery (multi-select + WhatsApp share +
+full-screen single-item view) inside the v6 index, "craftily" on the
+main page. Make the site navigation non-transparent so links are
+easily readable and clickable. Bright, readable fonts. Use the project
+logo (`/winterior-logo.jpeg` — a red/silver square mark with serif
+"WINTERIOR DESIGN" wordmark). Use Wood Kivu as inspiration.
+
+**What changed (all scoped to v6 + the shared `Navigation`)**:
+
+1. **`src/components/Navigation.tsx`** — replaced:
+   - **Logo image** added: a 40×40 (mobile) / 48×48 (desktop) `<Image>`
+     pointing to `/winterior-logo.jpeg` with `priority` and
+     `object-contain`, paired with a hidden-on-mobile wordmark +
+     "Design · Nairobi" tagline.
+   - **Solid cream background** (`bg-[#F5F1E9]`) with a 1px
+     `border-b border-[#171716]/10` and a soft drop shadow. No more
+     transparent → opaque-on-scroll transition. The scroll-listener
+     state was removed.
+   - **Bright, readable link colors**: nav links are now
+     `text-[#171716]` (deep charcoal) by default and
+     `text-[#C66B3D]` (muted terracotta) on hover/active, with
+     bold (`font-semibold`) and wider letter-spacing for legibility.
+   - **"Start a project" CTA** added to the right of the nav (visible
+     `md+`): `bg-[#171716] text-[#F5F1E9] hover:bg-[#C66B3D]`. The same
+     CTA appears in the mobile menu.
+   - **Wood Kivu-style** clear hierarchy: logo on the left, primary
+     nav center, primary CTA right — the same anatomy the Wood Kivu
+     site uses.
+   - The mobile menu now uses the same bright charcoal + terracotta
+     hover and includes the CTA.
+
+2. **`src/components/variants/v6/V6GallerySection.tsx`** (new) — a
+   v5-style gallery embedded in the v6 page:
+   - **Filter chips** (`All Work`, `Kitchens`, `Wardrobes`, `Bath
+     Vanities`, `Shop Fit-Outs`) with a count badge per chip. Active
+     chip is filled charcoal; inactive chips have a hairline border
+     and shift to terracotta on hover.
+   - **3-column responsive grid** (1 / 2 / 3 cols) of project tiles.
+     Each tile is a button (not a link) so the full-screen overlay
+     can take over without a route change.
+   - **+ select button** top-right of every tile. Selected tiles
+     flip the button to `bg-[#C66B3D] text-[#F5F1E9]` with a check
+     glyph.
+   - **Full-screen single-item overlay** (matches v5's pattern but
+     stays in-page, not a route). Features: edge-tap prev/next
+     zones, keyboard arrow + Esc, swipe (50px threshold), thumbnail
+     strip, tap-image to toggle a 60vh details panel from the bottom,
+     and an "Add to selection" button in the top bar. URL updates to
+     `?p=<slug>` so the overlay is shareable.
+   - **Floating selection bar** at the bottom (charcoal ground,
+     terracotta border-top, charcoal-filled "Clear" + filled
+     terracotta "WhatsApp →" CTA). Shows the selection count and
+     links to the WhatsApp deep link (generated by the existing v5
+     `SelectionContext`).
+   - The "Wood Kivu feel" comes from: a strong "Browse our
+     *completed work.*" editorial headline above the grid, terracotta
+     `§`-markers, and a filter-row that feels like typographic tabs
+     rather than pill buttons.
+
+3. **`src/components/variants/v6/AtelierIndex.tsx`** — replaced the
+   old asymmetric project grid (3 templates) with a single
+   `<V6GallerySection />` import. The previous filter state, the
+   `CATEGORIES` constant, and the `filtered` memo were removed (the
+   gallery component owns its own filter state). The hero eyebrow
+   padding was reduced from `pt-28 md:pt-32` to `pt-24 md:pt-28` to
+   account for the now-solid nav above it.
+
+4. **`public/winterior-logo.jpeg`** — copied from the project root
+   so `next/image` can serve it.
+
+5. **No changes to**: any v1–v5 component, `SelectionContext.tsx`,
+   `SelectionBar.tsx`, `globals.css`, `tailwind.config.tsx`,
+   `layout.tsx`, or any other shared chrome. The shared
+   `SelectionProvider` (mounted in the root layout) means the
+   selection persists across every page in the site — selecting a
+   project on `/v6/work`, then visiting `/v5/gallery`, still shows
+   the floating bar.
+
+**Caveats**:
+
+- The v6 gallery's full-screen overlay updates the URL to
+  `/v6/work?p=<slug>` and listens for the `v6-gallery-open` window
+  event. A back-button press navigates correctly; a hard refresh
+  with `?p=` re-opens the overlay.
+- The nav now uses fixed-charcoal link colors on every page (not
+  just v6) — a deliberate, site-wide decision to prioritize
+  legibility over the previous "transparent on light hero" effect.
+  v1–v5 keep their visual identities, but their navigation is now
+  equally readable.
 

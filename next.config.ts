@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 160, 256, 384, 512, 768],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  async rewrites() {
+    return [
+      { source: "/v6", destination: "/v6/work" },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -324,6 +324,51 @@ export const projects: Project[] = [
       "Nairobi kitchen design",
     ],
   },
+  {
+    id: "bathroom-vanities",
+    title: "Bathroom Vanities",
+    subtitle: "Stone, Brass, Linen",
+    category: "Bath Vanity",
+    description:
+      "Bath vanities and full fit-outs — stone tops, brass hardware, soft-close hardware, considered lighting. Each piece is hand-finished to the room it lives in.",
+    year: "2025",
+    location: "Nairobi, Kenya",
+    materials: ["Quartz", "Brushed Brass", "Soft-close Drawers", "Travertine"],
+    images: Array.from({ length: 5 }, (_, i) =>
+      img("bath-vanities", i + 1)
+    ),
+    featured: true,
+    tags: [
+      "bath vanity",
+      "bathroom",
+      "brass",
+      "stone",
+      "Nairobi bathroom design",
+    ],
+  },
+  {
+    id: "better-wardrobes",
+    title: "Better Wardrobes",
+    subtitle: "Handled & Handleless",
+    category: "Wardrobe",
+    description:
+      "Bespoke wardrobes, walk-ins and dressing rooms — handled, handleless, mirror-fronted, with makeup-vanity corners. Hand-finished joinery, soft-close everywhere, drawn to the room it lives in.",
+    year: "2025",
+    location: "Nairobi, Kenya",
+    materials: ["Mahogany", "Melanin Finish", "Brass Fittings", "Bevel Mirrors"],
+    images: Array.from({ length: 9 }, (_, i) =>
+      img("better-wardrobes", i + 1)
+    ),
+    featured: true,
+    tags: [
+      "wardrobe",
+      "bespoke",
+      "tailored",
+      "mahogany",
+      "handleless",
+      "Nairobi wardrobe design",
+    ],
+  },
 ];
 
 export const projectById = (id: string) =>
