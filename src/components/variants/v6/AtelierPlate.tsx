@@ -134,6 +134,7 @@ export default function AtelierPlate({ slug }: Props) {
             priority
             className="object-cover"
             sizes="100vw"
+            quality={100}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/55 via-transparent to-transparent" />
         </div>
@@ -229,6 +230,7 @@ export default function AtelierPlate({ slug }: Props) {
               fill
               className="object-cover"
               sizes="100vw"
+              quality={100}
             />
           </div>
         </section>
@@ -315,6 +317,7 @@ export default function AtelierPlate({ slug }: Props) {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={100}
                   />
                 </div>
               );
@@ -338,6 +341,7 @@ export default function AtelierPlate({ slug }: Props) {
                   fill
                   className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={100}
                 />
               </div>
               <p className={`${label} text-[#716D65] mb-2`}>← Previous</p>
@@ -364,6 +368,7 @@ export default function AtelierPlate({ slug }: Props) {
                   fill
                   className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={100}
                 />
               </div>
               <p className={`${label} text-[#716D65] mb-2`}>Next →</p>
