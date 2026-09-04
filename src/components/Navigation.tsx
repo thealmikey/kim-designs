@@ -124,35 +124,27 @@ export default function Navigation() {
             <span className="relative flex flex-col items-center justify-center gap-1 group-hover:scale-[1.02] transition-transform duration-300">
               <span
                 className="relative block"
-                style={{
-                  height: "30px",
-                  aspectRatio: "788 / 124",
-                  width: "220px",
-                }}
+                style={{ width: "200px", height: "38px" }}
               >
                 <Image
                   src="/winterior-wordmark.png"
                   alt="WINTERIOR"
                   fill
                   priority
-                  sizes="220px"
+                  sizes="200px"
                   className="object-contain"
                 />
               </span>
               <span
                 className="relative block"
-                style={{
-                  height: "22px",
-                  aspectRatio: "495 / 118",
-                  width: "92px",
-                }}
+                style={{ width: "88px", height: "25px" }}
               >
                 <Image
                   src="/winterior-design.png"
                   alt="DESIGN"
                   fill
                   priority
-                  sizes="92px"
+                  sizes="88px"
                   className="object-contain"
                 />
               </span>
