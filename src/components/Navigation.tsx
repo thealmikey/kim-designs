@@ -71,30 +71,45 @@ export default function Navigation() {
             <p className="flex items-center gap-6 text-[#F5F1E9]/85">
               <a
                 href="tel:+254755164654"
-                className="hover:text-[#C66B3D] transition-colors"
+                className="hover:text-[#A68A64] transition-colors"
               >
                 +254 755 164 654
               </a>
               <span className="text-[#F5F1E9]/30">·</span>
               <a
                 href="mailto:info@winteriordesign.co.ke"
-                className="hover:text-[#C66B3D] transition-colors"
+                className="hover:text-[#A68A64] transition-colors"
               >
                 info@winteriordesign.co.ke
               </a>
               <span className="text-[#F5F1E9]/30">·</span>
               <span>Enterprise Rd, Nairobi</span>
             </p>
-            <p className="flex items-center gap-2 text-[#F5F1E9]/70">
-              Mon — Sat · 8:00 — 18:00
-            </p>
+            <a
+              href="https://wa.me/254728846560"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-0.5 bg-[#25D366] text-[#171716] hover:bg-[#F5F1E9] transition-colors"
+              aria-label="Chat on WhatsApp"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.554-5.338 11.89-11.893 11.89a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+              </svg>
+              <span>WhatsApp</span>
+            </a>
           </div>
         </div>
 
         {/* Scroll progress hairline */}
         <div
           aria-hidden
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#C66B3D] via-[#C66B3D] to-[#E89A6A] transition-[width] duration-150"
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#A68A64] via-[#A68A64] to-[#E89A6A] transition-[width] duration-150"
           style={{ width: `${scrollPct}%` }}
         />
 
@@ -167,9 +182,9 @@ export default function Navigation() {
                   <span
                     className={`font-body text-[12px] lg:text-[13px] font-bold tracking-[0.18em] uppercase transition-colors duration-200 ${
                       isActive
-                        ? "text-[#C66B3D]"
+                        ? "text-[#A68A64]"
                         : isHover
-                        ? "text-[#C66B3D]"
+                        ? "text-[#A68A64]"
                         : "text-[#171716]"
                     }`}
                   >
@@ -178,14 +193,14 @@ export default function Navigation() {
                   {/* Animated underline */}
                   <span
                     aria-hidden
-                    className={`absolute left-3 right-3 lg:left-4 lg:right-4 bottom-1 h-[2px] bg-[#C66B3D] origin-left transition-transform duration-300 ${
+                    className={`absolute left-3 right-3 lg:left-4 lg:right-4 bottom-1 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
                       isActive || isHover ? "scale-x-100" : "scale-x-0"
                     }`}
                   />
                   {/* Hover dot */}
                   <span
                     aria-hidden
-                    className={`absolute -top-0.5 right-2 w-1 h-1 rounded-full bg-[#C66B3D] transition-opacity duration-200 ${
+                    className={`absolute -top-0.5 right-2 w-1 h-1 rounded-full bg-[#A68A64] transition-opacity duration-200 ${
                       isHover ? "opacity-100" : "opacity-0"
                     }`}
                   />
@@ -226,7 +241,7 @@ export default function Navigation() {
             >
               <span
                 aria-hidden
-                className="absolute inset-0 bg-[#C66B3D] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
+                className="absolute inset-0 bg-[#A68A64] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
               />
               <span className="relative">Get a Quote</span>
               <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">
@@ -259,10 +274,10 @@ export default function Navigation() {
         <div className="fixed inset-0 z-40 bg-[#F5F1E9] flex flex-col pt-24">
           <div className="bg-[#171716] text-[#F5F1E9] px-6 py-3 text-[10px] tracking-[0.25em] uppercase font-body font-semibold flex items-center justify-between">
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[#C66B3D] rounded-full animate-pulse" />
+              <span className="w-1.5 h-1.5 bg-[#A68A64] rounded-full animate-pulse" />
               Now booking Q4 2026
             </span>
-            <a href="tel:+254728846560" className="hover:text-[#C66B3D]">
+            <a href="tel:+254728846560" className="hover:text-[#A68A64]">
               Call us
             </a>
           </div>
@@ -280,11 +295,11 @@ export default function Navigation() {
                   onClick={() => setIsOpen(false)}
                   className={`font-display text-5xl sm:text-6xl font-light tracking-tight transition-colors duration-300 ${
                     pathname === link.href
-                      ? "text-[#C66B3D]"
-                      : "text-[#171716] hover:text-[#C66B3D]"
+                      ? "text-[#A68A64]"
+                      : "text-[#171716] hover:text-[#A68A64]"
                   }`}
                 >
-                  <span className="text-[#C66B3D] text-sm font-body tracking-[0.3em] uppercase font-semibold mr-3 align-middle">
+                  <span className="text-[#A68A64] text-sm font-body tracking-[0.3em] uppercase font-semibold mr-3 align-middle">
                     0{i + 1}
                   </span>
                   {link.label}
@@ -295,7 +310,7 @@ export default function Navigation() {
               <Link
                 href="/contact"
                 onClick={() => setIsOpen(false)}
-                className="font-body text-[12px] tracking-[0.22em] uppercase font-bold bg-[#171716] text-[#F5F1E9] px-6 py-4 text-center hover:bg-[#C66B3D] transition-colors"
+                className="font-body text-[12px] tracking-[0.22em] uppercase font-bold bg-[#171716] text-[#F5F1E9] px-6 py-4 text-center hover:bg-[#A68A64] transition-colors"
               >
                 Get a Quote →
               </Link>

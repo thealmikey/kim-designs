@@ -104,7 +104,7 @@ function MobileSnapCarousel({
     <div className="lg:hidden">
       {/* Index badge */}
       <div className="flex items-center justify-between mb-4 px-1">
-        <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#C66B3D] font-bold">
+        <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#A68A64] font-bold">
           ← Swipe →
         </p>
         <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#171716]/60 font-semibold tabular-nums">
@@ -138,7 +138,7 @@ function MobileSnapCarousel({
               <button
                 type="button"
                 onClick={() => onOpen(i)}
-                className="relative block w-full aspect-[4/5] overflow-hidden bg-[#171716]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C66B3D]"
+                className="relative block w-full aspect-[4/5] overflow-hidden bg-[#171716]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A68A64]"
                 aria-label={`Open ${project.title}`}
                 aria-current={focused ? "true" : undefined}
               >
@@ -194,8 +194,8 @@ function MobileSnapCarousel({
                 }
                 className={`absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center transition-all shadow-md ${
                   isSelected(project.id)
-                    ? "bg-[#C66B3D] text-[#F5F1E9]"
-                    : "bg-[#F5F1E9]/95 text-[#171716] hover:bg-[#C66B3D] hover:text-[#F5F1E9]"
+                    ? "bg-[#A68A64] text-[#F5F1E9]"
+                    : "bg-[#F5F1E9]/95 text-[#171716] hover:bg-[#A68A64] hover:text-[#F5F1E9]"
                 }`}
               >
                 {isSelected(project.id) ? (
@@ -224,7 +224,7 @@ function MobileSnapCarousel({
                 className="pointer-events-none absolute inset-0 transition-all duration-500"
                 style={{
                   boxShadow: focused
-                    ? "0 20px 50px -10px rgba(23,23,22,0.35), 0 0 0 3px #C66B3D"
+                    ? "0 20px 50px -10px rgba(23,23,22,0.35), 0 0 0 3px #A68A64"
                     : "0 0 0 0px transparent",
                 }}
               />
@@ -260,7 +260,7 @@ function MobileSnapCarousel({
               className="h-1.5 rounded-full transition-all duration-500"
               style={{
                 width: focused ? "32px" : "6px",
-                background: focused ? "#C66B3D" : "rgba(23,23,22,0.25)",
+                background: focused ? "#A68A64" : "rgba(23,23,22,0.25)",
               }}
             />
           );
@@ -326,7 +326,7 @@ function GalleryTile({
       <button
         type="button"
         onClick={() => onOpen(index)}
-        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#171716]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C66B3D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F5F1E9]"
+        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#171716]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A68A64] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F5F1E9]"
         aria-label={`Open ${project.title}`}
       >
         {inView && (
@@ -385,8 +385,8 @@ function GalleryTile({
         }
         className={`absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center transition-all shadow-sm ${
           isSelected
-            ? "bg-[#C66B3D] text-[#F5F1E9]"
-            : "bg-[#F5F1E9]/95 text-[#171716] hover:bg-[#C66B3D] hover:text-[#F5F1E9]"
+            ? "bg-[#A68A64] text-[#F5F1E9]"
+            : "bg-[#F5F1E9]/95 text-[#171716] hover:bg-[#A68A64] hover:text-[#F5F1E9]"
         }`}
       >
         {isSelected ? (
@@ -503,8 +503,8 @@ function SingleItemOverlay({
             aria-pressed={isSelected(project.id)}
             className={`${label} px-3 py-2 transition-colors ${
               isSelected(project.id)
-                ? "bg-[#C66B3D] text-[#F5F1E9]"
-                : "border border-[#F5F1E9]/30 text-[#F5F1E9] hover:border-[#C66B3D] hover:text-[#C66B3D]"
+                ? "bg-[#A68A64] text-[#F5F1E9]"
+                : "border border-[#F5F1E9]/30 text-[#F5F1E9] hover:border-[#A68A64] hover:text-[#A68A64]"
             }`}
           >
             {isSelected(project.id) ? "Selected ✓" : "Add to selection"}
@@ -582,7 +582,7 @@ function SingleItemOverlay({
               transition: "transform 400ms ease-out",
             }}
           >
-            <p className={`${label} text-[#C66B3D] mb-3`}>
+            <p className={`${label} text-[#A68A64] mb-3`}>
               {project.category} · {project.location} · {project.year}
             </p>
             <h2
@@ -633,7 +633,7 @@ function SingleItemOverlay({
                 onClick={() => setActiveImage(i)}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden border-2 transition-colors ${
                   i === activeImage
-                    ? "border-[#C66B3D]"
+                    ? "border-[#A68A64]"
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
                 aria-label={`View image ${i + 1}`}
@@ -705,7 +705,7 @@ export default function V6GallerySection() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14 border-b border-[#171716]/15 pb-5">
         <div>
-          <p className={`${label} text-[#C66B3D] mb-3`}>§ The Gallery</p>
+          <p className={`${label} text-[#A68A64] mb-3`}>§ The Gallery</p>
           <h2
             className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#171716]"
             style={{
@@ -750,7 +750,7 @@ export default function V6GallerySection() {
               className={`${label} px-4 py-2.5 border-2 transition-colors font-semibold ${
                 active
                   ? "bg-[#171716] text-[#F5F1E9] border-[#171716]"
-                  : "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#C66B3D] hover:text-[#C66B3D]"
+                  : "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#A68A64] hover:text-[#A68A64]"
               }`}
             >
               {c.label}
@@ -821,10 +821,10 @@ export default function V6GallerySection() {
 
       {/* Floating selection bar (local copy styled for v6, also appears site-wide via root layout) */}
       {hydrated && selected.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#171716] text-[#F5F1E9] border-t-2 border-[#C66B3D] shadow-2xl">
+        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#171716] text-[#F5F1E9] border-t-2 border-[#A68A64] shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 md:py-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="bg-[#C66B3D] text-[#F5F1E9] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
+              <span className="bg-[#A68A64] text-[#F5F1E9] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
                 {selected.length}
               </span>
               <p className="font-body text-xs md:text-sm text-[#F5F1E9]/90 truncate">
@@ -848,7 +848,7 @@ export default function V6GallerySection() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#C66B3D] hover:bg-[#F5F1E9] hover:text-[#171716] text-[#F5F1E9] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
+                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#A68A64] hover:bg-[#F5F1E9] hover:text-[#171716] text-[#F5F1E9] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
               >
                 <span>WhatsApp</span>
                 <span aria-hidden>→</span>

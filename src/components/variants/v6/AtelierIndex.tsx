@@ -41,10 +41,10 @@ const SERVICES = [
 ];
 
 const PROCESS = [
-  { no: "01", title: "Consult", body: "We visit the space and hear the brief." },
-  { no: "02", title: "Design", body: "3D studies, material samples, drawings." },
-  { no: "03", title: "Craft", body: "Our joiners build to spec in our workshop." },
-  { no: "04", title: "Install", body: "Clean, dust-aware installation on site." },
+  { no: "01", title: "Consult", body: "We visit, hear the brief." },
+  { no: "02", title: "Design", body: "Plans, samples, 3D studies." },
+  { no: "03", title: "Craft", body: "Built to spec in our workshop." },
+  { no: "04", title: "Install", body: "On site, clean and dust-aware." },
 ];
 
 const MARQUEE_WORDS = [
@@ -291,7 +291,7 @@ export default function AtelierIndex() {
                 >
                   <span
                     aria-hidden
-                    className="absolute inset-0 bg-[#C66B3D] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
+                    className="absolute inset-0 bg-[#A68A64] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
                   />
                   <span className="relative group-hover:text-[#F5F1E9] transition-colors">
                     View Projects
@@ -326,7 +326,7 @@ export default function AtelierIndex() {
               <span
                 className={`block w-1 transition-all duration-500 ${
                   heroIndex === i
-                    ? "h-10 bg-[#C66B3D]"
+                    ? "h-10 bg-[#A68A64]"
                     : "h-4 bg-[#F5F1E9]/40 group-hover:bg-[#F5F1E9]/80"
                 }`}
               />
@@ -341,7 +341,7 @@ export default function AtelierIndex() {
           </p>
           <div className="w-px h-10 bg-[#F5F1E9]/30 relative overflow-hidden">
             <div
-              className="absolute top-0 left-0 w-px h-4 bg-[#C66B3D]"
+              className="absolute top-0 left-0 w-px h-4 bg-[#A68A64]"
               style={{ animation: "scrollLine 2s ease-in-out infinite" }}
             />
           </div>
@@ -349,7 +349,7 @@ export default function AtelierIndex() {
       </section>
 
       {/* ============ MARQUEE STRIP ============ */}
-      <section className="relative bg-[#171716] text-[#F5F1E9] py-5 md:py-6 overflow-hidden border-y border-[#C66B3D]/40">
+      <section className="relative bg-[#171716] text-[#F5F1E9] py-5 md:py-6 overflow-hidden border-y border-[#A68A64]/40">
         <div
           className="flex gap-12 whitespace-nowrap"
           style={{
@@ -366,7 +366,7 @@ export default function AtelierIndex() {
               >
                 {w}
                 <span
-                  className="text-[#C66B3D] text-2xl"
+                  className="text-[#A68A64] text-2xl"
                   aria-hidden
                 >
                   ✦
@@ -399,10 +399,10 @@ export default function AtelierIndex() {
       <section className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
         <div className="grid grid-cols-12 gap-6 md:gap-12">
           <div className="col-span-12 md:col-span-3 at-fade">
-            <p className={`${label} text-[#C66B3D] mb-3 font-bold`}>
+            <p className={`${label} text-[#A68A64] mb-3 font-bold`}>
               § About the studio
             </p>
-            <div className="hidden md:block w-12 h-px bg-[#C66B3D] mt-2" />
+            <div className="hidden md:block w-12 h-px bg-[#A68A64] mt-2" />
           </div>
           <div className="col-span-12 md:col-span-8 at-fade">
             <h2
@@ -428,7 +428,7 @@ export default function AtelierIndex() {
             <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-2">
               <Link
                 href="/studio"
-                className={`${label} text-[#171716] hover:text-[#C66B3D] inline-flex items-center gap-2 border-b border-[#171716]/40 hover:border-[#C66B3D] pb-0.5 transition-colors`}
+                className={`${label} text-[#171716] hover:text-[#A68A64] inline-flex items-center gap-2 border-b border-[#171716]/40 hover:border-[#A68A64] pb-0.5 transition-colors`}
               >
                 Read our story <span aria-hidden>→</span>
               </Link>
@@ -444,7 +444,7 @@ export default function AtelierIndex() {
       <section className="bg-[#171716] text-[#F5F1E9] px-6 md:px-12 lg:px-16 py-20 md:py-28">
         <div className="grid grid-cols-12 gap-6 md:gap-12 mb-12 md:mb-16 at-fade">
           <div className="col-span-12 md:col-span-4">
-            <p className={`${label} text-[#C66B3D] mb-3 font-bold`}>
+            <p className={`${label} text-[#A68A64] mb-3 font-bold`}>
               § What we do
             </p>
             <h2
@@ -472,14 +472,14 @@ export default function AtelierIndex() {
           {SERVICES.map((s) => (
             <li
               key={s.no}
-              className="at-fade border-b border-[#F5F1E9]/15 group transition-all duration-300 hover:bg-[#C66B3D] hover:px-4 md:hover:px-6"
+              className="at-fade border-b border-[#F5F1E9]/15 group transition-all duration-300 hover:bg-[#A68A64] hover:px-4 md:hover:px-6"
             >
               <Link
                 href="/services"
                 className="grid grid-cols-12 gap-6 md:gap-10 items-baseline py-6 md:py-8"
               >
                 <p
-                  className={`col-span-3 md:col-span-1 ${label} text-[#C66B3D] group-hover:text-[#171716] tabular-nums font-bold transition-colors`}
+                  className={`col-span-3 md:col-span-1 ${label} text-[#A68A64] group-hover:text-[#171716] tabular-nums font-bold transition-colors`}
                 >
                   {s.no}
                 </p>
@@ -513,7 +513,7 @@ export default function AtelierIndex() {
       <section className="px-6 md:px-12 lg:px-16 py-20 md:py-28 bg-[#F5F1E9]">
         <div className="grid grid-cols-12 gap-6 md:gap-12 mb-12 md:mb-16 at-fade">
           <div className="col-span-12 md:col-span-3">
-            <p className={`${label} text-[#C66B3D] mb-3 font-bold`}>
+            <p className={`${label} text-[#A68A64] mb-3 font-bold`}>
               § Our process
             </p>
           </div>
@@ -531,22 +531,22 @@ export default function AtelierIndex() {
           {PROCESS.map((p, i) => (
             <li
               key={p.no}
-              className="at-fade relative border-t-2 border-[#171716] pt-6 hover:border-[#C66B3D] transition-colors duration-300 group"
+              className="at-fade relative border-t-2 border-[#171716] pt-6 hover:border-[#A68A64] transition-colors duration-300 group"
             >
               <div className="flex items-baseline justify-between mb-3">
                 <p
-                  className={`${label} text-[#C66B3D] tabular-nums font-bold`}
+                  className={`${label} text-[#A68A64] tabular-nums font-bold`}
                 >
                   {p.no}
                 </p>
                 <p
-                  className={`${label} text-[#171716]/30 group-hover:text-[#C66B3D] transition-colors`}
+                  className={`${label} text-[#171716]/30 group-hover:text-[#A68A64] transition-colors`}
                 >
                   Step {i + 1} of 4
                 </p>
               </div>
               <h3
-                className="font-display font-light text-[#171716] group-hover:text-[#C66B3D] text-3xl md:text-4xl tracking-tight mb-3 transition-colors"
+                className="font-display font-light text-[#171716] group-hover:text-[#A68A64] text-3xl md:text-4xl tracking-tight mb-3 transition-colors"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {p.title}
@@ -563,7 +563,7 @@ export default function AtelierIndex() {
       <section className="bg-gradient-to-br from-[#171716] to-[#2C2C2C] text-[#F5F1E9] px-6 md:px-12 lg:px-16 py-20 md:py-28">
         <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
           <div className="col-span-12 md:col-span-4 at-fade">
-            <p className={`${label} text-[#C66B3D] mb-3 font-bold`}>
+            <p className={`${label} text-[#A68A64] mb-3 font-bold`}>
               § Material palette
             </p>
             <h2
@@ -599,7 +599,7 @@ export default function AtelierIndex() {
             ].map((m) => (
               <li
                 key={m}
-                className={`${label} text-[#F5F1E9]/75 border-b border-[#F5F1E9]/15 pb-2 hover:text-[#C66B3D] hover:border-[#C66B3D] transition-colors`}
+                className={`${label} text-[#F5F1E9]/75 border-b border-[#F5F1E9]/15 pb-2 hover:text-[#A68A64] hover:border-[#A68A64] transition-colors`}
               >
                 {m}
               </li>
@@ -627,7 +627,7 @@ export default function AtelierIndex() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </Link>
             <div className="col-span-12 md:col-span-4 md:col-start-9 at-fade order-1 md:order-2">
-              <p className={`${label} text-[#C66B3D] mb-3 font-bold`}>
+              <p className={`${label} text-[#A68A64] mb-3 font-bold`}>
                 Featured project
               </p>
               <h3
@@ -650,7 +650,7 @@ export default function AtelierIndex() {
               </p>
               <Link
                 href={`/v6/work/${featured[0].id}`}
-                className={`${label} text-[#171716] hover:text-[#C66B3D] inline-flex items-center gap-2 border-b border-[#171716]/40 hover:border-[#C66B3D] pb-0.5 mt-7 transition-colors font-bold`}
+                className={`${label} text-[#171716] hover:text-[#A68A64] inline-flex items-center gap-2 border-b border-[#171716]/40 hover:border-[#A68A64] pb-0.5 mt-7 transition-colors font-bold`}
               >
                 View plate <span aria-hidden>→</span>
               </Link>
@@ -663,15 +663,15 @@ export default function AtelierIndex() {
       <section className="relative bg-[#171716] text-[#F5F1E9] px-6 md:px-12 lg:px-16 py-20 md:py-32 overflow-hidden">
         <div
           aria-hidden
-          className="absolute -top-40 -right-40 w-96 h-96 bg-[#C66B3D] rounded-full blur-3xl opacity-30"
+          className="absolute -top-40 -right-40 w-96 h-96 bg-[#A68A64] rounded-full blur-3xl opacity-30"
         />
         <div
           aria-hidden
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#C66B3D] rounded-full blur-3xl opacity-20"
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#A68A64] rounded-full blur-3xl opacity-20"
         />
         <div className="relative grid grid-cols-12 gap-6 md:gap-12">
           <div className="col-span-12 md:col-span-6 at-fade">
-            <p className={`${label} text-[#C66B3D] mb-4 font-bold`}>
+            <p className={`${label} text-[#A68A64] mb-4 font-bold`}>
               § Start a project
             </p>
             <h2
@@ -689,7 +689,7 @@ export default function AtelierIndex() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center gap-2 bg-[#C66B3D] text-[#F5F1E9] px-6 py-4 font-body text-[11px] font-bold tracking-[0.22em] uppercase overflow-hidden"
+                className="group relative inline-flex items-center gap-2 bg-[#A68A64] text-[#F5F1E9] px-6 py-4 font-body text-[11px] font-bold tracking-[0.22em] uppercase overflow-hidden"
               >
                 <span
                   aria-hidden
@@ -729,29 +729,29 @@ export default function AtelierIndex() {
             </p>
             <div className="space-y-3 border-t border-[#F5F1E9]/15 pt-5">
               <div className="flex items-baseline justify-between gap-3 border-b border-[#F5F1E9]/10 pb-3">
-                <span className={`${meta} text-[#C66B3D] font-bold`}>
+                <span className={`${meta} text-[#A68A64] font-bold`}>
                   Email
                 </span>
                 <a
                   href="mailto:info@winteriordesign.co.ke"
-                  className="font-body text-sm text-[#F5F1E9] hover:text-[#C66B3D] transition-colors"
+                  className="font-body text-sm text-[#F5F1E9] hover:text-[#A68A64] transition-colors"
                 >
                   info@winteriordesign.co.ke
                 </a>
               </div>
               <div className="flex items-baseline justify-between gap-3 border-b border-[#F5F1E9]/10 pb-3">
-                <span className={`${meta} text-[#C66B3D] font-bold`}>
+                <span className={`${meta} text-[#A68A64] font-bold`}>
                   Phone
                 </span>
                 <a
                   href="tel:+254755164654"
-                  className="font-body text-sm text-[#F5F1E9] hover:text-[#C66B3D] transition-colors"
+                  className="font-body text-sm text-[#F5F1E9] hover:text-[#A68A64] transition-colors"
                 >
                   +254 755 164 654
                 </a>
               </div>
               <div className="flex items-baseline justify-between gap-3 border-b border-[#F5F1E9]/10 pb-3">
-                <span className={`${meta} text-[#C66B3D] font-bold`}>
+                <span className={`${meta} text-[#A68A64] font-bold`}>
                   Studio
                 </span>
                 <span className="font-body text-sm text-[#F5F1E9] text-right">
@@ -772,7 +772,7 @@ export default function AtelierIndex() {
             className="font-display italic text-sm md:text-base text-[#171716]/70"
             style={{ fontFamily: "var(--font-cormorant), serif" }}
           >
-            <span className="text-[#C66B3D] font-semibold not-italic font-body text-[10px] tracking-[0.3em] uppercase mr-2 align-middle">
+            <span className="text-[#A68A64] font-semibold not-italic font-body text-[10px] tracking-[0.3em] uppercase mr-2 align-middle">
               § Other variants
             </span>
             Compare visual systems across the studio.
@@ -780,28 +780,28 @@ export default function AtelierIndex() {
           <div className="flex items-center gap-3 text-[10px] font-body tracking-[0.3em] uppercase font-semibold text-[#171716]/70">
             <Link
               href="/home-v5"
-              className="hover:text-[#C66B3D] transition-colors"
+              className="hover:text-[#A68A64] transition-colors"
             >
               v5 · Home
             </Link>
             <span className="text-[#171716]/20">·</span>
             <Link
               href="/v4/work"
-              className="hover:text-[#C66B3D] transition-colors"
+              className="hover:text-[#A68A64] transition-colors"
             >
               v4 · Issue
             </Link>
             <span className="text-[#171716]/20">·</span>
             <Link
               href="/v3/work"
-              className="hover:text-[#C66B3D] transition-colors"
+              className="hover:text-[#A68A64] transition-colors"
             >
               v3 · Viewing
             </Link>
             <span className="text-[#171716]/20">·</span>
             <Link
               href="/v2/work"
-              className="hover:text-[#C66B3D] transition-colors"
+              className="hover:text-[#A68A64] transition-colors"
             >
               v2 · Archive
             </Link>

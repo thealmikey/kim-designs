@@ -1,11 +1,19 @@
 import Link from "next/link";
 
+const quickLinks = [
+  { href: "/v6/work", label: "Projects" },
+  { href: "/services", label: "Services" },
+  { href: "/studio", label: "Studio" },
+  { href: "/contact", label: "Contact" },
+];
+
 export default function Footer() {
   return (
     <footer className="border-t border-sand/30">
       <div className="px-6 md:px-12 py-12 md:py-16">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+          {/* Brand block */}
+          <div className="md:col-span-4">
             <Link
               href="/"
               className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-foreground"
@@ -19,65 +27,70 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-6 text-right">
-            <div>
-              <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
-                Studio
-              </p>
-              <div className="flex flex-col gap-1.5">
-                {[
-                  { href: "/work", label: "Work" },
-                  { href: "/studio", label: "Studio" },
-                  { href: "/services", label: "Services" },
-                  { href: "/contact", label: "Contact" },
-                ].map((link) => (
+          {/* Quick Links — matches woodkivu's footer pattern */}
+          <div className="md:col-span-2">
+            <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
+              Quick Links
+            </p>
+            <ul className="flex flex-col gap-1.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
                   <Link
-                    key={link.href}
                     href={link.href}
                     className="font-body text-xs text-stone hover:text-foreground transition-colors tracking-wide"
                   >
                     {link.label}
                   </Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
-                Contact
-              </p>
-              <div className="flex flex-col gap-1.5 text-right">
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="md:col-span-3">
+            <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
+              Contact
+            </p>
+            <ul className="flex flex-col gap-1.5">
+              <li>
                 <a
                   href="mailto:info@winteriordesign.co.ke"
                   className="font-body text-xs text-stone hover:text-foreground transition-colors tracking-wide"
                 >
                   info@winteriordesign.co.ke
                 </a>
+              </li>
+              <li>
                 <a
                   href="tel:+254728846560"
                   className="font-body text-xs text-stone hover:text-foreground transition-colors tracking-wide"
                 >
                   +254 728 846 560
                 </a>
+              </li>
+              <li>
                 <a
                   href="tel:+254755164654"
                   className="font-body text-xs text-stone hover:text-foreground transition-colors tracking-wide"
                 >
                   +254 755 164 654
                 </a>
-              </div>
-            </div>
-            <div className="col-span-2 sm:col-span-1">
-              <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
-                Visit
-              </p>
-              <p className="font-body text-xs text-stone leading-relaxed">
-                Enterprise Rd, Opp Hillocks Hotel
-                <br />
-                Industrial Area, Nairobi
-                <br />
-                P.O. Box 39254-00623
-              </p>
-            </div>
+              </li>
+            </ul>
+          </div>
+
+          {/* Visit */}
+          <div className="md:col-span-3">
+            <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
+              Visit
+            </p>
+            <p className="font-body text-xs text-stone leading-relaxed">
+              Enterprise Rd, Opp Hillocks Hotel
+              <br />
+              Industrial Area, Nairobi
+              <br />
+              P.O. Box 39254-00623
+            </p>
           </div>
         </div>
 
