@@ -134,7 +134,6 @@ export default function Navigation() {
                 fill
                 priority
                 sizes="60px"
-                unoptimized
                 className="object-contain"
               />
             </span>
@@ -149,7 +148,6 @@ export default function Navigation() {
                   fill
                   priority
                   sizes="210px"
-                  unoptimized
                   className="object-contain"
                 />
               </span>
@@ -163,7 +161,6 @@ export default function Navigation() {
                   fill
                   priority
                   sizes="100px"
-                  unoptimized
                   className="object-contain"
                 />
               </span>

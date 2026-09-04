@@ -151,7 +151,6 @@ function MobileSnapCarousel({
                   loading={i < 3 ? "eager" : "lazy"}
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
-                  quality={100}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/85 via-[#171716]/15 to-transparent" />
                 {/* Category pill */}
@@ -341,7 +340,6 @@ function GalleryTile({
             decoding="async"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
-            quality={100}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/80 via-[#171716]/15 to-transparent" />
@@ -570,7 +568,6 @@ function SingleItemOverlay({
             priority
             className="object-contain"
             sizes="100vw"
-            quality={100}
           />
         </button>
 
@@ -644,7 +641,6 @@ function SingleItemOverlay({
                   fill
                   className="object-cover"
                   sizes="80px"
-                  quality={100}
                 />
               </button>
             ))}
