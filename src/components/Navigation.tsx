@@ -113,10 +113,10 @@ export default function Navigation() {
           style={{ width: `${scrollPct}%` }}
         />
 
-        <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4">
+        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4 relative">
           <Link
             href="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3 group md:static absolute left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0"
             aria-label="Winterior Design home"
           >
             {/* WG mark — only on md+ (mobile uses the stacked wordmark alone) */}
@@ -145,12 +145,12 @@ export default function Navigation() {
                   fontSize: "clamp(1.5rem, 2.3vw, 2rem)",
                   lineHeight: 1,
                   background:
-                    "linear-gradient(180deg, #2A2A28 0%, #171716 35%, #8B1F0E 65%, #C13D1E 100%)",
+                    "linear-gradient(180deg, #FAFAFA 0%, #FAFAFA 12%, #D44A2A 30%, #8B1F0E 50%, #D44A2A 70%, #FAFAFA 88%, #FAFAFA 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                   filter:
-                    "drop-shadow(0 1px 0 rgba(255,255,255,0.25)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5))",
+                    "drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 1px 1px rgba(0,0,0,0.25))",
                 }}
                 aria-label="WINTERIOR"
               >

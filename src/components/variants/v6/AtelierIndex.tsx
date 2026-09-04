@@ -221,25 +221,38 @@ export default function AtelierIndex() {
         className="relative w-full min-h-[100svh] overflow-hidden"
         style={{ marginTop: "calc(28px + 1.75rem + 0px)" }}
       >
-        {/* Background photos cycling */}
+        {/* Background photos cycling — curated order (6 strongest photos) */}
         <div className="at-kenburns absolute inset-0">
-          {projects.slice(0, 6).map((p, i) => (
-            <div
-              key={p.id}
-              className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
-              style={{ opacity: heroIndex === i ? 1 : 0 }}
-              aria-hidden={heroIndex !== i}
-            >
-              <Image
-                src={p.images[0]}
-                alt=""
-                fill
-                priority={i === 0}
-                className="object-cover"
-                sizes="100vw"
-              />
-            </div>
-          ))}
+          {(() => {
+            const heroIds = [
+              "pvc-foilwrap-and-high-gloss-handless-kitchen",
+              "high-gloss-handless-kitchen",
+              "spray-paint-kitchen",
+              "bathroom-vanities",
+              "wardropes",
+              "walk-in-closet",
+            ];
+            const heroProjects = heroIds
+              .map((id) => projects.find((p) => p.id === id))
+              .filter((p): p is (typeof projects)[number] => Boolean(p));
+            return heroProjects.map((p, i) => (
+              <div
+                key={p.id}
+                className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
+                style={{ opacity: heroIndex === i ? 1 : 0 }}
+                aria-hidden={heroIndex !== i}
+              >
+                <Image
+                  src={p.images[0]}
+                  alt=""
+                  fill
+                  priority={i === 0}
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+            ));
+          })()}
         </div>
 
         {/* Bright legibility veil — slightly stronger at the bottom to anchor the headline, transparent at the top so the eyebrow reads clearly */}
@@ -312,25 +325,28 @@ export default function AtelierIndex() {
           </div>
         </div>
 
-        {/* Photo pagination dots */}
+        {/* Photo pagination dots — match curated hero order */}
         <div className="absolute right-6 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 z-10 hidden md:flex flex-col gap-3">
-          {projects.slice(0, 6).map((p, i) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setHeroIndex(i)}
-              aria-label={`View ${p.title}`}
-              className="group flex items-center gap-3"
-            >
-              <span
-                className={`block w-1 transition-all duration-500 ${
-                  heroIndex === i
-                    ? "h-10 bg-[#A68A64]"
-                    : "h-4 bg-[#F5F1E9]/40 group-hover:bg-[#F5F1E9]/80"
-                }`}
-              />
-            </button>
-          ))}
+          {["pvc-foilwrap-and-high-gloss-handless-kitchen", "high-gloss-handless-kitchen", "spray-paint-kitchen", "bathroom-vanities", "wardropes", "walk-in-closet"].map((id, i) => {
+            const p = projects.find((x) => x.id === id);
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setHeroIndex(i)}
+                aria-label={`View ${p?.title ?? "project"}`}
+                className="group flex items-center gap-3"
+              >
+                <span
+                  className={`block w-1 transition-all duration-500 ${
+                    heroIndex === i
+                      ? "h-10 bg-[#A68A64]"
+                      : "h-4 bg-[#F5F1E9]/40 group-hover:bg-[#F5F1E9]/80"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </div>
 
         {/* Scroll prompt */}
