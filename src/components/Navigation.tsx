@@ -121,13 +121,13 @@ export default function Navigation() {
                 className="object-contain"
               />
             </span>
-            <span className="relative flex flex-col items-start justify-center gap-1 group-hover:scale-[1.02] transition-transform duration-300">
+            <span className="relative flex flex-col items-center justify-center gap-1 group-hover:scale-[1.02] transition-transform duration-300">
               <span
                 className="relative block"
                 style={{
                   height: "30px",
                   aspectRatio: "788 / 124",
-                  width: "190px",
+                  width: "220px",
                 }}
               >
                 <Image
@@ -135,8 +135,8 @@ export default function Navigation() {
                   alt="WINTERIOR"
                   fill
                   priority
-                  sizes="190px"
-                  className="object-contain object-left"
+                  sizes="220px"
+                  className="object-contain"
                 />
               </span>
               <span
@@ -153,7 +153,7 @@ export default function Navigation() {
                   fill
                   priority
                   sizes="92px"
-                  className="object-contain object-left"
+                  className="object-contain"
                 />
               </span>
             </span>
