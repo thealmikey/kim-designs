@@ -715,7 +715,7 @@ export default function V6GallerySection() {
           >
             Browse our
             <br />
-            <span className="italic">completed work.</span>
+            completed work.
           </h2>
           <p className="font-body text-sm md:text-base text-[#171716]/75 mt-5 max-w-xl leading-relaxed">
             Tap any project for a closer look. Select the ones you love and

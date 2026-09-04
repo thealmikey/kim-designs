@@ -252,23 +252,6 @@ export default function AtelierIndex() {
           }}
         />
 
-        {/* Animated corner mark — lowered so it never sits under the nav */}
-        <div className="absolute top-10 left-6 md:top-14 md:left-12 lg:left-16 z-10 at-hero-eyebrow">
-          <p className="font-body text-[10px] tracking-[0.32em] uppercase font-bold text-[#F5F1E9] flex items-center gap-2">
-            <span className="w-6 h-px bg-[#C66B3D]" />
-            Winterior Design — Nairobi
-          </p>
-        </div>
-        <div className="absolute top-10 right-6 md:top-14 md:right-12 lg:right-16 z-10 at-hero-eyebrow hidden md:block">
-          <a
-            href="tel:+254755164654"
-            className="font-body text-[10px] tracking-[0.32em] uppercase font-bold text-[#F5F1E9] text-right hover:text-[#C66B3D] transition-colors inline-flex items-center gap-2"
-          >
-            <span className="w-6 h-px bg-[#C66B3D]" />
-            +254 755 164 654
-          </a>
-        </div>
-
         {/* Headline + sub + CTA — asymmetric, bottom-anchored */}
         <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 lg:px-16 pb-12 md:pb-20">
           <div className="grid grid-cols-12 gap-6 items-end">
@@ -283,9 +266,7 @@ export default function AtelierIndex() {
                 }}
               >
                 <span className="at-hero-title-line block">Interiors</span>
-                <span className="at-hero-title-line block italic">
-                  with a sense
-                </span>
+                <span className="at-hero-title-line block">with a sense</span>
                 <span className="at-hero-title-line block">of place.</span>
               </h1>
             </div>
@@ -433,7 +414,7 @@ export default function AtelierIndex() {
             >
               We design and build
               <br />
-              <span className="italic">interiors that age with grace</span> —
+              interiors that age with grace —
               kitchens, wardrobes, bath vanities and full fit-outs across
               Nairobi and beyond.
             </h2>
@@ -475,7 +456,7 @@ export default function AtelierIndex() {
             >
               Four
               <br />
-              <span className="italic">disciplines.</span>
+              disciplines.
             </h2>
           </div>
           <p
