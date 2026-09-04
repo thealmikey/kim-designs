@@ -137,32 +137,37 @@ export default function Navigation() {
                 className="object-contain"
               />
             </span>
-            <span className="relative flex flex-col items-center justify-center gap-1 group-hover:scale-[1.02] transition-transform duration-300">
+            <span className="relative flex flex-col items-center justify-center gap-0.5 group-hover:scale-[1.02] transition-transform duration-300 leading-none">
               <span
-                className="relative block"
-                style={{ width: "210px", height: "40px" }}
+                className="winterior-wordmark font-bold tracking-[0.04em] uppercase whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-cinzel), serif",
+                  fontSize: "clamp(1.5rem, 2.3vw, 2rem)",
+                  lineHeight: 1,
+                  background:
+                    "linear-gradient(180deg, #2A2A28 0%, #171716 35%, #8B1F0E 65%, #C13D1E 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter:
+                    "drop-shadow(0 1px 0 rgba(255,255,255,0.25)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5))",
+                }}
+                aria-label="WINTERIOR"
               >
-                <Image
-                  src="/winterior-wordmark.png"
-                  alt="WINTERIOR"
-                  fill
-                  priority
-                  sizes="210px"
-                  className="object-contain"
-                />
+                WINTERIOR
               </span>
               <span
-                className="relative block"
-                style={{ width: "100px", height: "28px" }}
+                className="winterior-design font-semibold tracking-[0.32em] uppercase whitespace-nowrap"
+                style={{
+                  fontFamily: "var(--font-cinzel), serif",
+                  fontSize: "clamp(0.625rem, 0.85vw, 0.75rem)",
+                  lineHeight: 1,
+                  letterSpacing: "0.42em",
+                  color: "#171716",
+                }}
+                aria-label="DESIGN"
               >
-                <Image
-                  src="/winterior-design.png"
-                  alt="DESIGN"
-                  fill
-                  priority
-                  sizes="100px"
-                  className="object-contain"
-                />
+                DESIGN
               </span>
             </span>
           </Link>
