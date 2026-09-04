@@ -644,6 +644,7 @@ function SingleItemOverlay({
                   fill
                   className="object-cover"
                   sizes="80px"
+                  quality={100}
                 />
               </button>
             ))}
