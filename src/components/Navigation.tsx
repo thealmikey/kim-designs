@@ -107,8 +107,8 @@ export default function Navigation() {
             <span
               className="relative block transition-transform duration-300 group-hover:scale-[1.04]"
               style={{
-                height: "56px",
-                width: "56px",
+                height: "60px",
+                width: "60px",
                 flexShrink: 0,
               }}
             >
@@ -117,19 +117,45 @@ export default function Navigation() {
                 alt="Winterior Design"
                 fill
                 priority
-                sizes="56px"
+                sizes="60px"
                 className="object-contain"
               />
             </span>
-            <span
-              className="hidden sm:inline-block font-display font-bold tracking-[0.05em] text-[#171716] leading-none"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                fontSize: "clamp(1.5rem, 2.2vw, 2rem)",
-                letterSpacing: "0.04em",
-              }}
-            >
-              WINTERIOR
+            <span className="relative flex flex-col items-start justify-center gap-1 group-hover:scale-[1.02] transition-transform duration-300">
+              <span
+                className="relative block"
+                style={{
+                  height: "30px",
+                  aspectRatio: "788 / 124",
+                  width: "190px",
+                }}
+              >
+                <Image
+                  src="/winterior-wordmark.png"
+                  alt="WINTERIOR"
+                  fill
+                  priority
+                  sizes="190px"
+                  className="object-contain object-left"
+                />
+              </span>
+              <span
+                className="relative block"
+                style={{
+                  height: "22px",
+                  aspectRatio: "495 / 118",
+                  width: "92px",
+                }}
+              >
+                <Image
+                  src="/winterior-design.png"
+                  alt="DESIGN"
+                  fill
+                  priority
+                  sizes="92px"
+                  className="object-contain object-left"
+                />
+              </span>
             </span>
           </Link>
 
