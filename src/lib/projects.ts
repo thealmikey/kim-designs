@@ -32,8 +32,8 @@ export const projects: Project[] = [
     year: "2024",
     location: "Nairobi, Kenya",
     materials: ["PVC Foilwrap", "High Gloss", "Handleless", "Quartz"],
-    images: Array.from({ length: 10 }, (_, i) =>
-      img("pvc-foilwrap-and-high-gloss-handless-kitchen", i + 1)
+    images: Array.from({ length: 6 }, (_, i) =>
+      img("high-gloss-handless-kitchen", i + 1)
     ),
     featured: true,
     tags: [
@@ -47,6 +47,30 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "high-gloss-handless-kitchen",
+    title: "High Gloss Handleless Kitchen",
+    subtitle: "Integrated Form",
+    category: "Kitchen",
+    description:
+      "A high-gloss, handleless kitchen where every surface is seamless and every detail is considered. Reflective finishes bounce light across the room; integrated pulls disappear; the cabinetry becomes architecture.",
+    year: "2025",
+    location: "Nairobi, Kenya",
+    materials: ["MDF", "High Gloss Lacquer", "Quartz Counter", "Soft-close Hardware"],
+    images: Array.from({ length: 6 }, (_, i) =>
+      img("high-gloss-handless-kitchen", i + 1)
+    ),
+    featured: true,
+    tags: [
+      "kitchen",
+      "handleless",
+      "high gloss",
+      "lacquer",
+      "modern kitchen",
+      "seamless",
+      "Nairobi kitchen design",
+    ],
+  },
+  {
     id: "spray-paint-kitchen",
     title: "Spray Paint Kitchen",
     subtitle: "Seamless Surface",
@@ -56,7 +80,7 @@ export const projects: Project[] = [
     year: "2024",
     location: "Nairobi, Kenya",
     materials: ["MDF", "Spray Paint", "Quartz Counter"],
-    images: Array.from({ length: 5 }, (_, i) => img("spray-paint-kitchen", i + 1)),
+    images: Array.from({ length: 4 }, (_, i) => img("spray-paint-kitchen", i + 1)),
     featured: true,
     tags: [
       "kitchen",
@@ -334,7 +358,7 @@ export const projects: Project[] = [
     year: "2025",
     location: "Nairobi, Kenya",
     materials: ["Quartz", "Brushed Brass", "Soft-close Drawers", "Travertine"],
-    images: Array.from({ length: 5 }, (_, i) =>
+    images: Array.from({ length: 6 }, (_, i) =>
       img("bath-vanities", i + 1)
     ),
     featured: true,

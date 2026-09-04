@@ -73,7 +73,7 @@ export default function AtelierIndex() {
   // Cycle hero (slower, with cross-fade)
   useEffect(() => {
     const id = window.setInterval(() => {
-      setHeroIndex((i) => (i + 1) % Math.min(5, projects.length));
+      setHeroIndex((i) => (i + 1) % Math.min(6, projects.length));
     }, 6500);
     return () => window.clearInterval(id);
   }, []);
@@ -223,7 +223,7 @@ export default function AtelierIndex() {
       >
         {/* Background photos cycling */}
         <div className="at-kenburns absolute inset-0">
-          {projects.slice(0, 5).map((p, i) => (
+          {projects.slice(0, 6).map((p, i) => (
             <div
               key={p.id}
               className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
@@ -314,7 +314,7 @@ export default function AtelierIndex() {
 
         {/* Photo pagination dots */}
         <div className="absolute right-6 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 z-10 hidden md:flex flex-col gap-3">
-          {projects.slice(0, 5).map((p, i) => (
+          {projects.slice(0, 6).map((p, i) => (
             <button
               key={p.id}
               type="button"
