@@ -105,21 +105,31 @@ export default function Navigation() {
             aria-label="Winterior Design home"
           >
             <span
-              className="relative block transition-transform duration-300 group-hover:scale-[1.03]"
+              className="relative block transition-transform duration-300 group-hover:scale-[1.04]"
               style={{
-                height: "46px",
-                aspectRatio: "1385 / 471",
-                maxWidth: "240px",
+                height: "56px",
+                width: "56px",
+                flexShrink: 0,
               }}
             >
               <Image
-                src="/winterior-logo.png"
+                src="/winterior-mark.png"
                 alt="Winterior Design"
                 fill
                 priority
-                sizes="240px"
+                sizes="56px"
                 className="object-contain"
               />
+            </span>
+            <span
+              className="hidden sm:inline-block font-display font-bold tracking-[0.05em] text-[#171716] leading-none"
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontSize: "clamp(1.5rem, 2.2vw, 2rem)",
+                letterSpacing: "0.04em",
+              }}
+            >
+              WINTERIOR
             </span>
           </Link>
 
