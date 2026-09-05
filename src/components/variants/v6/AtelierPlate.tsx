@@ -174,28 +174,28 @@ export default function AtelierPlate({ slug }: Props) {
         </div>
       </section>
 
-      {/* ============ META PANEL ============ */}
+      {/* ============ META PANEL (symmetric 4-col row) ============ */}
       <section className="px-6 md:px-12 lg:px-16 pt-20 md:pt-28 pb-12 md:pb-16">
-        <div className="grid grid-cols-12 gap-6 md:gap-10 atp-hero-meta">
-          <div className="col-span-6 md:col-span-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 atp-hero-meta">
+          <div>
             <p className={`${label} text-[#716D65] mb-2`}>Location</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               {project.location}
             </p>
           </div>
-          <div className="col-span-6 md:col-span-3">
+          <div>
             <p className={`${label} text-[#716D65] mb-2`}>Year</p>
             <p className="font-body text-sm md:text-base text-[#171716] tabular-nums">
               {project.year}
             </p>
           </div>
-          <div className="col-span-6 md:col-span-3">
+          <div>
             <p className={`${label} text-[#716D65] mb-2`}>Discipline</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               {project.category}
             </p>
           </div>
-          <div className="col-span-6 md:col-span-3">
+          <div>
             <p className={`${label} text-[#716D65] mb-2`}>Status</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               Completed
@@ -204,18 +204,20 @@ export default function AtelierPlate({ slug }: Props) {
         </div>
       </section>
 
-      {/* ============ INTRODUCTION ============ */}
+      {/* ============ INTRODUCTION (symmetric 6-6) ============ */}
       <section className="px-6 md:px-12 lg:px-16 py-12 md:py-20">
+        <div className="text-center atp-fade mb-8 md:mb-12">
+          <p className={`${label} text-[#A68A64] mb-4`}>§ The brief</p>
+        </div>
         <div className="grid grid-cols-12 gap-6 md:gap-12">
-          <div className="col-span-12 md:col-span-3 atp-fade">
-            <p className={`${label} text-[#A68A64] mb-4`}>§ The brief</p>
+          <div className="col-span-12 md:col-span-6 md:col-start-4 atp-fade">
+            <p
+              className="font-display italic text-2xl md:text-3xl lg:text-4xl leading-[1.3] text-[#171716] text-center"
+              style={{ fontFamily: "var(--font-cormorant), serif" }}
+            >
+              {project.description}
+            </p>
           </div>
-          <p
-            className="col-span-12 md:col-span-7 md:col-start-5 font-display italic text-2xl md:text-4xl leading-[1.25] text-[#171716] atp-fade"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
-          >
-            {project.description}
-          </p>
         </div>
       </section>
 
@@ -234,24 +236,24 @@ export default function AtelierPlate({ slug }: Props) {
         </section>
       )}
 
-      {/* ============ MATERIALS ============ */}
+      {/* ============ MATERIALS (symmetric: centered heading + centered 6-6 list) ============ */}
       <section className="bg-[#EFE9DE] px-6 md:px-12 lg:px-16 py-20 md:py-28 mt-8 md:mt-16">
+        <div className="text-center atp-fade mb-12 md:mb-16">
+          <p className={`${label} text-[#A68A64] mb-4`}>§ Material palette</p>
+          <h2
+            className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#171716]"
+            style={{
+              fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
+              fontFamily: "var(--font-cormorant), serif",
+            }}
+          >
+            Surfaces that
+            <br />
+            <span className="italic">hold the room.</span>
+          </h2>
+        </div>
         <div className="grid grid-cols-12 gap-6 md:gap-12">
-          <div className="col-span-12 md:col-span-4 atp-fade">
-            <p className={`${label} text-[#A68A64] mb-4`}>§ Material palette</p>
-            <h2
-              className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#171716]"
-              style={{
-                fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
-                fontFamily: "var(--font-cormorant), serif",
-              }}
-            >
-              Surfaces that
-              <br />
-              <span className="italic">hold the room.</span>
-            </h2>
-          </div>
-          <ul className="col-span-12 md:col-span-7 md:col-start-6 atp-fade">
+          <ul className="col-span-12 md:col-span-6 md:col-start-4 atp-fade">
             {project.materials.map((m, i) => (
               <li
                 key={m}
@@ -263,9 +265,7 @@ export default function AtelierPlate({ slug }: Props) {
                 >
                   {m}
                 </span>
-                <span
-                  className={`${label} text-[#716D65] tabular-nums`}
-                >
+                <span className={`${label} text-[#716D65] tabular-nums`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </li>
@@ -274,10 +274,10 @@ export default function AtelierPlate({ slug }: Props) {
         </div>
       </section>
 
-      {/* ============ REMAINING IMAGES (rotated aspect ratios) ============ */}
+      {/* ============ REMAINING IMAGES (uniform 4/5 grid, no offsets) ============ */}
       {remaining.length > 1 && (
         <section className="px-6 md:px-12 lg:px-16 py-20 md:py-32">
-          <div className="mb-10 md:mb-16 atp-fade">
+          <div className="text-center mb-10 md:mb-16 atp-fade">
             <p className={`${label} text-[#716D65] mb-3`}>§ The plate</p>
             <h2
               className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#171716]"
@@ -289,42 +289,30 @@ export default function AtelierPlate({ slug }: Props) {
               Additional views.
             </h2>
           </div>
-          <div className="grid grid-cols-12 gap-6 md:gap-10">
-            {remaining.slice(1).map((src, i) => {
-              const layout = i % 3;
-              const aspect =
-                layout === 0
-                  ? "aspect-[4/5]"
-                  : layout === 1
-                  ? "aspect-[3/2]"
-                  : "aspect-square";
-              const col =
-                layout === 0
-                  ? "col-span-12 md:col-span-5"
-                  : layout === 1
-                  ? "col-span-12 md:col-span-4 md:col-start-7 md:mt-24"
-                  : "col-span-12 md:col-span-3";
-              return (
-                <div
-                  key={src + i}
-                  className={`${col} atp-img-reveal relative ${aspect} overflow-hidden bg-[#171716]/5`}
-                >
-                  <Image
-                    src={src}
-                    alt={`${project.title} — view ${i + 2}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {remaining.slice(1).map((src, i) => (
+              <div
+                key={src + i}
+                className="atp-img-reveal relative aspect-[4/5] overflow-hidden bg-[#171716]/5"
+              >
+                <Image
+                  src={src}
+                  alt={`${project.title} — view ${i + 2}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            ))}
           </div>
         </section>
       )}
 
-      {/* ============ RELATED PLATES ============ */}
+      {/* ============ RELATED PLATES (symmetric 6-6) ============ */}
       <section className="px-6 md:px-12 lg:px-16 pb-20 md:pb-28">
+        <div className="text-center mb-10 md:mb-12 atp-fade">
+          <p className={`${label} text-[#716D65]`}>§ Other commissions</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           {prev && (
             <Link
@@ -355,7 +343,7 @@ export default function AtelierPlate({ slug }: Props) {
           {next && (
             <Link
               href={`/v6/work/${next.id}`}
-              className="group atp-fade block md:text-right"
+              className="group atp-fade block"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[#171716]/5 mb-4">
                 <Image
@@ -381,28 +369,20 @@ export default function AtelierPlate({ slug }: Props) {
         </div>
       </section>
 
-      {/* ============ FOOTER CTA ============ */}
-      <section className="border-t border-[#171716]/15 px-6 md:px-12 lg:px-16 py-12 md:py-16">
-        <div className="grid grid-cols-12 gap-6 items-baseline atp-fade">
-          <p className={`col-span-12 md:col-span-2 ${label} text-[#716D65]`}>
-            Continue
-          </p>
-          <p
-            className="col-span-12 md:col-span-7 font-display italic text-xl md:text-2xl text-[#171716]/85"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
-          >
-            Kim Interior Designs — a working register of completed
-            commissions.
-          </p>
-          <p className="col-span-12 md:col-span-3 md:text-right">
-            <Link
-              href="/contact"
-              className={`${label} text-[#171716] hover:text-[#A68A64] border-b border-[#171716]/40 hover:border-[#A68A64] inline-block pb-0.5 transition-colors`}
-            >
-              Start a project →
-            </Link>
-          </p>
-        </div>
+      {/* ============ FOOTER CTA (centered) ============ */}
+      <section className="border-t border-[#171716]/15 px-6 md:px-12 lg:px-16 py-12 md:py-16 text-center atp-fade">
+        <p
+          className="font-display italic text-xl md:text-2xl text-[#171716]/85 mb-6"
+          style={{ fontFamily: "var(--font-cormorant), serif" }}
+        >
+          Winterior Design — a working register of completed commissions.
+        </p>
+        <Link
+          href="/contact"
+          className={`${label} text-[#171716] hover:text-[#A68A64] border-b border-[#171716]/40 hover:border-[#A68A64] inline-block pb-0.5 transition-colors`}
+        >
+          Start a project →
+        </Link>
       </section>
     </div>
   );
