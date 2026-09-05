@@ -144,13 +144,7 @@ export default function Navigation() {
                   fontFamily: "var(--font-cinzel), serif",
                   fontSize: "clamp(1.5rem, 2.3vw, 2rem)",
                   lineHeight: 1,
-                  background:
-                    "linear-gradient(180deg, #FAFAFA 0%, #FAFAFA 12%, #D44A2A 30%, #8B1F0E 50%, #D44A2A 70%, #FAFAFA 88%, #FAFAFA 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter:
-                    "drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 1px 1px rgba(0,0,0,0.25))",
+                  color: "#171716",
                 }}
                 aria-label="WINTERIOR"
               >
