@@ -113,7 +113,25 @@ export default function Navigation() {
           style={{ width: `${scrollPct}%` }}
         />
 
-        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4 relative">
+        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4">
+          {/* Hamburger — left on mobile (standard), hidden on md+ */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden relative w-11 h-11 flex items-center justify-center text-[#171716] order-first"
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
+                isOpen ? "rotate-45 translate-y-0" : "-translate-y-1.5"
+              }`}
+            />
+            <span
+              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
+                isOpen ? "-rotate-45 translate-y-0" : "translate-y-1.5"
+              }`}
+            />
+          </button>
+
           <Link
             href="/"
             className="flex items-center gap-3 group md:static absolute left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0"
@@ -232,23 +250,6 @@ export default function Navigation() {
               </span>
             </a>
           </div>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative w-11 h-11 flex items-center justify-center text-[#171716]"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
-                isOpen ? "rotate-45 translate-y-0" : "-translate-y-1.5"
-              }`}
-            />
-            <span
-              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
-                isOpen ? "-rotate-45 translate-y-0" : "translate-y-1.5"
-              }`}
-            />
-          </button>
         </nav>
       </header>
 
