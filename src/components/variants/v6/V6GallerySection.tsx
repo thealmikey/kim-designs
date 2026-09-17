@@ -4,12 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
-import { projects as projectsBase } from "@/lib/projects";
-import {
-  allCategories,
-  projects,
-  type ProjectCategory,
-} from "@/lib/projects";
+import { projects, type Project, type ProjectCategory } from "@/lib/projects";
+import { allCategories } from "@/lib/projects";
 
 const label = "font-body text-[10px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.22em] uppercase";
@@ -48,7 +44,7 @@ function MobileSnapCarousel({
   isSelected,
   onToggle,
 }: {
-  projects: (typeof projectsBase)[number][];
+  projects: Project[];
   onOpen: (i: number) => void;
   isSelected: (id: string) => boolean;
   onToggle: (id: string) => void;
@@ -413,11 +409,9 @@ function GalleryTile({
 function SingleItemOverlay({
   slug,
   onClose,
-  filtered,
 }: {
   slug: string;
   onClose: () => void;
-  filtered: (typeof projects)[number][];
 }) {
   const project = projects.find((p) => p.id === slug);
   const { toggle, isSelected } = useSelection();
@@ -427,10 +421,10 @@ function SingleItemOverlay({
   const touchStartX = useRef<number | null>(null);
   const interactedRef = useRef(false);
 
-  const currentIndex = filtered.findIndex((p) => p.id === slug);
-  const total = filtered.length;
-  const prev = total > 1 ? filtered[(currentIndex - 1 + total) % total] : null;
-  const next = total > 1 ? filtered[(currentIndex + 1) % total] : null;
+  const currentIndex = projects.findIndex((p) => p.id === slug);
+  const total = projects.length;
+  const prev = total > 1 ? projects[(currentIndex - 1 + total) % total] : null;
+  const next = total > 1 ? projects[(currentIndex + 1) % total] : null;
   const hasMultipleImages = project ? project.images.length > 1 : false;
 
   const navigate = useCallback(
@@ -653,7 +647,6 @@ function SingleItemOverlay({
 
 export default function V6GallerySection() {
   const { toggle, isSelected, selected, hydrated, whatsappLink, clear } = useSelection();
-  const [category, setCategory] = useState<"all" | ProjectCategory>("all");
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   // Read initial open slug from ?p= query
@@ -673,16 +666,8 @@ export default function V6GallerySection() {
       window.removeEventListener("v6-gallery-open", onOpen as EventListener);
   }, []);
 
-  const filtered = useMemo(
-    () =>
-      category === "all"
-        ? projects
-        : projects.filter((p) => p.category === category),
-    [category]
-  );
-
   const openIndex = openSlug
-    ? filtered.findIndex((p) => p.id === openSlug)
+    ? projects.findIndex((p) => p.id === openSlug)
     : -1;
 
   const closeOverlay = useCallback(() => {
@@ -720,54 +705,46 @@ export default function V6GallerySection() {
           </p>
         </div>
         <p className={`${meta} text-[#171716]/60 mt-6 md:mt-0 tabular-nums`}>
-          {String(filtered.length).padStart(2, "0")} of{" "}
-          {String(projects.length).padStart(2, "0")} shown
+          {String(projects.length).padStart(2, "0")} project{projects.length !== 1 ? "s" : ""}
         </p>
       </div>
 
-      {/* Filter chips */}
+      {/* Filter chips - now link to category pages */}
       <div
         className="flex flex-wrap items-center gap-2 md:gap-3 mb-8 md:mb-12"
-        role="tablist"
-        aria-label="Filter projects by category"
+        role="navigation"
+        aria-label="Browse projects by category"
       >
         {allCategories.map((c) => {
-          const active = category === c.id;
           const count =
             c.id === "all"
               ? projects.length
               : projects.filter((p) => p.category === c.id).length;
+          const href = c.id === "all" ? "/v6/work" : `/${c.id.toLowerCase().replace(" ", "-")}`;
           return (
-            <button
+            <Link
               key={c.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setCategory(c.id)}
+              href={href}
               className={`${label} px-4 py-2.5 border-2 transition-colors font-semibold ${
-                active
-                  ? "bg-[#171716] text-[#F5F1E9] border-[#171716]"
+                c.id === "all"
+                  ? "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#A68A64] hover:text-[#A68A64]"
                   : "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#A68A64] hover:text-[#A68A64]"
               }`}
             >
               {c.label}
-              <span
-                className={`ml-2 text-[9px] tabular-nums ${
-                  active ? "text-[#F5F1E9]/70" : "text-[#171716]/45"
-                }`}
-              >
+              <span className="ml-2 text-[9px] tabular-nums text-[#171716]/45">
                 {String(count).padStart(2, "0")}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>
 
       {/* Mobile scroll-snap carousel (only on < lg) */}
       <MobileSnapCarousel
-        projects={filtered}
+        projects={projects}
         onOpen={(i) => {
-          const target = filtered[i];
+          const target = projects[i];
           if (!target) return;
           if (typeof window !== "undefined") {
             const url = new URL(window.location.href);
@@ -786,14 +763,14 @@ export default function V6GallerySection() {
         role="grid"
         aria-label="Project gallery"
       >
-        {filtered.map((project, i) => (
+        {projects.map((project, i) => (
           <GalleryTile
             key={project.id}
             project={project}
             index={i}
             priority={i < 3}
             onOpen={(idx) => {
-              const target = filtered[idx];
+              const target = projects[idx];
               if (!target) return;
               if (typeof window !== "undefined") {
                 const url = new URL(window.location.href);
@@ -805,12 +782,12 @@ export default function V6GallerySection() {
             isSelected={isSelected(project.id)}
             onToggle={toggle}
             globalIndex={i}
-            total={filtered.length}
+            total={projects.length}
           />
         ))}
       </div>
 
-      {filtered.length === 0 && (
+      {projects.length === 0 && (
         <p className="text-center font-body text-sm text-[#171716]/60 py-12">
           No projects in this category yet.
         </p>
@@ -860,7 +837,6 @@ export default function V6GallerySection() {
         <SingleItemOverlay
           slug={openSlug}
           onClose={closeOverlay}
-          filtered={filtered}
         />
       )}
     </section>

@@ -7,19 +7,55 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/work", label: "Projects" },
+  { href: "/kitchens", label: "Kitchens" },
+  { href: "/wardrobes", label: "Wardrobes" },
+  { href: "/bath-vanities", label: "Bath Vanities" },
+  { href: "/shop-fit-outs", label: "Shop Fit-Outs" },
   { href: "/studio", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+const categoryLinks = {
+  "Kitchens": [
+    { href: "/kitchens", label: "All Kitchens" },
+    { href: "/kitchens?style=handleless", label: "Handleless" },
+    { href: "/kitchens?style=high-gloss", label: "High Gloss" },
+    { href: "/kitchens?style=spray-paint", label: "Spray Paint" },
+    { href: "/kitchens?style=classic", label: "Classic" },
+    { href: "/kitchens?style=solid-wood", label: "Solid Wood" },
+  ],
+  "Wardrobes": [
+    { href: "/wardrobes", label: "All Wardrobes" },
+    { href: "/wardrobes?style=walk-in", label: "Walk-In Closets" },
+    { href: "/wardrobes?style=classic", label: "Classic Suites" },
+    { href: "/wardrobes?style=mirror", label: "Mirror Fronted" },
+    { href: "/wardrobes?style=handleless", label: "Handleless" },
+    { href: "/wardrobes?style=under-stairs", label: "Under-Stairs" },
+  ],
+  "Bath Vanities": [
+    { href: "/bath-vanities", label: "All Bath Vanities" },
+    { href: "/bath-vanities?style=stone", label: "Stone Tops" },
+    { href: "/bath-vanities?style=brass", label: "Brass Hardware" },
+    { href: "/bath-vanities?style=fit-out", label: "Full Fit-Outs" },
+  ],
+  "Shop Fit-Outs": [
+    { href: "/shop-fit-outs", label: "All Shop Fit-Outs" },
+    { href: "/shop-fit-outs?style=showroom", label: "Showrooms" },
+    { href: "/shop-fit-outs?style=retail", label: "Retail" },
+    { href: "/shop-fit-outs?style=hospitality", label: "Hospitality" },
+  ],
+};
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const [ctaT, setCtaT] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -45,6 +81,19 @@ export default function Navigation() {
     };
   }, [isOpen]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    }
+    if (openDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openDropdown]);
+
   // Magnetic CTA — gentle pull toward cursor
   const onCtaMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const el = ctaRef.current;
@@ -56,6 +105,8 @@ export default function Navigation() {
   };
   const onCtaLeave = () => setCtaT({ x: 0, y: 0 });
 
+  const isCategoryLink = (label: string) => label in categoryLinks;
+
   return (
     <>
       <header
@@ -64,6 +115,7 @@ export default function Navigation() {
             ? "bg-[#F5F1E9]/95 backdrop-blur-lg border-b border-[#171716]/10 shadow-[0_6px_28px_-18px_rgba(23,23,22,0.45)]"
             : "bg-[#F5F1E9] border-b border-transparent"
         }`}
+        ref={dropdownRef}
       >
         {/* Top utility strip (Wood Kivu-style) */}
         <div className="hidden lg:block bg-[#171716] text-[#F5F1E9] text-[10px] tracking-[0.25em] uppercase font-body font-semibold">
@@ -113,7 +165,7 @@ export default function Navigation() {
           style={{ width: `${scrollPct}%` }}
         />
 
-        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4">
+        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4 relative">
           {/* Hamburger — left on mobile (standard), hidden on md+ */}
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -185,44 +237,81 @@ export default function Navigation() {
           </Link>
 
           {/* Center nav */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 relative">
             {navLinks.map((link, i) => {
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || (pathname.startsWith(link.href + "/") && link.href !== "/");
               const isHover = hoverIdx === i;
+              const hasDropdown = isCategoryLink(link.label);
+              const dropdownItems = categoryLinks[link.label as keyof typeof categoryLinks];
+
               return (
-                <Link
+                <div
                   key={link.href}
-                  href={link.href}
-                  onMouseEnter={() => setHoverIdx(i)}
-                  onMouseLeave={() => setHoverIdx(null)}
-                  className="relative px-3 lg:px-4 py-2 group"
+                  className="relative"
+                  onMouseEnter={() => {
+                    setHoverIdx(i);
+                    if (hasDropdown) setOpenDropdown(link.label);
+                  }}
+                  onMouseLeave={() => {
+                    setHoverIdx(null);
+                    if (hasDropdown) setOpenDropdown(null);
+                  }}
                 >
-                  <span
-                    className={`font-body text-[12px] lg:text-[13px] font-bold tracking-[0.18em] uppercase transition-colors duration-200 ${
-                      isActive
-                        ? "text-[#A68A64]"
-                        : isHover
-                        ? "text-[#A68A64]"
-                        : "text-[#171716]"
-                    }`}
+                  <Link
+                    href={link.href}
+                    onMouseEnter={() => setHoverIdx(i)}
+                    onMouseLeave={() => setHoverIdx(null)}
+                    className="relative px-3 lg:px-4 py-2 group"
                   >
-                    {link.label}
-                  </span>
-                  {/* Animated underline */}
-                  <span
-                    aria-hidden
-                    className={`absolute left-3 right-3 lg:left-4 lg:right-4 bottom-1 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
-                      isActive || isHover ? "scale-x-100" : "scale-x-0"
-                    }`}
-                  />
-                  {/* Hover dot */}
-                  <span
-                    aria-hidden
-                    className={`absolute -top-0.5 right-2 w-1 h-1 rounded-full bg-[#A68A64] transition-opacity duration-200 ${
-                      isHover ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                </Link>
+                    <span
+                      className={`font-body text-[12px] lg:text-[13px] font-bold tracking-[0.18em] uppercase transition-colors duration-200 ${
+                        isActive
+                          ? "text-[#A68A64]"
+                          : isHover
+                          ? "text-[#A68A64]"
+                          : "text-[#171716]"
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                    {/* Animated underline */}
+                    <span
+                      aria-hidden
+                      className={`absolute left-3 right-3 lg:left-4 lg:right-4 bottom-1 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
+                        isActive || isHover ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    />
+                    {/* Hover dot */}
+                    <span
+                      aria-hidden
+                      className={`absolute -top-0.5 right-2 w-1 h-1 rounded-full bg-[#A68A64] transition-opacity duration-200 ${
+                        isHover ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  </Link>
+
+                  {/* Dropdown / Mega Menu for categories */}
+                  {hasDropdown && openDropdown === link.label && (
+                    <div
+                      className="absolute top-full left-0 min-w-[220px] bg-[#F5F1E9] border border-[#171716]/10 rounded-md shadow-lg py-2 z-50 animate-fadeIn"
+                      role="menu"
+                      aria-label={`${link.label} submenu`}
+                      onMouseEnter={() => setOpenDropdown(link.label)}
+                      onMouseLeave={() => setOpenDropdown(null)}
+                    >
+                      {dropdownItems?.map((item, idx) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          role="menuitem"
+                          className="block px-4 py-2.5 font-body text-[11px] tracking-[0.15em] uppercase text-[#171716] hover:bg-[#171716] hover:text-[#F5F1E9] transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -265,31 +354,76 @@ export default function Navigation() {
               Call us
             </a>
           </div>
-          <nav className="flex-1 flex flex-col items-start justify-center px-8 gap-6">
-            {navLinks.map((link, i) => (
-              <div
-                key={link.href}
-                className="overflow-hidden"
-                style={{
-                  animation: `fadeUp 0.7s ease-out ${i * 0.1}s both`,
-                }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`font-display text-5xl sm:text-6xl font-light tracking-tight transition-colors duration-300 ${
-                    pathname === link.href
-                      ? "text-[#A68A64]"
-                      : "text-[#171716] hover:text-[#A68A64]"
-                  }`}
+          <nav className="flex-1 flex flex-col items-start justify-center px-8 gap-4 overflow-y-auto">
+            {navLinks.map((link, i) => {
+              const isActive = pathname === link.href || (pathname.startsWith(link.href + "/") && link.href !== "/");
+              const hasDropdown = isCategoryLink(link.label);
+              const dropdownItems = categoryLinks[link.label as keyof typeof categoryLinks];
+              const [dropdownOpen, setDropdownOpen] = useState(false);
+
+              return (
+                <div
+                  key={link.href}
+                  className="w-full"
+                  style={{
+                    animation: `fadeUp 0.7s ease-out ${i * 0.08}s both`,
+                  }}
                 >
-                  <span className="text-[#A68A64] text-sm font-body tracking-[0.3em] uppercase font-semibold mr-3 align-middle">
-                    0{i + 1}
-                  </span>
-                  {link.label}
-                </Link>
-              </div>
-            ))}
+                  <Link
+                    href={link.href}
+                    onClick={() => !hasDropdown && setIsOpen(false)}
+                    className={`font-display text-4xl sm:text-5xl font-light tracking-tight transition-colors duration-300 w-full text-left ${
+                      isActive
+                        ? "text-[#A68A64]"
+                        : "text-[#171716] hover:text-[#A68A64]"
+                    }`}
+                  >
+                    <span className="text-[#A68A64] text-sm font-body tracking-[0.3em] uppercase font-semibold mr-3 align-middle">
+                      0{i + 1}
+                    </span>
+                    {link.label}
+                    {hasDropdown && (
+                      <button
+                        type="button"
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        className="ml-2 text-[#A68A64] self-center"
+                        aria-expanded={dropdownOpen}
+                        aria-label={`Toggle ${link.label} submenu`}
+                      >
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          style={{ transform: dropdownOpen ? "rotate(180deg)" : "rotate(0)" }}
+                          className="transition-transform duration-200"
+                          aria-hidden="true"
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </button>
+                    )}
+                  </Link>
+
+                  {hasDropdown && dropdownOpen && dropdownItems && (
+                    <div className="ml-10 mt-2 space-y-1 border-l border-[#171716]/20 pl-4 animate-fadeIn">
+                      {dropdownItems.map((item, idx) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          className="block font-body text-sm text-[#171716]/80 hover:text-[#A68A64] transition-colors py-1.5"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             <div className="mt-8 flex flex-col gap-3 w-full max-w-sm">
               <Link
                 href="/contact"
@@ -327,6 +461,11 @@ export default function Navigation() {
             transform: translateY(0);
           }
         }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 200ms ease-out; }
       `}</style>
     </>
   );
