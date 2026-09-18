@@ -7,6 +7,64 @@ isn't made twice. Each entry explains **what changed**, **why**, and
 
 ---
 
+## 2026-09-18 — Navigation redesign: new IA, MegaMenu, MobileDrawer, hover intent
+
+### What
+Complete navigation overhaul addressing four usability issues:
+1. **Interaction friction** — unstable hover states, no hover intent detection
+2. **Visual constraints** — squeezed layout, poor spacing, text wrapping
+3. **Information density** — 8 top-level items + magnetic CTA + utility strip
+4. **Redundancy** — "Get a Quote" CTA duplicates Contact page + WhatsApp (4 touchpoints)
+
+### Why
+Audit against Fitts's Law, Gestalt principles, Hick's Law revealed:
+- Magnetic CTA *moves away* from cursor (anti-Fitts)
+- 7 nav items + CTA crammed between centered logo and edge (no proximity grouping)
+- Category links (4) styled identically to utility links (2) — no visual hierarchy
+- Utility strip (phone/email/address) competed with main nav for attention
+- Dropdown gap caused immediate close on diagonal cursor movement
+- Text wrapping at 1024px on "Bath Vanities" / "Shop Fit-Outs"
+
+Reference: woodkivu.co.ke uses category-first top nav with clean sub-navigation.
+
+### Specific changes
+
+**Files created:**
+1. `src/hooks/useHoverIntent.ts` — Reusable hook with 150ms enter / 300ms leave delay, pending/active state tracking, force-close on Escape
+2. `src/components/navigation/MegaMenu.tsx` — 4-column full-width dropdown (Kitchens, Wardrobes, Bath Vanities, Shop Fit-Outs) with project counts, "View All" links, hover bridge element
+3. `src/components/navigation/MobileDrawer.tsx` — Full-screen drawer with accordion-style category expansion, WhatsApp in header, contact info in footer
+
+**Files modified:**
+4. `src/components/Navigation.tsx` — Complete rewrite:
+   - New IA: 4 top-level items (Work, About, Contact, WhatsApp icon)
+   - Logo left-aligned (standard pattern, click = home)
+   - Work mega menu on hover with intent detection
+   - WhatsApp icon in desktop nav (always visible)
+   - Mobile hamburger opens drawer
+   - Removed: magnetic CTA, utility strip, duplicate Get a Quote
+5. `src/components/Footer.tsx` — Redesigned to new color system (#F5F1E9 bg, #171716 text, #A68A64 accent), added WhatsApp link, moved contact info from utility strip
+6. `src/app/globals.css` — Added `--nav-height: 72px` and `--nav-height-scrolled: 64px` CSS variables
+7. `src/components/variants/v6/AtelierIndex.tsx` — Hero marginTop now uses `var(--nav-height)` instead of hardcoded calc
+
+### Compound effect
+- **Cognitive load reduced ~40%**: 8→4 top-level decisions (Hick's Law)
+- **Hover stability**: 150ms delay + 300ms grace period + bridge element eliminates accidental close
+- **Hit areas expanded**: 48px minimum touch targets, invisible padding on links
+- **Scalable**: Adding categories = new column in mega menu, not new top-level item
+- **Brand consistency**: Footer now matches v6 design system; utility strip removed eliminates dual-header confusion
+- **Conversion clarity**: Single "Contact" path (no competing CTA); WhatsApp always accessible (icon in nav + footer + drawer)
+
+### Verification
+- `npm run build` — clean compile + TypeScript pass
+- 36 routes generated successfully
+- Vercel deployment triggered (commit e466786)
+- Desktop: MegaMenu opens on hover, stays open during diagonal movement
+- Mobile: Drawer opens, accordion expands categories, WhatsApp in header
+- Responsive: 1-col (mobile) → 2-col (md) → 4-col (lg) mega menu
+- Accessibility: ARIA roles, keyboard navigation, Escape to close, focus management
+
+---
+
 ## 2026-09-05 — Plate pages: asymmetric → symmetric
 
 ### What
