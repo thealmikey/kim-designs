@@ -33,7 +33,7 @@ export const projects: Project[] = [
     location: "Nairobi, Kenya",
     materials: ["PVC Foilwrap", "High Gloss", "Handleless", "Quartz"],
     images: Array.from({ length: 6 }, (_, i) =>
-      img("high-gloss-handless-kitchen", i + 1)
+      img("pvc-foilwrap-and-high-gloss-handless-kitchen", i + 1)
     ),
     featured: true,
     tags: [
