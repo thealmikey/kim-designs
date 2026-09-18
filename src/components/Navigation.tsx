@@ -4,65 +4,64 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useHoverIntent } from "@/hooks/useHoverIntent";
+import MegaMenu from "@/components/navigation/MegaMenu";
+import MobileDrawer from "@/components/navigation/MobileDrawer";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/kitchens", label: "Kitchens" },
-  { href: "/wardrobes", label: "Wardrobes" },
-  { href: "/bath-vanities", label: "Bath Vanities" },
-  { href: "/shop-fit-outs", label: "Shop Fit-Outs" },
+const NAV_ITEMS = [
+  { href: "/", label: "Work", hasMegaMenu: true },
   { href: "/studio", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
-const categoryLinks = {
-  "Kitchens": [
-    { href: "/kitchens", label: "All Kitchens" },
-    { href: "/kitchens?style=handleless", label: "Handleless" },
-    { href: "/kitchens?style=high-gloss", label: "High Gloss" },
-    { href: "/kitchens?style=spray-paint", label: "Spray Paint" },
-    { href: "/kitchens?style=classic", label: "Classic" },
-    { href: "/kitchens?style=solid-wood", label: "Solid Wood" },
-  ],
-  "Wardrobes": [
-    { href: "/wardrobes", label: "All Wardrobes" },
-    { href: "/wardrobes?style=walk-in", label: "Walk-In Closets" },
-    { href: "/wardrobes?style=classic", label: "Classic Suites" },
-    { href: "/wardrobes?style=mirror", label: "Mirror Fronted" },
-    { href: "/wardrobes?style=handleless", label: "Handleless" },
-    { href: "/wardrobes?style=under-stairs", label: "Under-Stairs" },
-  ],
-  "Bath Vanities": [
-    { href: "/bath-vanities", label: "All Bath Vanities" },
-    { href: "/bath-vanities?style=stone", label: "Stone Tops" },
-    { href: "/bath-vanities?style=brass", label: "Brass Hardware" },
-    { href: "/bath-vanities?style=fit-out", label: "Full Fit-Outs" },
-  ],
-  "Shop Fit-Outs": [
-    { href: "/shop-fit-outs", label: "All Shop Fit-Outs" },
-    { href: "/shop-fit-outs?style=showroom", label: "Showrooms" },
-    { href: "/shop-fit-outs?style=retail", label: "Retail" },
-    { href: "/shop-fit-outs?style=hospitality", label: "Hospitality" },
-  ],
-};
-
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
-  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
-  const ctaRef = useRef<HTMLAnchorElement>(null);
-  const [ctaT, setCtaT] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
+  // Hover intent for mega menu
+  const {
+    requestOpen,
+    requestClose,
+    forceClose,
+    isOpen: isMegaMenuOpen,
+  } = useHoverIntent({
+    enterDelay: 150,
+    leaveDelay: 300,
+    onOpen: () => {},
+    onClose: () => {},
+  });
+
+  // Track which mega menu is open
+  const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null);
+
+  // Sync hover intent with mega menu state
+  const handleRequestOpen = (key: string) => {
+    requestOpen(key);
+    setOpenMegaMenu(key);
+  };
+
+  const handleRequestClose = () => {
+    requestClose();
+    // Don't immediately clear - let the leave delay handle it
+    setTimeout(() => {
+      if (!isMegaMenuOpen) setOpenMegaMenu(null);
+    }, 350);
+  };
+
+  const handleForceClose = () => {
+    forceClose();
+    setOpenMegaMenu(null);
+  };
+
+  // Scroll effects
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 30);
-      const max =
-        document.documentElement.scrollHeight - window.innerHeight || 1;
+      setScrolled(y > 20);
+      const max = document.documentElement.scrollHeight - window.innerHeight || 1;
       setScrollPct(Math.min(100, (y / max) * 100));
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -70,8 +69,9 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Body scroll lock for mobile
   useEffect(() => {
-    if (isOpen) {
+    if (isMobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -79,388 +79,175 @@ export default function Navigation() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [isMobileOpen]);
 
-  // Close dropdown when clicking outside
+  // Close mega menu on escape key
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpenDropdown(null);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleForceClose();
+        setIsMobileOpen(false);
       }
-    }
-    if (openDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [openDropdown]);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleForceClose]);
 
-  // Magnetic CTA — gentle pull toward cursor
-  const onCtaMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = ctaRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width / 2)) * 0.18;
-    const y = (e.clientY - (r.top + r.height / 2)) * 0.18;
-    setCtaT({ x, y });
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
   };
-  const onCtaLeave = () => setCtaT({ x: 0, y: 0 });
-
-  const isCategoryLink = (label: string) => label in categoryLinks;
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled || isOpen
-            ? "bg-[#F5F1E9]/95 backdrop-blur-lg border-b border-[#171716]/10 shadow-[0_6px_28px_-18px_rgba(23,23,22,0.45)]"
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-[#F5F1E9]/98 backdrop-blur-lg border-b border-[#171716]/10 shadow-[0_4px_24px_-12px_rgba(23,23,22,0.35)]"
             : "bg-[#F5F1E9] border-b border-transparent"
         }`}
-        ref={dropdownRef}
+        onMouseLeave={handleRequestClose}
       >
-        {/* Top utility strip (Wood Kivu-style) */}
-        <div className="hidden lg:block bg-[#171716] text-[#F5F1E9] text-[10px] tracking-[0.25em] uppercase font-body font-semibold">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex items-center justify-between h-7">
-            <p className="flex items-center gap-6 text-[#F5F1E9]/85">
-              <a
-                href="tel:+254755164654"
-                className="hover:text-[#A68A64] transition-colors"
-              >
-                +254 755 164 654
-              </a>
-              <span className="text-[#F5F1E9]/30">·</span>
-              <a
-                href="mailto:info@winteriordesign.co.ke"
-                className="hover:text-[#A68A64] transition-colors"
-              >
-                info@winteriordesign.co.ke
-              </a>
-              <span className="text-[#F5F1E9]/30">·</span>
-              <span>Enterprise Rd, Nairobi</span>
-            </p>
-            <a
-              href="https://wa.me/254728846560"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-0.5 bg-[#25D366] text-[#171716] hover:bg-[#F5F1E9] transition-colors"
-              aria-label="Chat on WhatsApp"
-            >
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.554-5.338 11.89-11.893 11.89a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-              </svg>
-              <span>WhatsApp</span>
-            </a>
-          </div>
-        </div>
-
         {/* Scroll progress hairline */}
         <div
           aria-hidden
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#A68A64] via-[#A68A64] to-[#E89A6A] transition-[width] duration-150"
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#A68A64] via-[#A68A64] to-[#E89A6A] transition-[width] duration-200"
           style={{ width: `${scrollPct}%` }}
         />
 
-        <nav className="flex items-center justify-between md:justify-between px-6 md:px-12 lg:px-16 py-3 md:py-4 relative">
-          {/* Hamburger — left on mobile (standard), hidden on md+ */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative w-11 h-11 flex items-center justify-center text-[#171716] order-first"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
-                isOpen ? "rotate-45 translate-y-0" : "-translate-y-1.5"
-              }`}
-            />
-            <span
-              className={`block absolute w-6 h-[2px] bg-[#171716] transition-all duration-500 origin-center ${
-                isOpen ? "-rotate-45 translate-y-0" : "translate-y-1.5"
-              }`}
-            />
-          </button>
-
+        <nav className="flex items-center justify-between px-6 lg:px-16 py-4 lg:py-5 relative" style={{ minHeight: "72px" }}>
+          {/* Logo - left aligned */}
           <Link
             href="/"
-            className="flex items-center gap-3 group md:static absolute left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0"
+            className="flex items-center gap-3 group shrink-0"
             aria-label="Winterior Design home"
+            onMouseEnter={handleRequestClose}
           >
-            {/* WG mark — only on md+ (mobile uses the stacked wordmark alone) */}
-            <span
-              className="relative block transition-transform duration-300 group-hover:scale-[1.04] hidden md:block"
-              style={{
-                height: "60px",
-                width: "60px",
-                flexShrink: 0,
-              }}
-            >
+            <span className="relative block transition-transform duration-300 group-hover:scale-[1.04]" style={{ height: "48px", width: "48px", flexShrink: 0 }}>
               <Image
                 src="/winterior-mark.png"
                 alt="Winterior Design"
                 fill
                 priority
-                sizes="60px"
+                sizes="48px"
                 className="object-contain"
               />
             </span>
-            <span className="relative flex flex-col items-center justify-center gap-0.5 group-hover:scale-[1.02] transition-transform duration-300 leading-none">
+            <span className="hidden lg:flex flex-col items-start justify-center gap-0.5 group-hover:scale-[1.02] transition-transform duration-300 leading-none">
               <span
-                className="winterior-wordmark font-bold tracking-[0.04em] uppercase whitespace-nowrap"
+                className="font-bold tracking-[0.04em] uppercase whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-cinzel), serif",
-                  fontSize: "clamp(1.5rem, 2.3vw, 2rem)",
+                  fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
                   lineHeight: 1,
                   color: "#171716",
                 }}
-                aria-label="WINTERIOR"
               >
                 WINTERIOR
               </span>
               <span
-                className="winterior-design font-semibold tracking-[0.32em] uppercase whitespace-nowrap"
+                className="font-semibold tracking-[0.32em] uppercase whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-cinzel), serif",
-                  fontSize: "clamp(0.625rem, 0.85vw, 0.75rem)",
+                  fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)",
                   lineHeight: 1,
                   letterSpacing: "0.42em",
                   color: "#171716",
                 }}
-                aria-label="DESIGN"
               >
                 DESIGN
               </span>
             </span>
+            <span className="lg:hidden font-bold tracking-[0.04em] uppercase" style={{ fontFamily: "var(--font-cinzel), serif", fontSize: "1.25rem", color: "#171716" }}>
+              WINTERIOR
+            </span>
           </Link>
 
-          {/* Center nav */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3 relative">
-            {navLinks.map((link, i) => {
-              const isActive = pathname === link.href || (pathname.startsWith(link.href + "/") && link.href !== "/");
-              const isHover = hoverIdx === i;
-              const hasDropdown = isCategoryLink(link.label);
-              const dropdownItems = categoryLinks[link.label as keyof typeof categoryLinks];
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-10">
+            {NAV_ITEMS.map((item, index) => {
+              const active = isActive(item.href);
+              const hasMegaMenu = item.hasMegaMenu;
+              const isMegaOpen = Boolean(hasMegaMenu && openMegaMenu === item.label);
 
               return (
                 <div
-                  key={link.href}
+                  key={item.label}
                   className="relative"
-                  onMouseEnter={() => {
-                    setHoverIdx(i);
-                    if (hasDropdown) setOpenDropdown(link.label);
-                  }}
-                  onMouseLeave={() => {
-                    setHoverIdx(null);
-                    if (hasDropdown) setOpenDropdown(null);
-                  }}
+                  onMouseEnter={hasMegaMenu ? () => handleRequestOpen(item.label) : handleRequestClose}
+                  onMouseLeave={hasMegaMenu ? handleRequestClose : undefined}
                 >
                   <Link
-                    href={link.href}
-                    onMouseEnter={() => setHoverIdx(i)}
-                    onMouseLeave={() => setHoverIdx(null)}
-                    className="relative px-3 lg:px-4 py-2 group"
+                    href={item.href}
+                    className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-3 px-2 ${
+                      active
+                        ? "text-[#A68A64]"
+                        : "text-[#171716] hover:text-[#A68A64]"
+                    }`}
+                    onMouseEnter={hasMegaMenu ? () => handleRequestOpen(item.label) : handleRequestClose}
+                    onMouseLeave={hasMegaMenu ? handleRequestClose : undefined}
                   >
-                    <span
-                      className={`font-body text-[12px] lg:text-[13px] font-bold tracking-[0.18em] uppercase transition-colors duration-200 ${
-                        isActive
-                          ? "text-[#A68A64]"
-                          : isHover
-                          ? "text-[#A68A64]"
-                          : "text-[#171716]"
-                      }`}
-                    >
-                      {link.label}
-                    </span>
+                    {item.label}
                     {/* Animated underline */}
                     <span
                       aria-hidden
-                      className={`absolute left-3 right-3 lg:left-4 lg:right-4 bottom-1 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
-                        isActive || isHover ? "scale-x-100" : "scale-x-0"
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
+                        active || isMegaOpen ? "scale-x-100" : "scale-x-0"
                       }`}
                     />
                     {/* Hover dot */}
                     <span
                       aria-hidden
-                      className={`absolute -top-0.5 right-2 w-1 h-1 rounded-full bg-[#A68A64] transition-opacity duration-200 ${
-                        isHover ? "opacity-100" : "opacity-0"
+                      className={`absolute top-0 right-0 w-1.5 h-1.5 rounded-full bg-[#A68A64] transform translate-x-1/2 -translate-y-1/2 transition-opacity duration-200 ${
+                        isMegaOpen ? "opacity-100" : "opacity-0"
                       }`}
                     />
                   </Link>
 
-                  {/* Dropdown / Mega Menu for categories */}
-                  {hasDropdown && openDropdown === link.label && (
-                    <div
-                      className="absolute top-full left-0 min-w-[220px] bg-[#F5F1E9] border border-[#171716]/10 rounded-md shadow-lg py-2 z-50 animate-fadeIn"
-                      role="menu"
-                      aria-label={`${link.label} submenu`}
-                      onMouseEnter={() => setOpenDropdown(link.label)}
-                      onMouseLeave={() => setOpenDropdown(null)}
-                    >
-                      {dropdownItems?.map((item, idx) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          role="menuitem"
-                          className="block px-4 py-2.5 font-body text-[11px] tracking-[0.15em] uppercase text-[#171716] hover:bg-[#171716] hover:text-[#F5F1E9] transition-colors"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
+                  {/* Mega Menu for Work */}
+                  {hasMegaMenu && (
+                    <MegaMenu
+                      isOpen={isMegaOpen}
+                      onClose={handleRequestClose}
+                      onItemHover={() => handleRequestOpen(item.label)}
+                    />
                   )}
                 </div>
               );
             })}
-          </div>
 
-          {/* Right: magnetic CTA (WhatsApp lives in the top utility strip only) */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3">
+            {/* WhatsApp icon - always visible on desktop */}
             <a
-              ref={ctaRef}
-              href="/contact"
-              onMouseMove={onCtaMove}
-              onMouseLeave={onCtaLeave}
-              className="relative inline-flex items-center gap-2 bg-[#171716] text-[#F5F1E9] px-5 lg:px-6 py-3 font-body text-[11px] lg:text-[12px] font-bold tracking-[0.22em] uppercase overflow-hidden group"
-              style={{
-                transform: `translate(${ctaT.x}px, ${ctaT.y}px)`,
-                transition: "transform 250ms ease-out",
-              }}
+              href="https://wa.me/254728846560"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-4 flex items-center justify-center w-10 h-10 rounded-sm bg-[#25D366] text-[#171716] hover:bg-[#25D366]/90 transition-colors"
+              aria-label="Chat on WhatsApp"
             >
-              <span
-                aria-hidden
-                className="absolute inset-0 bg-[#A68A64] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
-              />
-              <span className="relative">Get a Quote</span>
-              <span className="relative inline-block transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.554-5.338 11.89-11.893 11.89a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+              </svg>
             </a>
           </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsMobileOpen(true)}
+            className="lg:hidden relative w-11 h-11 flex items-center justify-center text-[#171716]"
+            aria-label="Open menu"
+          >
+            <span className="block absolute w-6 h-[2px] bg-[#171716]" />
+            <span className="block absolute w-6 h-[2px] bg-[#171716] translate-y-[-6px]" />
+            <span className="block absolute w-6 h-[2px] bg-[#171716] translate-y-[6px]" />
+          </button>
         </nav>
       </header>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="fixed inset-0 z-40 bg-[#F5F1E9] flex flex-col pt-24">
-          <div className="bg-[#171716] text-[#F5F1E9] px-6 py-3 text-[10px] tracking-[0.25em] uppercase font-body font-semibold flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[#A68A64] rounded-full animate-pulse" />
-              Now booking Q4 2026
-            </span>
-            <a href="tel:+254728846560" className="hover:text-[#A68A64]">
-              Call us
-            </a>
-          </div>
-          <nav className="flex-1 flex flex-col items-start justify-center px-8 gap-4 overflow-y-auto">
-            {navLinks.map((link, i) => {
-              const isActive = pathname === link.href || (pathname.startsWith(link.href + "/") && link.href !== "/");
-              const hasDropdown = isCategoryLink(link.label);
-              const dropdownItems = categoryLinks[link.label as keyof typeof categoryLinks];
-              const [dropdownOpen, setDropdownOpen] = useState(false);
-
-              return (
-                <div
-                  key={link.href}
-                  className="w-full"
-                  style={{
-                    animation: `fadeUp 0.7s ease-out ${i * 0.08}s both`,
-                  }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => !hasDropdown && setIsOpen(false)}
-                    className={`font-display text-4xl sm:text-5xl font-light tracking-tight transition-colors duration-300 w-full text-left ${
-                      isActive
-                        ? "text-[#A68A64]"
-                        : "text-[#171716] hover:text-[#A68A64]"
-                    }`}
-                  >
-                    <span className="text-[#A68A64] text-sm font-body tracking-[0.3em] uppercase font-semibold mr-3 align-middle">
-                      0{i + 1}
-                    </span>
-                    {link.label}
-                    {hasDropdown && (
-                      <button
-                        type="button"
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="ml-2 text-[#A68A64] self-center"
-                        aria-expanded={dropdownOpen}
-                        aria-label={`Toggle ${link.label} submenu`}
-                      >
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          style={{ transform: dropdownOpen ? "rotate(180deg)" : "rotate(0)" }}
-                          className="transition-transform duration-200"
-                          aria-hidden="true"
-                        >
-                          <path d="M6 9l6 6 6-6" />
-                        </svg>
-                      </button>
-                    )}
-                  </Link>
-
-                  {hasDropdown && dropdownOpen && dropdownItems && (
-                    <div className="ml-10 mt-2 space-y-1 border-l border-[#171716]/20 pl-4 animate-fadeIn">
-                      {dropdownItems.map((item, idx) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsOpen(false)}
-                          className="block font-body text-sm text-[#171716]/80 hover:text-[#A68A64] transition-colors py-1.5"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <div className="mt-8 flex flex-col gap-3 w-full max-w-sm">
-              <Link
-                href="/contact"
-                onClick={() => setIsOpen(false)}
-                className="font-body text-[12px] tracking-[0.22em] uppercase font-bold bg-[#171716] text-[#F5F1E9] px-6 py-4 text-center hover:bg-[#A68A64] transition-colors"
-              >
-                Get a Quote →
-              </Link>
-              <a
-                href="https://wa.me/254728846560"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-body text-[12px] tracking-[0.22em] uppercase font-bold border-2 border-[#25D366] text-[#25D366] px-6 py-4 text-center hover:bg-[#25D366] hover:text-white transition-colors"
-              >
-                WhatsApp Us
-              </a>
-            </div>
-          </nav>
-
-          <div className="border-t border-[#171716]/15 px-8 py-6 flex justify-between text-xs font-body text-[#171716]/70">
-            <span>info@winteriordesign.co.ke</span>
-            <span>+254 728 846 560</span>
-          </div>
-        </div>
-      )}
+      {/* Mobile Drawer */}
+      <MobileDrawer isOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} />
 
       <style jsx global>{`
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-8px); }
           to { opacity: 1; transform: translateY(0); }

@@ -17,6 +17,8 @@
   --color-cream: #F0EBE3;
   --font-display: var(--font-cormorant);
   --font-body: var(--font-dm-sans);
+  --nav-height: 72px;
+  --nav-height-scrolled: 64px;
 }
 
 html.custom-cursor-active,

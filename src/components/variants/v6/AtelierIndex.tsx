@@ -219,7 +219,7 @@ export default function AtelierIndex() {
       {/* ============ HERO ============ */}
       <section
         className="relative w-full min-h-[100svh] overflow-hidden"
-        style={{ marginTop: "calc(28px + 1.75rem + 0px)" }}
+        style={{ marginTop: "var(--nav-height)" }}
       >
         {/* Background photos cycling — curated order (6 strongest photos) */}
         <div className="at-kenburns absolute inset-0">
