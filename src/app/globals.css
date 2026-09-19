@@ -19,7 +19,7 @@
   --font-body: var(--font-dm-sans);
   --nav-height: 72px;
   --nav-height-scrolled: 64px;
-  --category-bar-height: 56px;
+  --nav-two-row-height: 112px;
 }
 
 html.custom-cursor-active,

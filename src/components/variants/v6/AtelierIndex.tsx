@@ -164,7 +164,7 @@ export default function AtelierIndex() {
       {/* ============ HERO ============ */}
       <section
         className="relative w-full min-h-[100svh] overflow-hidden"
-        style={{ marginTop: "calc(var(--nav-height) + var(--category-bar-height))" }}
+        style={{ marginTop: "var(--nav-two-row-height)" }}
       >
         <div className="at-kenburns absolute inset-0">
           {(() => {
