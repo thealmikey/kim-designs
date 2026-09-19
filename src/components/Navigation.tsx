@@ -127,8 +127,8 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Primary + Secondary navigation rows - right of logo */}
-          <div className="flex-1 flex flex-col justify-between ml-8 lg:ml-12 min-w-0">
+          {/* Primary + Secondary navigation rows - right of logo (desktop only) */}
+          <div className="hidden lg:flex lg:flex-1 flex-col justify-between ml-8 lg:ml-12 min-w-0">
             {/* Row 1: Primary nav (About, Contact, WhatsApp) */}
             <div className="flex items-center justify-end gap-10 py-2 border-b border-[#171716]/10">
               {NAV_ITEMS.map((item) => {
