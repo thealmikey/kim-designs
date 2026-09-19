@@ -20,9 +20,9 @@ export default function CategoryBar() {
 
   return (
     <nav
-      className="bg-[#F5F1E9] border-b border-[#171716]/10"
+      className="bg-[#F5F1E9] border-b border-[#171716]/10 sticky top-0 z-40"
       aria-label="Work categories"
-      style={{ height: "56px" }}
+      style={{ height: "56px", top: "var(--nav-height)" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
         <div className="flex items-center h-full gap-2 lg:gap-3 overflow-x-auto scrollbar-hide pb-1">
