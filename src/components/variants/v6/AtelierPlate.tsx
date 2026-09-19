@@ -9,7 +9,7 @@ import { projects, projectById } from "@/lib/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const label = "font-body text-[10px] tracking-[0.3em] uppercase";
+const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.2em] uppercase";
 
 interface Props {
@@ -178,25 +178,25 @@ export default function AtelierPlate({ slug }: Props) {
       <section className="px-6 md:px-12 lg:px-16 pt-20 md:pt-28 pb-12 md:pb-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 atp-hero-meta">
           <div>
-            <p className={`${label} text-[#716D65] mb-2`}>Location</p>
+            <p className={`${label} text-warm-gray mb-2`}>Location</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               {project.location}
             </p>
           </div>
           <div>
-            <p className={`${label} text-[#716D65] mb-2`}>Year</p>
+            <p className={`${label} text-warm-gray mb-2`}>Year</p>
             <p className="font-body text-sm md:text-base text-[#171716] tabular-nums">
               {project.year}
             </p>
           </div>
           <div>
-            <p className={`${label} text-[#716D65] mb-2`}>Discipline</p>
+            <p className={`${label} text-warm-gray mb-2`}>Discipline</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               {project.category}
             </p>
           </div>
           <div>
-            <p className={`${label} text-[#716D65] mb-2`}>Status</p>
+            <p className={`${label} text-warm-gray mb-2`}>Status</p>
             <p className="font-body text-sm md:text-base text-[#171716]">
               Completed
             </p>
@@ -311,7 +311,7 @@ export default function AtelierPlate({ slug }: Props) {
       {/* ============ RELATED PLATES (symmetric 6-6) ============ */}
       <section className="px-6 md:px-12 lg:px-16 pb-20 md:pb-28">
         <div className="text-center mb-10 md:mb-12 atp-fade">
-          <p className={`${label} text-[#716D65]`}>§ Other commissions</p>
+          <p className={`${label} text-warm-gray`}>§ Other commissions</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           {prev && (
@@ -328,14 +328,14 @@ export default function AtelierPlate({ slug }: Props) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <p className={`${label} text-[#716D65] mb-2`}>← Previous</p>
+              <p className={`${label} text-warm-gray mb-2`}>← Previous</p>
               <h3
                 className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#A68A64] transition-colors"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {prev.title}
               </h3>
-              <p className="font-display italic text-base text-[#171716]/65 mt-1">
+              <p className="font-display italic text-base text-[#171716]/75 mt-1">
                 {prev.subtitle}.
               </p>
             </Link>
@@ -354,14 +354,14 @@ export default function AtelierPlate({ slug }: Props) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <p className={`${label} text-[#716D65] mb-2`}>Next →</p>
+              <p className={`${label} text-warm-gray mb-2`}>Next →</p>
               <h3
                 className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#A68A64] transition-colors"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {next.title}
               </h3>
-              <p className="font-display italic text-base text-[#171716]/65 mt-1">
+              <p className="font-display italic text-base text-[#171716]/75 mt-1">
                 {next.subtitle}.
               </p>
             </Link>

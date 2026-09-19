@@ -70,7 +70,7 @@ export default function ContactSection() {
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-foreground tracking-[-0.03em] leading-[1.02]">
                 Let&apos;s start
                 <br />
-                <span className="italic text-foreground/70">a project.</span>
+                <span className="italic text-foreground/80">a project.</span>
               </h1>
               <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-5 max-w-md">
                 Tell us about the space and the result you want to live with.
@@ -109,7 +109,7 @@ export default function ContactSection() {
                   <span className="block font-display text-lg md:text-xl text-foreground">
                     +254 728 846 560
                   </span>
-                  <span className="block font-display text-base md:text-lg text-foreground/70">
+                  <span className="block font-display text-base md:text-lg text-foreground/80">
                     +254 755 164 654
                   </span>
                 </span>
@@ -122,12 +122,12 @@ export default function ContactSection() {
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Showroom
                   </span>
-                  <span className="block font-body text-sm text-foreground/80 leading-relaxed">
+                  <span className="block font-body text-sm text-foreground/85 leading-relaxed">
                     Enterprise Road, Opp Hillocks Hotel
                     <br />
                     Industrial Area, Nairobi
                     <br />
-                    <span className="text-foreground/55">P.O. Box 39254-00623</span>
+                    <span className="text-foreground/70">P.O. Box 39254-00623</span>
                   </span>
                 </span>
               </div>
@@ -228,7 +228,7 @@ export default function ContactSection() {
                 noValidate
               >
                 <label className="flex flex-col gap-2 md:col-span-1">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <span className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     Name
                   </span>
                   <input
@@ -238,11 +238,11 @@ export default function ContactSection() {
                     placeholder="Your full name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/60 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <span className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     Email
                   </span>
                   <input
@@ -252,11 +252,11 @@ export default function ContactSection() {
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/60 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <span className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     Phone
                   </span>
                   <input
@@ -265,11 +265,11 @@ export default function ContactSection() {
                     placeholder="+254 …"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/60 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <span className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     Service
                   </span>
                   <select
@@ -288,7 +288,7 @@ export default function ContactSection() {
                   </select>
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-2">
-                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <span className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     Message
                   </span>
                   <textarea
@@ -298,16 +298,16 @@ export default function ContactSection() {
                     placeholder="Tell us about the space, the result you want, and when you'd like to start."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/60 outline-none resize-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none resize-none transition-colors"
                   />
                 </label>
                 <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-4 mt-4">
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray">
+                  <p className="font-body text-[11px] tracking-[0.3em] uppercase text-warm-gray">
                     We respond within 48 hours
                   </p>
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 font-body text-[10px] tracking-[0.3em] uppercase bg-foreground text-background px-5 py-3 hover:bg-aged-brass transition-colors"
+                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-foreground text-background px-5 py-3 hover:bg-aged-brass transition-colors"
                   >
                     Send message
                     <ArrowUpRight

@@ -7,7 +7,7 @@ import { useSelection } from "@/components/variants/v5/SelectionContext";
 import { projects, type Project, type ProjectCategory } from "@/lib/projects";
 import { allCategories } from "@/lib/projects";
 
-const label = "font-body text-[10px] tracking-[0.3em] uppercase";
+const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.22em] uppercase";
 
 const BLUR_DATA_URL =
@@ -100,10 +100,10 @@ function MobileSnapCarousel({
     <div className="lg:hidden">
       {/* Index badge */}
       <div className="flex items-center justify-between mb-4 px-1">
-        <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#A68A64] font-bold">
+        <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#A68A64] font-bold">
           ← Swipe →
         </p>
-        <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#171716]/60 font-semibold tabular-nums">
+        <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#171716]/70 font-semibold tabular-nums">
           {String(safeIdx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
       </div>
@@ -167,7 +167,7 @@ function MobileSnapCarousel({
                   >
                     {project.subtitle}
                   </p>
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#F5F1E9]/65 mt-3 font-semibold">
+                  <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#F5F1E9]/75 mt-3 font-semibold">
                     {project.location} · {project.year}
                   </p>
                 </div>

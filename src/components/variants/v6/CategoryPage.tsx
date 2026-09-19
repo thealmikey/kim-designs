@@ -6,7 +6,7 @@ import Image from "next/image";
 import { projects, type Project, type ProjectCategory, allCategories } from "@/lib/projects";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
 
-const label = "font-body text-[10px] tracking-[0.3em] uppercase";
+const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.22em] uppercase";
 
 const BLUR_DATA_URL =
@@ -419,7 +419,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
               {c.label}
               <span
                 className={`ml-2 text-[9px] tabular-nums ${
-                  c.id === category ? "text-[#F5F1E9]/70" : "text-[#171716]/45"
+                  c.id === category ? "text-[#F5F1E9]/70" : "text-warm-gray"
                 }`}
               >
                 {String(count).padStart(2, "0")}

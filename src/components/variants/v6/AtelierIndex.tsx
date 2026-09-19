@@ -10,7 +10,7 @@ import V6GallerySection from "./V6GallerySection";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const label = "font-body text-[10px] tracking-[0.3em] uppercase";
+const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 
 function Counter({ to, suffix = "" }: { to: string; suffix?: string }) {
   void to;

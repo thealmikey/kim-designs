@@ -57,14 +57,14 @@ export default function WorkInProgress() {
       <div className="px-4 md:px-12 py-20 md:py-28">
         <div className="wip-header flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-4">
+            <p className="font-body text-[11px] text-warm-gray tracking-[0.4em] uppercase mb-4">
               Currently On Site
             </p>
             <h2
               id="wip-heading"
               className="font-display text-3xl md:text-5xl lg:text-6xl font-light text-foreground tracking-[-0.03em] leading-[1.05]"
             >
-              Work in <span className="italic text-foreground/70">progress.</span>
+              Work in <span className="italic text-foreground/80">progress.</span>
             </h2>
           </div>
           <p className="font-body text-sm md:text-[15px] text-warm-gray max-w-md leading-relaxed">

@@ -163,7 +163,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
       <nav className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
         {/* WORK section with expandable categories */}
         <section className="space-y-4">
-          <h3 className="font-body text-[10px] tracking-[0.25em] uppercase text-[#A68A64] font-semibold">
+          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#A68A64] font-semibold">
             Work
           </h3>
           <div className="space-y-2">
@@ -184,7 +184,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                       {cat.label}
                     </span>
                     <span className="flex items-center gap-2">
-                      <span className="font-body text-[11px] text-[#171716]/40">
+                      <span className="font-body text-[11px] text-[#171716]/60">
                         {count}
                       </span>
                       <svg
@@ -214,7 +214,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                               className={`font-body text-sm py-1.5 transition-colors ${isItemActive ? "text-[#A68A64] font-semibold" : "text-[#171716]/80 hover:text-[#A68A64]"} `}
                             >
                               {item.label}
-                              <span className="font-body text-[10px] text-[#171716]/30 font-normal ml-2">
+                              <span className="font-body text-[11px] text-[#171716]/50 font-normal ml-2">
                                 ({getCount(cat.id)})
                               </span>
                             </Link>
@@ -240,7 +240,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
 
         {/* ABOUT & CONTACT */}
         <section className="space-y-4 border-t border-[#171716]/10 pt-8">
-          <h3 className="font-body text-[10px] tracking-[0.25em] uppercase text-[#A68A64] font-semibold">
+          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#A68A64] font-semibold">
             Studio
           </h3>
           <ul className="space-y-3">
@@ -276,7 +276,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
 
       {/* Footer */}
       <footer className="border-t border-[#171716]/10 px-6 py-6">
-        <div className="flex flex-col sm:flex-row justify-between gap-4 text-xs font-body text-[#171716]/70">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 text-xs font-body text-[#171716]/80">
           <div className="flex flex-col gap-1">
             <span>info@winteriordesign.co.ke</span>
             <span>+254 755 164 654</span>

@@ -136,10 +136,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-[#171716]/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-body text-[10px] tracking-[0.1em] uppercase text-[#171716]/50">
+          <p className="font-body text-[11px] tracking-[0.1em] uppercase text-[#171716]/60">
             &copy; {new Date().getFullYear()} Winterior Design
           </p>
-          <p className="font-body text-[10px] tracking-[0.2em] uppercase text-[#171716]/50">
+          <p className="font-body text-[11px] tracking-[0.2em] uppercase text-[#171716]/60">
             Nairobi, Kenya
           </p>
         </div>

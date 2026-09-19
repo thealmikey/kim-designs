@@ -133,7 +133,7 @@ export default function StudioSection() {
                     <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-3 max-w-2xl">
                       {step.body}
                     </p>
-                    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-foreground/55 mt-4">
+                    <p className="font-body text-[11px] tracking-[0.3em] uppercase text-foreground/70 mt-4">
                       {step.output}
                     </p>
                   </div>
@@ -169,7 +169,7 @@ export default function StudioSection() {
             </div>
 
             <div>
-              <p className="studio-materials font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-5">
+              <p className="studio-materials font-body text-[11px] text-warm-gray tracking-[0.3em] uppercase mb-5">
                 What we work with
               </p>
               <ul className="flex flex-wrap gap-2">
@@ -186,7 +186,7 @@ export default function StudioSection() {
 
             <Link
               href="/contact"
-              className="studio-materials group inline-flex items-center gap-3 font-body text-[10px] text-warm-gray hover:text-foreground transition-colors tracking-[0.3em] uppercase"
+              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-warm-gray hover:text-foreground transition-colors tracking-[0.3em] uppercase"
             >
               <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground group-hover:w-12 transition-all" />
               Start a project
