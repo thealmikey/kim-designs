@@ -682,16 +682,16 @@ export default function V6GallerySection() {
   return (
     <section
       id="v6-gallery"
-      className="px-6 md:px-12 lg:px-16 py-20 md:py-28 bg-[#F5F1E9]"
+      className="px-6 md:px-8 lg:px-12 py-12 md:py-16 bg-[#F5F1E9]"
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14 border-b border-[#171716]/15 pb-5">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-6 md:mb-10 border-b border-[#171716]/10 pb-4">
         <div>
-          <p className={`${label} text-[#A68A64] mb-3`}>§ The Gallery</p>
+          <p className={`${label} text-[#A68A64] mb-2`}>§ The Gallery</p>
           <h2
             className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#171716]"
             style={{
-              fontSize: "clamp(2rem, 4.5vw, 4rem)",
+              fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
               fontFamily: "var(--font-cormorant), serif",
             }}
           >
@@ -699,45 +699,37 @@ export default function V6GallerySection() {
             <br />
             completed work.
           </h2>
-          <p className="font-body text-sm md:text-base text-[#171716]/75 mt-5 max-w-xl leading-relaxed">
-            Tap any project for a closer look. Select the ones you love and
-            send them straight to our studio via WhatsApp.
-          </p>
         </div>
-        <p className={`${meta} text-[#171716]/60 mt-6 md:mt-0 tabular-nums`}>
-          {String(projects.length).padStart(2, "0")} project{projects.length !== 1 ? "s" : ""}
-        </p>
       </div>
 
-      {/* Filter chips - now link to category pages */}
+      {/* Filter chips - match CategoryBar pill style */}
       <div
-        className="flex flex-wrap items-center gap-2 md:gap-3 mb-8 md:mb-12"
+        className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6"
         role="navigation"
         aria-label="Browse projects by category"
       >
-        {allCategories.map((c) => {
-          const count =
-            c.id === "all"
-              ? projects.length
-              : projects.filter((p) => p.category === c.id).length;
-          const href = c.id === "all" ? "/v6/work" : `/${c.id.toLowerCase().replace(" ", "-")}`;
-          return (
-            <Link
-              key={c.id}
-              href={href}
-              className={`${label} px-4 py-2.5 border-2 transition-colors font-semibold ${
-                c.id === "all"
-                  ? "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#A68A64] hover:text-[#A68A64]"
-                  : "bg-[#F5F1E9] text-[#171716] border-[#171716]/25 hover:border-[#A68A64] hover:text-[#A68A64]"
-              }`}
-            >
-              {c.label}
-              <span className="ml-2 text-[9px] tabular-nums text-[#171716]/45">
-                {String(count).padStart(2, "0")}
-              </span>
-            </Link>
-          );
-        })}
+        {allCategories
+          .filter((c) => c.id !== "all")
+          .map((c) => {
+            const count =
+              c.id === "all"
+                ? projects.length
+                : projects.filter((p) => p.category === c.id).length;
+            const href = `/${c.id.toLowerCase().replace(" ", "-")}`;
+            return (
+              <Link
+                key={c.id}
+                href={href}
+                className={`relative flex items-center px-4 py-2 rounded-full text-[13px] font-body font-semibold tracking-[0.1em] uppercase transition-all duration-200 whitespace-nowrap ${
+                  c.id === "all"
+                    ? "bg-[#171716] text-[#F5F1E9] shadow-[0_2px_8px_rgba(23,23,22,0.25)]"
+                    : "bg-[#F5F1E9] text-[#171716] border border-[#171716]/15 hover:bg-[#171716]/5 hover:border-[#A68A64]/50"
+                }`}
+              >
+                {c.label}
+              </Link>
+            );
+          })}
       </div>
 
       {/* Mobile scroll-snap carousel (only on < lg) */}
