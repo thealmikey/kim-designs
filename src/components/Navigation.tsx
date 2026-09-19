@@ -170,8 +170,8 @@ export default function Navigation() {
               </a>
             </div>
 
-            {/* Row 2: Secondary nav (Categories) - menu boxes, left-aligned */}
-            <div className="flex items-center gap-3 lg:gap-4 py-2 overflow-x-auto scrollbar-hide">
+            {/* Row 2: Secondary nav (Categories) - menu boxes, right-aligned under primary */}
+            <div className="flex justify-end gap-3 lg:gap-4 py-2 overflow-x-auto scrollbar-hide">
               {CATEGORIES.map((cat) => {
                 const active = isActive(cat.href);
 
