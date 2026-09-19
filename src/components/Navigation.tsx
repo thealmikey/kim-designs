@@ -82,7 +82,7 @@ export default function Navigation() {
           style={{ width: `${scrollPct}%` }}
         />
 
-        <nav className="flex h-full px-6 lg:px-16 relative" style={{ minHeight: "var(--nav-two-row-height)" }}>
+        <nav className="flex h-full px-6 lg:px-16 relative justify-between" style={{ minHeight: "var(--nav-two-row-height)" }}>
           {/* Logo - spans both rows vertically, anchored left */}
           <Link
             href="/"
@@ -127,10 +127,10 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Primary + Secondary navigation rows - right of logo (desktop only) */}
-          <div className="hidden lg:flex lg:flex-1 flex-col justify-between ml-8 lg:ml-12 min-w-0">
+          {/* Primary + Secondary navigation rows - desktop only, right-aligned */}
+          <div className="hidden lg:flex lg:flex-1 flex-col justify-between ml-8 lg:ml-12 min-w-0 w-full">
             {/* Row 1: Primary nav (About, Contact, WhatsApp) */}
-            <div className="flex items-center justify-end gap-10 py-2 border-b border-[#171716]/10">
+            <div className="flex items-center justify-end gap-10 py-2 border-b border-[#171716]/10 w-full">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
 
@@ -168,7 +168,7 @@ export default function Navigation() {
             </div>
 
             {/* Row 2: Secondary nav (Categories) - menu boxes, right-aligned under primary */}
-            <div className="flex justify-end gap-3 lg:gap-4 py-2 overflow-x-auto scrollbar-hide">
+            <div className="flex justify-end gap-3 lg:gap-4 py-2 overflow-x-auto scrollbar-hide w-full">
               {CATEGORIES.map((cat) => {
                 const active = isActive(cat.href);
 
@@ -190,10 +190,10 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger - fixed top right on mobile */}
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="lg:hidden relative w-11 h-11 flex items-center justify-center text-[#171716] ml-4"
+            className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-[#171716] z-50"
             aria-label="Open menu"
           >
             <span className="block absolute w-6 h-[2px] bg-[#171716]" />
