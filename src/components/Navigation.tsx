@@ -125,9 +125,6 @@ export default function Navigation() {
                 DESIGN
               </span>
             </span>
-            <span className="hidden lg:block font-body text-[10px] tracking-[0.25em] uppercase text-[#6B6762] mt-1">
-              Kitchen · Wardrobe · Bath · Shop Fit-Outs
-            </span>
           </Link>
 
           {/* Primary + Secondary navigation rows - right of logo */}
