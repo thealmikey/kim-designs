@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans, Cinzel } from "next/font/google";
 import Navigation from "@/components/Navigation";
+import CategoryBar from "@/components/navigation/CategoryBar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ScrollToTop />
         <CustomCursor />
         <Navigation />
+        <CategoryBar />
         <SmoothScrollProvider>
           <SelectionProvider>
             <main className="flex-1">

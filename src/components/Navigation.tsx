@@ -5,11 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useHoverIntent } from "@/hooks/useHoverIntent";
-import MegaMenu from "@/components/navigation/MegaMenu";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Work", hasMegaMenu: true },
   { href: "/studio", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -20,41 +18,6 @@ export default function Navigation() {
   const [scrollPct, setScrollPct] = useState(0);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
-
-  // Hover intent for mega menu
-  const {
-    requestOpen,
-    requestClose,
-    forceClose,
-    isOpen: isMegaMenuOpen,
-  } = useHoverIntent({
-    enterDelay: 150,
-    leaveDelay: 300,
-    onOpen: () => {},
-    onClose: () => {},
-  });
-
-  // Track which mega menu is open
-  const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null);
-
-  // Sync hover intent with mega menu state
-  const handleRequestOpen = (key: string) => {
-    requestOpen(key);
-    setOpenMegaMenu(key);
-  };
-
-  const handleRequestClose = () => {
-    requestClose();
-    // Don't immediately clear - let the leave delay handle it
-    setTimeout(() => {
-      if (!isMegaMenuOpen) setOpenMegaMenu(null);
-    }, 350);
-  };
-
-  const handleForceClose = () => {
-    forceClose();
-    setOpenMegaMenu(null);
-  };
 
   // Scroll effects
   useEffect(() => {
@@ -81,17 +44,16 @@ export default function Navigation() {
     };
   }, [isMobileOpen]);
 
-  // Close mega menu on escape key
+  // Close mobile menu on escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        handleForceClose();
         setIsMobileOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleForceClose]);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -107,7 +69,6 @@ export default function Navigation() {
             ? "bg-[#F5F1E9]/98 backdrop-blur-lg border-b border-[#171716]/10 shadow-[0_4px_24px_-12px_rgba(23,23,22,0.35)]"
             : "bg-[#F5F1E9] border-b border-transparent"
         }`}
-        onMouseLeave={handleRequestClose}
       >
         {/* Scroll progress hairline */}
         <div
@@ -122,7 +83,6 @@ export default function Navigation() {
             href="/"
             className="flex items-center gap-3 group shrink-0"
             aria-label="Winterior Design home"
-            onMouseEnter={handleRequestClose}
           >
             <span className="relative block transition-transform duration-300 group-hover:scale-[1.04]" style={{ height: "48px", width: "48px", flexShrink: 0 }}>
               <Image
@@ -164,56 +124,30 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - simplified: About, Contact, WhatsApp */}
           <div className="hidden lg:flex items-center gap-10">
             {NAV_ITEMS.map((item, index) => {
               const active = isActive(item.href);
-              const hasMegaMenu = item.hasMegaMenu;
-              const isMegaOpen = Boolean(hasMegaMenu && openMegaMenu === item.label);
 
               return (
-                <div
+                <Link
                   key={item.label}
-                  className="relative"
-                  onMouseEnter={hasMegaMenu ? () => handleRequestOpen(item.label) : handleRequestClose}
-                  onMouseLeave={hasMegaMenu ? handleRequestClose : undefined}
+                  href={item.href}
+                  className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-3 px-2 ${
+                    active
+                      ? "text-[#A68A64]"
+                      : "text-[#171716] hover:text-[#A68A64]"
+                  }`}
                 >
-                  <Link
-                    href={item.href}
-                    className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-3 px-2 ${
-                      active
-                        ? "text-[#A68A64]"
-                        : "text-[#171716] hover:text-[#A68A64]"
+                  {item.label}
+                  {/* Animated underline */}
+                  <span
+                    aria-hidden
+                    className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
+                      active ? "scale-x-100" : "scale-x-0"
                     }`}
-                    onMouseEnter={hasMegaMenu ? () => handleRequestOpen(item.label) : handleRequestClose}
-                    onMouseLeave={hasMegaMenu ? handleRequestClose : undefined}
-                  >
-                    {item.label}
-                    {/* Animated underline */}
-                    <span
-                      aria-hidden
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
-                        active || isMegaOpen ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
-                    {/* Hover dot */}
-                    <span
-                      aria-hidden
-                      className={`absolute top-0 right-0 w-1.5 h-1.5 rounded-full bg-[#A68A64] transform translate-x-1/2 -translate-y-1/2 transition-opacity duration-200 ${
-                        isMegaOpen ? "opacity-100" : "opacity-0"
-                      }`}
-                    />
-                  </Link>
-
-                  {/* Mega Menu for Work */}
-                  {hasMegaMenu && (
-                    <MegaMenu
-                      isOpen={isMegaOpen}
-                      onClose={handleRequestClose}
-                      onItemHover={() => handleRequestOpen(item.label)}
-                    />
-                  )}
-                </div>
+                  />
+                </Link>
               );
             })}
 
