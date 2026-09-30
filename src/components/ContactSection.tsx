@@ -59,18 +59,18 @@ export default function ContactSection() {
   }
 
   return (
-    <section ref={sectionRef} className="bg-background">
-      <div className="px-4 md:px-12 py-20 md:py-28">
+    <section ref={sectionRef} className="bg-[#0A0A0A]">
+      <div className="px-4 md:px-12 pt-[calc(var(--nav-two-row-height)+3rem)] pb-20 md:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           <div className="lg:col-span-5">
             <div className="contact-block">
               <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-4">
                 Contact
               </p>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-foreground tracking-[-0.03em] leading-[1.02]">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-[#FFFFFF] tracking-[-0.03em] leading-[1.02]">
                 Let&apos;s start
                 <br />
-                <span className="italic text-foreground/80">a project.</span>
+                <span className="italic text-[#FFFFFF]/80">a project.</span>
               </h1>
               <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-5 max-w-md">
                 Tell us about the space and the result you want to live with.
@@ -90,7 +90,7 @@ export default function ContactSection() {
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Email
                   </span>
-                  <span className="block font-display text-lg md:text-xl text-foreground">
+                  <span className="block font-display text-lg md:text-xl text-[#FFFFFF]">
                     info@winteriordesign.co.ke
                   </span>
                 </span>
@@ -106,10 +106,10 @@ export default function ContactSection() {
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Phone
                   </span>
-                  <span className="block font-display text-lg md:text-xl text-foreground">
+                  <span className="block font-display text-lg md:text-xl text-[#FFFFFF]">
                     +254 728 846 560
                   </span>
-                  <span className="block font-display text-base md:text-lg text-foreground/80">
+                  <span className="block font-display text-base md:text-lg text-[#FFFFFF]/80">
                     +254 755 164 654
                   </span>
                 </span>
@@ -122,12 +122,12 @@ export default function ContactSection() {
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Showroom
                   </span>
-                  <span className="block font-body text-sm text-foreground/85 leading-relaxed">
+                  <span className="block font-body text-sm text-[#FFFFFF]/85 leading-relaxed">
                     Enterprise Road, Opp Hillocks Hotel
                     <br />
                     Industrial Area, Nairobi
                     <br />
-                    <span className="text-foreground/70">P.O. Box 39254-00623</span>
+                    <span className="text-[#FFFFFF]/70">P.O. Box 39254-00623</span>
                   </span>
                 </span>
               </div>
@@ -190,22 +190,22 @@ export default function ContactSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-charcoal/40 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-4 md:bottom-5 md:left-6">
-                <p className="font-body text-[10px] text-cream/70 tracking-[0.3em] uppercase">
+                <p className="font-body text-[10px] text-[#FFFFFF]/70 tracking-[0.3em] uppercase">
                   Visit
                 </p>
-                <p className="font-display text-lg md:text-xl text-cream tracking-tight">
+                <p className="font-display text-lg md:text-xl text-[#FFFFFF] tracking-tight">
                   Our Showroom · Mon–Sat
                 </p>
               </div>
             </div>
 
             {submitted ? (
-              <div className="border border-aged-brass/40 bg-cream/40 p-8 md:p-10 flex items-start gap-4">
-                <span className="w-10 h-10 bg-aged-brass text-charcoal flex items-center justify-center shrink-0">
+              <div className="border border-aged-brass/40 bg-[#141414] p-8 md:p-10 flex items-start gap-4">
+                <span className="w-10 h-10 bg-[#D4A843] text-charcoal flex items-center justify-center shrink-0">
                   <Check size={18} strokeWidth={2} />
                 </span>
                 <div>
-                  <p className="font-display text-2xl text-foreground mb-2">
+                  <p className="font-display text-2xl text-[#FFFFFF] mb-2">
                     Thank you.
                   </p>
                   <p className="font-body text-sm text-warm-gray leading-relaxed">
@@ -213,7 +213,7 @@ export default function ContactSection() {
                     48 hours. In the meantime, reach us directly on{" "}
                     <a
                       href="tel:+254728846560"
-                      className="underline decoration-aged-brass underline-offset-4 hover:text-foreground"
+                      className="underline decoration-[#D4A843] underline-offset-4 hover:text-[#FFFFFF]"
                     >
                       +254 728 846 560
                     </a>
@@ -238,7 +238,7 @@ export default function ContactSection() {
                     placeholder="Your full name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -252,7 +252,7 @@ export default function ContactSection() {
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -265,7 +265,7 @@ export default function ContactSection() {
                     placeholder="+254 …"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -276,15 +276,15 @@ export default function ContactSection() {
                     name="service"
                     value={form.service}
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground outline-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] outline-none transition-colors"
                   >
-                    <option value="" disabled className="bg-background text-warm-gray">
+                    <option value="" disabled className="bg-[#0A0A0A] text-warm-gray">
                       Choose a service
                     </option>
-                    <option value="kitchen" className="bg-background">Kitchen</option>
-                    <option value="wardrobe" className="bg-background">Wardrobe</option>
-                    <option value="bath" className="bg-background">Bath Vanity</option>
-                    <option value="shop" className="bg-background">Shop Fit-Out</option>
+                    <option value="kitchen" className="bg-[#0A0A0A]">Kitchen</option>
+                    <option value="wardrobe" className="bg-[#0A0A0A]">Wardrobe</option>
+                    <option value="bath" className="bg-[#0A0A0A]">Bath Vanity</option>
+                    <option value="shop" className="bg-[#0A0A0A]">Shop Fit-Out</option>
                   </select>
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-2">
@@ -298,7 +298,7 @@ export default function ContactSection() {
                     placeholder="Tell us about the space, the result you want, and when you'd like to start."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-foreground placeholder:text-warm-gray/70 outline-none resize-none transition-colors"
+                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none resize-none transition-colors"
                   />
                 </label>
                 <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-4 mt-4">
@@ -307,7 +307,7 @@ export default function ContactSection() {
                   </p>
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-foreground text-background px-5 py-3 hover:bg-aged-brass transition-colors"
+                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-foreground text-background px-5 py-3 hover:bg-[#D4A843] transition-colors"
                   >
                     Send message
                     <ArrowUpRight

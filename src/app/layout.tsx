@@ -8,6 +8,7 @@ import Preloader from "@/components/Preloader";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import AgentationToolbar from "@/components/AgentationToolbar";
 import ScrollToTop from "@/components/ScrollToTop";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { SelectionProvider } from "@/components/variants/v5/SelectionContext";
 import SelectionBar from "@/components/variants/v5/SelectionBar";
 import "./globals.css";
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </SelectionProvider>
         </SmoothScrollProvider>
         <Footer />
+        <WhatsAppFloat />
         <AgentationToolbar />
       </body>
     </html>

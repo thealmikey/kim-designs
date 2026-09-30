@@ -4,34 +4,30 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useHoverIntent } from "@/hooks/useHoverIntent";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
 
 const NAV_ITEMS = [
-  { href: "/studio", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/studio", label: "About Us" },
+  { href: "/kitchens", label: "Kitchens" },
+  { href: "/wardrobes", label: "Wardrobes" },
+  { href: "/services", label: "How we do it" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
-const CATEGORIES = [
-  { label: "Kitchens", href: "/kitchens" },
-  { label: "Wardrobes", href: "/wardrobes" },
-  { label: "Bath Vanities", href: "/bath-vanities" },
-  { label: "Shop Fit-Outs", href: "/shop-fit-outs" },
+const TOP_CONTACT = [
+  { href: "mailto:info@winteriordesign.co.ke", label: "info@winteriordesign.co.ke", icon: "mail" },
+  { href: "tel:+254728846560", label: "+254 728 846 560", icon: "phone" },
 ];
 
 export default function Navigation() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [scrollPct, setScrollPct] = useState(0);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 20);
-      const max = document.documentElement.scrollHeight - window.innerHeight || 1;
-      setScrollPct(Math.min(100, (y / max) * 100));
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -70,44 +66,71 @@ export default function Navigation() {
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#F5F1E9]/98 backdrop-blur-lg border-b border-[#171716]/10 shadow-[0_4px_24px_-12px_rgba(23,23,22,0.35)]"
-            : "bg-[#F5F1E9] border-b border-transparent"
+            ? "bg-[#0A0A0A]/98 backdrop-blur-lg border-b border-[#2A2A2A]"
+            : "bg-[#0A0A0A] border-b border-transparent"
         }`}
         style={{ height: "var(--nav-two-row-height)" }}
       >
-        {/* Scroll progress hairline */}
-        <div
-          aria-hidden
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#A68A64] via-[#A68A64] to-[#E89A6A] transition-[width] duration-200"
-          style={{ width: `${scrollPct}%` }}
-        />
+        {/* Top Bar */}
+        <div className="hidden md:flex items-center justify-between px-6 h-[var(--topbar-height)] bg-[#000000] border-b border-[#2A2A2A]">
+          <div className="flex items-center gap-6 text-[12px] font-body text-[#FFFFFF]/70">
+            {TOP_CONTACT.map((item) => (
+              <a key={item.href} href={item.href} className="flex items-center gap-2 hover:text-[#D4A843] transition-colors">
+                <span>{item.icon === "mail" ? "✉" : "📞"}</span>
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://wa.me/254728846560"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#D4A843] text-[#0A0A0A] font-body text-[11px] font-semibold tracking-[0.1em] uppercase hover:bg-[#E8C56D] transition-colors"
+            >
+              <span>💬</span>
+              <span>WhatsApp Us</span>
+            </a>
+            <a
+              href="https://www.instagram.com/woodkivuinteriors/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 flex items-center justify-center border border-[#2A2A2A] hover:border-[#D4A843] hover:bg-[#1A1A1A] transition-colors"
+              aria-label="Instagram"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+              </svg>
+            </a>
+          </div>
+        </div>
 
-        <nav className="flex h-full px-6 lg:px-16 relative justify-between" style={{ minHeight: "var(--nav-two-row-height)" }}>
-          {/* Logo - spans both rows vertically, anchored left */}
+        {/* Main Navigation */}
+        <nav className="flex h-[calc(var(--nav-two-row-height)-var(--topbar-height))] px-6 lg:px-16 items-center justify-between relative">
+          {/* Logo */}
           <Link
             href="/"
-            className="flex flex-col items-start justify-center gap-1 group shrink-0"
+            className="flex items-center gap-3 shrink-0"
             aria-label="Winterior Design home"
-            style={{ minWidth: "200px", zIndex: 60 }}
           >
-            <span className="relative block transition-transform duration-300 group-hover:scale-[1.04]" style={{ height: "48px", width: "48px", flexShrink: 0 }}>
+            <span className="relative block" style={{ height: "50px", width: "50px", flexShrink: 0 }}>
               <Image
                 src="/winterior-mark.png"
                 alt="Winterior Design"
                 fill
                 priority
-                sizes="48px"
+                sizes="50px"
                 className="object-contain"
               />
             </span>
-            <span className="flex flex-col items-start justify-center gap-0.5 group-hover:scale-[1.02] transition-transform duration-300 leading-none">
+            <span className="flex flex-col items-start justify-center gap-0.5 leading-none">
               <span
                 className="font-bold tracking-[0.04em] uppercase whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-cinzel), serif",
                   fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
                   lineHeight: 1,
-                  color: "#171716",
+                  color: "#FFFFFF",
                 }}
               >
                 WINTERIOR
@@ -119,7 +142,7 @@ export default function Navigation() {
                   fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)",
                   lineHeight: 1,
                   letterSpacing: "0.42em",
-                  color: "#171716",
+                  color: "#D4A843",
                 }}
               >
                 DESIGN
@@ -127,78 +150,39 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Primary + Secondary navigation rows - desktop only, right-aligned */}
-          <div className="hidden lg:flex lg:flex-1 flex-col justify-between ml-8 lg:ml-12 min-w-0 w-full">
-            {/* Row 1: Primary nav (About, Contact, WhatsApp) */}
-            <div className="flex items-center justify-end gap-10 py-2 border-b border-[#171716]/10 w-full">
-              {NAV_ITEMS.map((item) => {
-                const active = isActive(item.href);
-
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-2 px-2 ${
-                      active ? "text-[#A68A64]" : "text-[#171716] hover:text-[#A68A64]"
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8">
+            {NAV_ITEMS.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-2 ${
+                    active ? "text-[#D4A843]" : "text-[#FFFFFF]/90 hover:text-[#D4A843]"
+                  }`}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden
+                    className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#D4A843] origin-left transition-transform duration-300 ${
+                      active ? "scale-x-100" : "scale-x-0"
                     }`}
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#A68A64] origin-left transition-transform duration-300 ${
-                        active ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
-                  </Link>
-                );
-              })}
-
-              {/* WhatsApp icon - stays on primary row far right */}
-              <a
-                href="https://wa.me/254728846560"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 rounded-sm bg-[#25D366] text-[#171716] hover:bg-[#25D366]/90 transition-colors"
-                aria-label="Chat on WhatsApp"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.554-5.338 11.89-11.893 11.89a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-              </a>
-            </div>
-
-            {/* Row 2: Secondary nav (Categories) - menu boxes, right-aligned under primary */}
-            <div className="flex justify-end gap-3 lg:gap-4 py-2 overflow-x-auto scrollbar-hide w-full">
-              {CATEGORIES.map((cat) => {
-                const active = isActive(cat.href);
-
-                return (
-                  <Link
-                    key={cat.href}
-                    href={cat.href}
-                    className={`relative flex items-center px-5 py-2.5 text-[13px] font-body font-semibold tracking-[0.1em] uppercase transition-all duration-200 whitespace-nowrap rounded-[4px] border border-[#171716]/20 bg-transparent ${
-                      active
-                        ? "bg-[#171716] text-[#F5F1E9]"
-                        : "text-[#171716] hover:bg-[#171716]/5 hover:border-[#A68A64]/50"
-                    }`}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    {cat.label}
-                  </Link>
-                );
-              })}
-            </div>
+                  />
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Mobile hamburger - fixed top right on mobile */}
+          {/* Mobile Hamburger - far right */}
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-[#171716] z-50"
+            className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-[#FFFFFF] z-50"
             aria-label="Open menu"
           >
-            <span className="block absolute w-6 h-[2px] bg-[#171716]" />
-            <span className="block absolute w-6 h-[2px] bg-[#171716] translate-y-[-6px]" />
-            <span className="block absolute w-6 h-[2px] bg-[#171716] translate-y-[6px]" />
+            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF]" />
+            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] translate-y-[-6px]" />
+            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] translate-y-[6px]" />
           </button>
         </nav>
       </header>

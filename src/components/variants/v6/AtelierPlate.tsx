@@ -93,11 +93,11 @@ export default function AtelierPlate({ slug }: Props) {
   if (!project) {
     return (
       <div
-        className="bg-[#F5F1E9] text-[#171716] min-h-[80vh] flex items-center justify-center px-6"
+        className="bg-[#0A0A0A] text-[#FFFFFF] min-h-[80vh] flex items-center justify-center px-6"
         style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
       >
         <div className="text-center">
-          <p className={`${label} text-[#716D65] mb-4`}>Plate not found</p>
+          <p className={`${label} text-[#D4A843] mb-4`}>Plate not found</p>
           <h1
             className="font-display font-light text-4xl md:text-6xl leading-tight mb-8"
             style={{ fontFamily: "var(--font-cormorant), serif" }}
@@ -106,7 +106,7 @@ export default function AtelierPlate({ slug }: Props) {
           </h1>
           <Link
             href="/v6/work"
-            className={`${label} text-[#171716] border-b border-[#171716]/40 hover:border-[#A68A64] hover:text-[#A68A64] pb-0.5 transition-colors`}
+            className={`${label} text-[#FFFFFF] border-b border-[#171716]/40 hover:border-[#A68A64] hover:text-[#A68A64] pb-0.5 transition-colors`}
           >
             ← Return to the register
           </Link>
@@ -121,7 +121,7 @@ export default function AtelierPlate({ slug }: Props) {
   return (
     <div
       ref={root}
-      className="bg-[#F5F1E9] text-[#171716] overflow-x-hidden"
+      className="bg-[#0A0A0A] text-[#FFFFFF] overflow-x-hidden"
       style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
     >
       {/* ============ HERO COVER ============ */}
@@ -141,7 +141,7 @@ export default function AtelierPlate({ slug }: Props) {
         <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-12 lg:px-16 pt-28 md:pt-32">
           <Link
             href="/v6/work"
-            className={`${label} text-[#F5F1E9]/85 hover:text-[#F5F1E9] inline-flex items-center gap-2 atp-hero-eyebrow transition-colors`}
+            className={`${label} text-[#FFFFFF]/85 hover:text-[#FFFFFF] inline-flex items-center gap-2 atp-hero-eyebrow transition-colors`}
           >
             <span aria-hidden>←</span>
             <span>The register</span>
@@ -151,11 +151,11 @@ export default function AtelierPlate({ slug }: Props) {
         <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 lg:px-16 pb-12 md:pb-20">
           <div className="grid grid-cols-12 gap-6 items-end">
             <div className="col-span-12 md:col-span-8">
-              <p className={`${label} text-[#F5F1E9]/85 mb-3 atp-hero-eyebrow`}>
+              <p className={`${label} text-[#FFFFFF]/85 mb-3 atp-hero-eyebrow`}>
                 {project.category} · {project.location} · {project.year}
               </p>
               <h1
-                className="atp-hero-title font-display font-light leading-[0.95] tracking-[-0.025em] text-[#F5F1E9]"
+                className="atp-hero-title font-display font-light leading-[0.95] tracking-[-0.025em] text-[#FFFFFF]"
                 style={{
                   fontSize: "clamp(2.5rem, 6.5vw, 7rem)",
                   fontFamily: "var(--font-cormorant), serif",
@@ -164,7 +164,7 @@ export default function AtelierPlate({ slug }: Props) {
                 {project.title}
               </h1>
               <p
-                className="font-display italic text-[#F5F1E9]/85 mt-4 text-xl md:text-2xl"
+                className="font-display italic text-[#FFFFFF]/85 mt-4 text-xl md:text-2xl"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {project.subtitle}.
@@ -179,25 +179,25 @@ export default function AtelierPlate({ slug }: Props) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 atp-hero-meta">
           <div>
             <p className={`${label} text-warm-gray mb-2`}>Location</p>
-            <p className="font-body text-sm md:text-base text-[#171716]">
+            <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               {project.location}
             </p>
           </div>
           <div>
             <p className={`${label} text-warm-gray mb-2`}>Year</p>
-            <p className="font-body text-sm md:text-base text-[#171716] tabular-nums">
+            <p className="font-body text-sm md:text-base text-[#FFFFFF] tabular-nums">
               {project.year}
             </p>
           </div>
           <div>
             <p className={`${label} text-warm-gray mb-2`}>Discipline</p>
-            <p className="font-body text-sm md:text-base text-[#171716]">
+            <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               {project.category}
             </p>
           </div>
           <div>
             <p className={`${label} text-warm-gray mb-2`}>Status</p>
-            <p className="font-body text-sm md:text-base text-[#171716]">
+            <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               Completed
             </p>
           </div>
@@ -212,7 +212,7 @@ export default function AtelierPlate({ slug }: Props) {
         <div className="grid grid-cols-12 gap-6 md:gap-12">
           <div className="col-span-12 md:col-span-6 md:col-start-4 atp-fade">
             <p
-              className="font-display italic text-2xl md:text-3xl lg:text-4xl leading-[1.3] text-[#171716] text-center"
+              className="font-display italic text-2xl md:text-3xl lg:text-4xl leading-[1.3] text-[#FFFFFF] text-center"
               style={{ fontFamily: "var(--font-cormorant), serif" }}
             >
               {project.description}
@@ -224,7 +224,7 @@ export default function AtelierPlate({ slug }: Props) {
       {/* ============ FULL-BLEED IMAGE ============ */}
       {remaining[0] && (
         <section className="px-6 md:px-12 lg:px-16 py-8 md:py-12">
-          <div className="atp-img-reveal relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[#171716]/5">
+          <div className="atp-img-reveal relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[#D4A843]/5">
             <Image
               src={remaining[0]}
               alt={`${project.title} — detail`}
@@ -237,11 +237,11 @@ export default function AtelierPlate({ slug }: Props) {
       )}
 
       {/* ============ MATERIALS (symmetric: centered heading + centered 6-6 list) ============ */}
-      <section className="bg-[#EFE9DE] px-6 md:px-12 lg:px-16 py-20 md:py-28 mt-8 md:mt-16">
+      <section className="bg-[#141414] px-6 md:px-12 lg:px-16 py-20 md:py-28 mt-8 md:mt-16">
         <div className="text-center atp-fade mb-12 md:mb-16">
           <p className={`${label} text-[#A68A64] mb-4`}>§ Material palette</p>
           <h2
-            className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#171716]"
+            className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#FFFFFF]"
             style={{
               fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
               fontFamily: "var(--font-cormorant), serif",
@@ -257,15 +257,15 @@ export default function AtelierPlate({ slug }: Props) {
             {project.materials.map((m, i) => (
               <li
                 key={m}
-                className="border-b border-[#171716]/15 py-5 flex items-baseline justify-between gap-4"
+                className="border-b border-[#2A2A2A] py-5 flex items-baseline justify-between gap-4"
               >
                 <span
-                  className="font-display text-xl md:text-2xl font-light text-[#171716]"
+                  className="font-display text-xl md:text-2xl font-light text-[#FFFFFF]"
                   style={{ fontFamily: "var(--font-cormorant), serif" }}
                 >
                   {m}
                 </span>
-                <span className={`${label} text-[#716D65] tabular-nums`}>
+                <span className={`${label} text-[#D4A843] tabular-nums`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </li>
@@ -278,9 +278,9 @@ export default function AtelierPlate({ slug }: Props) {
       {remaining.length > 1 && (
         <section className="px-6 md:px-12 lg:px-16 py-20 md:py-32">
           <div className="text-center mb-10 md:mb-16 atp-fade">
-            <p className={`${label} text-[#716D65] mb-3`}>§ The plate</p>
+            <p className={`${label} text-[#D4A843] mb-3`}>§ The plate</p>
             <h2
-              className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#171716]"
+              className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#FFFFFF]"
               style={{
                 fontSize: "clamp(1.75rem, 3vw, 2.75rem)",
                 fontFamily: "var(--font-cormorant), serif",
@@ -293,7 +293,7 @@ export default function AtelierPlate({ slug }: Props) {
             {remaining.slice(1).map((src, i) => (
               <div
                 key={src + i}
-                className="atp-img-reveal relative aspect-[4/5] overflow-hidden bg-[#171716]/5"
+                className="atp-img-reveal relative aspect-[4/5] overflow-hidden bg-[#D4A843]/5"
               >
                 <Image
                   src={src}
@@ -319,7 +319,7 @@ export default function AtelierPlate({ slug }: Props) {
               href={`/v6/work/${prev.id}`}
               className="group atp-fade block"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#171716]/5 mb-4">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#D4A843]/5 mb-4">
                 <Image
                   src={prev.images[0]}
                   alt={prev.title}
@@ -335,7 +335,7 @@ export default function AtelierPlate({ slug }: Props) {
               >
                 {prev.title}
               </h3>
-              <p className="font-display italic text-base text-[#171716]/75 mt-1">
+              <p className="font-display italic text-base text-[#FFFFFF]/75 mt-1">
                 {prev.subtitle}.
               </p>
             </Link>
@@ -345,7 +345,7 @@ export default function AtelierPlate({ slug }: Props) {
               href={`/v6/work/${next.id}`}
               className="group atp-fade block"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#171716]/5 mb-4">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#D4A843]/5 mb-4">
                 <Image
                   src={next.images[0]}
                   alt={next.title}
@@ -361,7 +361,7 @@ export default function AtelierPlate({ slug }: Props) {
               >
                 {next.title}
               </h3>
-              <p className="font-display italic text-base text-[#171716]/75 mt-1">
+              <p className="font-display italic text-base text-[#FFFFFF]/75 mt-1">
                 {next.subtitle}.
               </p>
             </Link>
@@ -370,16 +370,16 @@ export default function AtelierPlate({ slug }: Props) {
       </section>
 
       {/* ============ FOOTER CTA (centered) ============ */}
-      <section className="border-t border-[#171716]/15 px-6 md:px-12 lg:px-16 py-12 md:py-16 text-center atp-fade">
+      <section className="border-t border-[#2A2A2A] px-6 md:px-12 lg:px-16 py-12 md:py-16 text-center atp-fade">
         <p
-          className="font-display italic text-xl md:text-2xl text-[#171716]/85 mb-6"
+          className="font-display italic text-xl md:text-2xl text-[#FFFFFF]/85 mb-6"
           style={{ fontFamily: "var(--font-cormorant), serif" }}
         >
           Winterior Design — a working register of completed commissions.
         </p>
         <Link
           href="/contact"
-          className={`${label} text-[#171716] hover:text-[#A68A64] border-b border-[#171716]/40 hover:border-[#A68A64] inline-block pb-0.5 transition-colors`}
+          className={`${label} text-[#FFFFFF] hover:text-[#A68A64] border-b border-[#171716]/40 hover:border-[#A68A64] inline-block pb-0.5 transition-colors`}
         >
           Start a project →
         </Link>

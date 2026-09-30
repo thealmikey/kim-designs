@@ -1,25 +1,22 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #FAF8F5;
-  --color-foreground: #1A1A18;
-  --color-limestone: #E8E4DE;
-  --color-plaster: #F5F2ED;
-  --color-charcoal: #2C2C2C;
-  --color-warm-ivory: #FAF8F5;
-  --color-aged-brass: #A68A64;
-  --color-deep-green: #3A4F41;
-  --color-warm-gray: #6B6762;
-  --color-stone: #B5AFA8;
-  --color-sand: #D4CFC7;
-  --color-moss: #5A6B5E;
-  --color-earth: #6B5D52;
-  --color-cream: #F0EBE3;
+  --color-background: #0A0A0A;
+  --color-foreground: #FFFFFF;
+  --color-card: #141414;
+  --color-card-hover: #1A1A1A;
+  --color-gold: #D4A843;
+  --color-gold-hover: #E8C56D;
+  --color-gold-light: #F5E6B8;
+  --color-divider: #2A2A2A;
+  --color-topbar: #000000;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --color-overlay-strong: rgba(0, 0, 0, 0.85);
   --font-display: var(--font-cormorant);
   --font-body: var(--font-dm-sans);
-  --nav-height: 72px;
-  --nav-height-scrolled: 64px;
-  --nav-two-row-height: 112px;
+  --nav-height: 80px;
+  --nav-two-row-height: 120px;
+  --topbar-height: 40px;
 }
 
 html.custom-cursor-active,
@@ -38,8 +35,8 @@ html.custom-cursor-active label {
 }
 
 :root {
-  --background: #FAF8F5;
-  --foreground: #1A1A18;
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
 }
 
 html {
@@ -56,7 +53,7 @@ body {
 }
 
 ::selection {
-  background: rgba(166, 138, 100, 0.3);
+  background: rgba(212, 168, 67, 0.3);
 }
 
 ::-webkit-scrollbar {
@@ -68,12 +65,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-stone);
+  background: var(--color-gold);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-warm-gray);
+  background: var(--color-gold-hover);
 }
 
 .scrollbar-hide {
@@ -85,7 +82,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-aged-brass);
+  outline: 2px solid var(--color-gold);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -95,8 +92,8 @@ body {
   left: 12px;
   top: 12px;
   padding: 10px 16px;
-  background: var(--color-foreground);
-  color: var(--color-cream);
+  background: var(--color-gold);
+  color: #000;
   font-family: var(--font-body);
   font-size: 12px;
   letter-spacing: 0.15em;

@@ -10,7 +10,64 @@ import V6GallerySection from "./V6GallerySection";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const label = "font-body text-[11px] tracking-[0.3em] uppercase";
+const SERVICES = [
+  {
+    id: "kitchens",
+    title: "COMPLETELY SYNERGIZED",
+    subtitle: "KITCHEN FITTING",
+    image: "/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg",
+    href: "/kitchens",
+  },
+  {
+    id: "classic-solid-wood",
+    title: "CLASSIC SOLID WOOD",
+    subtitle: "KITCHENS",
+    image: "/images/classic-wardrobe/01.jpg",
+    href: "/kitchens?style=classic",
+  },
+  {
+    id: "spray-paint",
+    title: "SPRAY PAINT",
+    subtitle: "KITCHENS",
+    image: "/images/spray-paint-kitchen/01.jpg",
+    href: "/kitchens?style=spray-paint",
+  },
+  {
+    id: "wardrobes",
+    title: "CUSTOM WARDROBES",
+    subtitle: "WALK-IN CLOSETS",
+    image: "/images/wardropes/01.jpg",
+    href: "/wardrobes",
+  },
+];
+
+const ABOUT_CONTENT = {
+  title: "Wood Kivu Creative Solutions by Professional Designers",
+  body: "Your kitchen and interiors are an expression of who you are, and its design should match your space and feel. Winterior Design closely collaborates with clients to evolve every concept. Whether you have traditional tastes or desire a modern feel, we design your dream kitchen to suit your taste and budget.",
+  features: [
+    {
+      title: "Reasonable Prices",
+      description: "We design kitchens and other interior fittings that fulfill needs of all people and offer it at affordable and fair prices",
+      image: "/images/bath-vanities/01.jpg",
+    },
+    {
+      title: "Exclusive design",
+      description: "Mixture of imagination, experience and professionalism is the secret of our design!",
+      image: "/images/better-wardrobes/01.jpg",
+    },
+    {
+      title: "Professional Team",
+      description: "We are proud of our amicable, professional and always developing team!",
+      image: "/images/high-gloss-handless-kitchen/01.jpg",
+    },
+  ],
+};
+
+const PROCESS_STEPS = [
+  { step: "Step 1", title: "Identifying client's needs and objectives." },
+  { step: "Step 2", title: "Personalized 3D design samples to give you an idea of the look and feel" },
+  { step: "Step 3", title: "Delivering client's envisioned products. Our clients are always exemplary happy. Thank you for trusting us with your interiors" },
+];
 
 function Counter({ to, suffix = "" }: { to: string; suffix?: string }) {
   void to;
@@ -25,8 +82,8 @@ export default function AtelierIndex() {
 
   useEffect(() => {
     const id = window.setInterval(() => {
-      setHeroIndex((i) => (i + 1) % Math.min(6, projects.length));
-    }, 6500);
+      setHeroIndex((i) => (i + 1) % Math.min(4, projects.length));
+    }, 6000);
     return () => window.clearInterval(id);
   }, []);
 
@@ -56,97 +113,32 @@ export default function AtelierIndex() {
   useEffect(() => {
     if (prefersReducedMotion.current) return;
     const ctx = gsap.context(() => {
-      const heroTl = gsap.timeline({ delay: 0.15 });
-      heroTl
-        .fromTo(
-          ".at-hero-eyebrow",
-          { y: 14, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }
-        )
-        .fromTo(
-          ".at-hero-title-line",
-          { y: 60, opacity: 0, rotateX: -25 },
-          {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 1.2,
-            ease: "power4.out",
-            stagger: 0.12,
-          },
-          "-=0.5"
-        )
-        .fromTo(
-          ".at-hero-sub",
-          { y: 18, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
-          "-=0.7"
-        )
-        .fromTo(
-          ".at-hero-cta",
-          { y: 14, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
-          "-=0.6"
-        );
-
-      gsap.utils.toArray<HTMLElement>(".at-img-reveal").forEach((el) => {
+      gsap.utils.toArray<HTMLElement>(".wk-fade").forEach((el) => {
         gsap.fromTo(
           el,
-          { clipPath: "inset(100% 0 0 0)", opacity: 0 },
-          {
-            clipPath: "inset(0% 0 0 0)",
-            opacity: 1,
-            duration: 1.1,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 88%" },
-          }
-        );
-      });
-
-      gsap.utils.toArray<HTMLElement>(".at-fade").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 32, opacity: 0 },
+          { y: 40, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 1.0,
             ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 90%" },
+            scrollTrigger: { trigger: el, start: "top 85%" },
           }
         );
       });
 
-      gsap.utils.toArray<HTMLElement>(".at-kenburns img").forEach((el, i) => {
+      gsap.utils.toArray<HTMLElement>(".wk-scale-in").forEach((el) => {
         gsap.fromTo(
           el,
-          { scale: 1.0, x: 0 },
+          { scale: 1.05, opacity: 0 },
           {
-            scale: 1.08,
-            x: i % 2 === 0 ? -20 : 20,
-            ease: "none",
-            scrollTrigger: {
-              trigger: el,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 3,
-            },
+            scale: 1,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 85%" },
           }
         );
-      });
-
-      gsap.utils.toArray<HTMLElement>(".at-parallax").forEach((el) => {
-        const speed = parseFloat(el.dataset.speed || "0.2");
-        gsap.to(el, {
-          y: () => -window.innerHeight * speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
       });
     }, root);
 
@@ -158,161 +150,198 @@ export default function AtelierIndex() {
   return (
     <div
       ref={root}
-      className="bg-[#F5F1E9] text-[#171716] overflow-x-hidden"
+      className="bg-[#0A0A0A] text-[#FFFFFF] overflow-x-hidden"
       style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
     >
-      {/* ============ HERO ============ */}
-      <section
-        className="relative w-full min-h-[100svh] overflow-hidden"
-        style={{ marginTop: "var(--nav-two-row-height)" }}
-      >
-        <div className="at-kenburns absolute inset-0">
-          {(() => {
-            const heroIds = [
-              "pvc-foilwrap-and-high-gloss-handless-kitchen",
-              "high-gloss-handless-kitchen",
-              "spray-paint-kitchen",
-              "bathroom-vanities",
-              "wardropes",
-              "walk-in-closet",
-            ];
-            const heroProjects = heroIds
-              .map((id) => projects.find((p) => p.id === id))
-              .filter((p): p is (typeof projects)[number] => Boolean(p));
-            return heroProjects.map((p, i) => (
-              <div
-                key={p.id}
-                className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
-                style={{ opacity: heroIndex === i ? 1 : 0 }}
-                aria-hidden={heroIndex !== i}
-              >
-                <Image
-                  src={p.images[0]}
-                  alt=""
-                  fill
-                  priority={i === 0}
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              </div>
-            ));
-          })()}
+      {/* ============ HERO SLIDER ============ */}
+      <section className="relative w-full min-h-[100vh] overflow-hidden">
+        <div className="absolute inset-0">
+          {SERVICES.map((service, i) => (
+            <div
+              key={service.id}
+              className="absolute inset-0 transition-opacity duration-[1600ms] ease-out"
+              style={{ opacity: heroIndex === i ? 1 : 0 }}
+              aria-hidden={heroIndex !== i}
+            >
+              <Image
+                src={service.image}
+                alt={service.title}
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/40 via-transparent to-[#000000]/80" />
+            </div>
+          ))}
         </div>
 
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(23,23,22,0.15) 0%, rgba(23,23,22,0.05) 30%, rgba(23,23,22,0.45) 65%, rgba(23,23,22,0.78) 100%)",
-          }}
-        />
-
-        <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 lg:px-16 pb-6 md:pb-10">
-          <div className="grid grid-cols-12 gap-6 items-end">
-            <div className="col-span-12 md:col-span-9">
-              <h1
-                className="at-hero-title font-display font-light leading-[0.88] tracking-[-0.04em] text-[#F5F1E9]"
-                style={{
-                  fontSize: "clamp(2.75rem, 7.6vw, 8.5rem)",
-                  fontFamily: "var(--font-cormorant), serif",
-                  perspective: "1000px",
-                  textShadow: "0 2px 30px rgba(23,23,22,0.45)",
-                }}
+        <div className="absolute inset-0 flex items-center px-6 lg:px-16 z-10">
+          <div className="w-full max-w-4xl">
+            {SERVICES.map((service, i) => (
+              <div
+                key={service.id}
+                className="transition-opacity duration-[800ms] ease-out"
+                style={{ opacity: heroIndex === i ? 1 : 0, position: heroIndex === i ? "relative" : "absolute", pointerEvents: heroIndex === i ? "auto" : "none" }}
+                aria-hidden={heroIndex !== i}
               >
-                <span className="at-hero-title-line block">Interiors</span>
-                <span className="at-hero-title-line block">with a sense</span>
-                <span className="at-hero-title-line block">of place.</span>
-              </h1>
-            </div>
-            <div className="col-span-12 md:col-span-3 at-hero-cta md:text-right space-y-4 mt-6 md:mt-0">
-              <p
-                className="at-hero-sub relative inline-block md:max-w-xs md:ml-auto font-display italic text-[#F5F1E9] text-base md:text-lg leading-snug px-4 py-3 md:px-0 md:py-0"
-                style={{
-                  fontFamily: "var(--font-cormorant), serif",
-                  background:
-                    "linear-gradient(180deg, rgba(23,23,22,0.35) 0%, rgba(23,23,22,0.55) 100%)",
-                  boxShadow: "0 4px 30px -10px rgba(23,23,22,0.6)",
-                }}
-              >
-                Bespoke kitchens, wardrobes, and fit-outs — drawn for the
-                way you actually live.
-              </p>
-              <div className="flex md:justify-end gap-2 flex-wrap">
+                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-3 font-semibold wk-fade">
+                  {service.title}
+                </p>
+                <h1 className="font-display font-light leading-[1.0] tracking-[-0.02em] text-[#FFFFFF] wk-fade" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
+                  {service.subtitle}
+                </h1>
                 <Link
-                  href="#v6-gallery"
-                  className="group relative inline-flex items-center gap-2 bg-[#F5F1E9] text-[#171716] px-5 py-3 font-body text-[11px] font-bold tracking-[0.22em] uppercase overflow-hidden"
+                  href={service.href}
+                  className="inline-flex items-center gap-3 mt-8 px-6 py-3 bg-[#D4A843] text-[#0A0A0A] font-body text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-[#E8C56D] transition-colors wk-fade"
                 >
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 bg-[#A68A64] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
-                  />
-                  <span className="relative group-hover:text-[#F5F1E9] transition-colors">
-                    View Projects
-                  </span>
-                  <span className="relative group-hover:text-[#F5F1E9] group-hover:translate-x-1 transition-all">
-                    →
-                  </span>
+                  ENQUIRE
+                  <span aria-hidden>→</span>
                 </Link>
-                <a
-                  href="https://wa.me/254728846560"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center gap-2 border-2 border-[#F5F1E9] text-[#F5F1E9] px-5 py-3 font-body text-[11px] font-bold tracking-[0.22em] uppercase hover:bg-[#25D366] hover:border-[#25D366] transition-colors"
-                >
-                  <span>WhatsApp</span>
-                </a>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        <div className="absolute right-6 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 z-10 hidden md:flex flex-col gap-3">
-          {["pvc-foilwrap-and-high-gloss-handless-kitchen", "high-gloss-handless-kitchen", "spray-paint-kitchen", "bathroom-vanities", "wardropes", "walk-in-closet"].map((id, i) => {
-            const p = projects.find((x) => x.id === id);
-            return (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setHeroIndex(i)}
-                aria-label={`View ${p?.title ?? "project"}`}
-                className="group flex items-center gap-3"
-              >
-                <span
-                  className={`block w-1 transition-all duration-500 ${
-                    heroIndex === i
-                      ? "h-10 bg-[#A68A64]"
-                      : "h-4 bg-[#F5F1E9]/40 group-hover:bg-[#F5F1E9]/80"
-                  }`}
-                />
-              </button>
-            );
-          })}
+        {/* Hero pagination */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+          {SERVICES.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setHeroIndex(i)}
+              aria-label={`View slide ${i + 1}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                heroIndex === i ? "bg-[#D4A843] w-6" : "bg-[#FFFFFF]/40 hover:bg-[#FFFFFF]/80"
+              }`}
+            />
+          ))}
         </div>
 
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2">
-          <p className="font-body text-[10px] tracking-[0.3em] uppercase font-bold text-[#F5F1E9]/80">
-            Scroll
-          </p>
-          <div className="w-px h-10 bg-[#F5F1E9]/30 relative overflow-hidden">
-            <div
-              className="absolute top-0 left-0 w-px h-4 bg-[#A68A64]"
-              style={{ animation: "scrollLine 2s ease-in-out infinite" }}
-            />
+        {/* Scroll indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+          <p className="font-body text-[10px] tracking-[0.3em] uppercase font-bold text-[#FFFFFF]/60">Scroll</p>
+          <div className="w-[1px] h-10 bg-[#FFFFFF]/20 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-[1px] h-4 bg-[#D4A843]" style={{ animation: "scrollLine 2s ease-in-out infinite" }} />
           </div>
         </div>
       </section>
 
-      {/* ============ GALLERY ============ */}
+      {/* ============ SERVICES GRID ============ */}
+      <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#0A0A0A]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {SERVICES.map((service) => (
+            <Link
+              key={service.id}
+              href={service.href}
+              className="group relative aspect-[4/3] overflow-hidden bg-[#141414] wk-scale-in"
+            >
+              <Image
+                src={service.image}
+                alt={service.title}
+                fill
+                className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-1.5 font-semibold">
+                  {service.title}
+                </p>
+                <h3 className="font-display font-light text-2xl md:text-[1.7rem] text-[#FFFFFF] tracking-tight leading-[1.05]" style={{ fontFamily: "var(--font-cormorant), serif" }}>
+                  {service.subtitle}
+                </h3>
+                <span className="absolute bottom-5 right-5 inline-flex items-center gap-2 px-4 py-2 bg-[#D4A843] text-[#0A0A0A] font-body text-[10px] font-bold tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                  ENQUIRE
+                  <span aria-hidden>→</span>
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ ABOUT SECTION ============ */}
+      <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#141414]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+          <div className="lg:col-span-5 wk-fade">
+            <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-3 font-bold">About Us</p>
+            <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF] mb-6" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+              {ABOUT_CONTENT.title}
+            </h2>
+            <p className="font-body text-base md:text-lg text-[#FFFFFF]/70 leading-relaxed max-w-md">
+              {ABOUT_CONTENT.body}
+            </p>
+          </div>
+          <div className="lg:col-span-7 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+            {ABOUT_CONTENT.features.map((feature, i) => (
+              <div key={feature.title} className="relative aspect-[4/3] overflow-hidden bg-[#0A0A0A] wk-scale-in">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-2 font-semibold">{feature.title}</p>
+                  <p className="font-body text-sm text-[#FFFFFF]/80 leading-relaxed">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PROCESS ============ */}
+      <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#0A0A0A]">
+        <div className="text-center wk-fade mb-12 md:mb-16">
+          <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-3 font-bold">Our Process</p>
+          <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF]" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+            Creating your space together
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+          {PROCESS_STEPS.map((step, i) => (
+            <div key={i} className="wk-fade text-center p-6 md:p-8 border border-[#2A2A2A] hover:border-[#D4A843]/50 transition-colors">
+              <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-3 font-semibold">{step.step}</p>
+              <p className="font-body text-base md:text-lg text-[#FFFFFF]/80 leading-relaxed">{step.title}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ PORTFOLIO/GALLERY ============ */}
       <V6GallerySection />
+
+      {/* ============ BEFORE & AFTER ============ */}
+      <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#141414]">
+        <div className="text-center wk-fade mb-12 md:mb-16">
+          <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#D4A843] mb-3 font-bold">Before & After</p>
+          <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF]" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+            A modern approach to design
+          </h2>
+          <p className="font-body text-base md:text-lg text-[#FFFFFF]/70 leading-relaxed max-w-2xl mx-auto mt-6">
+            Work with an experienced designer to create your one-of-a-kind kitchen, backed by a perfect fit guarantee.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {[
+            "/images/pvc-foilwrap-and-high-gloss-handless-kitchen/02.jpg",
+            "/images/high-gloss-handless-kitchen/02.jpg",
+          ].map((src, i) => (
+            <div key={i} className="relative aspect-[4/3] overflow-hidden bg-[#0A0A0A] wk-scale-in">
+              <Image src={src} alt="Before & After" fill className="object-cover transition-transform duration-1000 hover:scale-[1.03]" sizes="(max-width: 768px) 100vw, 50vw" />
+            </div>
+          ))}
+        </div>
+      </section>
 
       <style jsx>{`
         @keyframes scrollLine {
-          0% {
-            transform: translateY(-100%);
-          }
-          100% {
-            transform: translateY(400%);
-          }
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(400%); }
         }
       `}</style>
     </div>
