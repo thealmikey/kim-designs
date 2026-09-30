@@ -94,7 +94,7 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-foreground pointer-events-none z-[9999] transition-opacity duration-200 ${
+        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-[#D4A843] pointer-events-none z-[9999] transition-opacity duration-200 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
         style={{ willChange: "transform" }}
@@ -110,7 +110,7 @@ export default function CustomCursor() {
             isVisible ? "opacity-100" : "opacity-0"
           } ${
             isHovering
-              ? "scale-50 border-aged-brass bg-aged-brass/10"
+              ? "scale-50 border-[#D4A843] bg-[#D4A843]/10"
               : "scale-100 border-foreground/40"
           }`}
           style={{ transformOrigin: "center" }}

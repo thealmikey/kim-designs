@@ -105,8 +105,8 @@ export default function AtelierPlate({ slug }: Props) {
             This commission is not in the register.
           </h1>
           <Link
-            href="/v6/work"
-            className={`${label} text-[#FFFFFF] border-b border-[#171716]/40 hover:border-[#A68A64] hover:text-[#A68A64] pb-0.5 transition-colors`}
+            href="/work"
+            className={`${label} text-[#FFFFFF] border-b border-[#FFFFFF]/40 hover:border-[#D4A843] hover:text-[#D4A843] pb-0.5 transition-colors`}
           >
             ← Return to the register
           </Link>
@@ -135,12 +135,12 @@ export default function AtelierPlate({ slug }: Props) {
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/55 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/70 via-transparent to-transparent" />
         </div>
 
-        <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-12 lg:px-16 pt-28 md:pt-32">
+        <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-12 lg:px-16 pt-[calc(var(--nav-two-row-height)+2rem)]">
           <Link
-            href="/v6/work"
+            href="/work"
             className={`${label} text-[#FFFFFF]/85 hover:text-[#FFFFFF] inline-flex items-center gap-2 atp-hero-eyebrow transition-colors`}
           >
             <span aria-hidden>←</span>
@@ -178,25 +178,25 @@ export default function AtelierPlate({ slug }: Props) {
       <section className="px-6 md:px-12 lg:px-16 pt-20 md:pt-28 pb-12 md:pb-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 atp-hero-meta">
           <div>
-            <p className={`${label} text-warm-gray mb-2`}>Location</p>
+            <p className={`${label} text-[#D4A843] mb-2`}>Location</p>
             <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               {project.location}
             </p>
           </div>
           <div>
-            <p className={`${label} text-warm-gray mb-2`}>Year</p>
+            <p className={`${label} text-[#D4A843] mb-2`}>Year</p>
             <p className="font-body text-sm md:text-base text-[#FFFFFF] tabular-nums">
               {project.year}
             </p>
           </div>
           <div>
-            <p className={`${label} text-warm-gray mb-2`}>Discipline</p>
+            <p className={`${label} text-[#D4A843] mb-2`}>Discipline</p>
             <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               {project.category}
             </p>
           </div>
           <div>
-            <p className={`${label} text-warm-gray mb-2`}>Status</p>
+            <p className={`${label} text-[#D4A843] mb-2`}>Status</p>
             <p className="font-body text-sm md:text-base text-[#FFFFFF]">
               Completed
             </p>
@@ -207,7 +207,7 @@ export default function AtelierPlate({ slug }: Props) {
       {/* ============ INTRODUCTION (symmetric 6-6) ============ */}
       <section className="px-6 md:px-12 lg:px-16 py-12 md:py-20">
         <div className="text-center atp-fade mb-8 md:mb-12">
-          <p className={`${label} text-[#A68A64] mb-4`}>§ The brief</p>
+          <p className={`${label} text-[#D4A843] mb-4`}>The brief</p>
         </div>
         <div className="grid grid-cols-12 gap-6 md:gap-12">
           <div className="col-span-12 md:col-span-6 md:col-start-4 atp-fade">
@@ -239,7 +239,7 @@ export default function AtelierPlate({ slug }: Props) {
       {/* ============ MATERIALS (symmetric: centered heading + centered 6-6 list) ============ */}
       <section className="bg-[#141414] px-6 md:px-12 lg:px-16 py-20 md:py-28 mt-8 md:mt-16">
         <div className="text-center atp-fade mb-12 md:mb-16">
-          <p className={`${label} text-[#A68A64] mb-4`}>§ Material palette</p>
+          <p className={`${label} text-[#D4A843] mb-4`}>Material palette</p>
           <h2
             className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#FFFFFF]"
             style={{
@@ -278,7 +278,7 @@ export default function AtelierPlate({ slug }: Props) {
       {remaining.length > 1 && (
         <section className="px-6 md:px-12 lg:px-16 py-20 md:py-32">
           <div className="text-center mb-10 md:mb-16 atp-fade">
-            <p className={`${label} text-[#D4A843] mb-3`}>§ The plate</p>
+            <p className={`${label} text-[#D4A843] mb-3`}>The plate</p>
             <h2
               className="font-display font-light leading-[1.02] tracking-[-0.02em] text-[#FFFFFF]"
               style={{
@@ -311,7 +311,7 @@ export default function AtelierPlate({ slug }: Props) {
       {/* ============ RELATED PLATES (symmetric 6-6) ============ */}
       <section className="px-6 md:px-12 lg:px-16 pb-20 md:pb-28">
         <div className="text-center mb-10 md:mb-12 atp-fade">
-          <p className={`${label} text-warm-gray`}>§ Other commissions</p>
+          <p className={`${label} text-[#D4A843]`}>Other commissions</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
           {prev && (
@@ -328,9 +328,9 @@ export default function AtelierPlate({ slug }: Props) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <p className={`${label} text-warm-gray mb-2`}>← Previous</p>
+              <p className={`${label} text-[#D4A843] mb-2`}>← Previous</p>
               <h3
-                className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#A68A64] transition-colors"
+                className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#D4A843] transition-colors"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {prev.title}
@@ -354,9 +354,9 @@ export default function AtelierPlate({ slug }: Props) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <p className={`${label} text-warm-gray mb-2`}>Next →</p>
+              <p className={`${label} text-[#D4A843] mb-2`}>Next →</p>
               <h3
-                className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#A68A64] transition-colors"
+                className="font-display text-2xl md:text-3xl font-light tracking-tight group-hover:text-[#D4A843] transition-colors"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 {next.title}
@@ -379,7 +379,7 @@ export default function AtelierPlate({ slug }: Props) {
         </p>
         <Link
           href="/contact"
-          className={`${label} text-[#FFFFFF] hover:text-[#A68A64] border-b border-[#171716]/40 hover:border-[#A68A64] inline-block pb-0.5 transition-colors`}
+          className={`${label} text-[#FFFFFF] hover:text-[#D4A843] border-b border-[#FFFFFF]/40 hover:border-[#D4A843] inline-block pb-0.5 transition-colors`}
         >
           Start a project →
         </Link>

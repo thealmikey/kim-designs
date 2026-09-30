@@ -108,7 +108,7 @@ export default function StudioSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-7">
             <div className="studio-header">
-              <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-5">
+              <p className="font-body text-[10px] text-[#FFFFFF]/65 tracking-[0.4em] uppercase mb-5">
                 Philosophy
               </p>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-[#FFFFFF] tracking-[-0.03em] leading-[1.1] max-w-2xl">
@@ -130,7 +130,7 @@ export default function StudioSection() {
                     <h3 className="font-display text-2xl md:text-3xl font-light text-[#FFFFFF] tracking-tight leading-tight">
                       {step.title}
                     </h3>
-                    <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-3 max-w-2xl">
+                    <p className="font-body text-sm md:text-[15px] text-[#FFFFFF]/65 leading-relaxed mt-3 max-w-2xl">
                       {step.body}
                     </p>
                     <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#FFFFFF]/70 mt-4">
@@ -169,7 +169,7 @@ export default function StudioSection() {
             </div>
 
             <div>
-              <p className="studio-materials font-body text-[11px] text-warm-gray tracking-[0.3em] uppercase mb-5">
+              <p className="studio-materials font-body text-[11px] text-[#FFFFFF]/65 tracking-[0.3em] uppercase mb-5">
                 What we work with
               </p>
               <ul className="flex flex-wrap gap-2">
@@ -186,7 +186,7 @@ export default function StudioSection() {
 
             <Link
               href="/contact"
-              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-warm-gray hover:text-[#FFFFFF] transition-colors tracking-[0.3em] uppercase"
+              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-[#FFFFFF]/65 hover:text-[#FFFFFF] transition-colors tracking-[0.3em] uppercase"
             >
               <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground group-hover:w-12 transition-all" />
               Start a project

@@ -81,9 +81,9 @@ export default function ContactSection() {
             <div className="contact-block mt-10 space-y-5">
               <a
                 href="mailto:info@winteriordesign.co.ke"
-                className="group flex items-start gap-4 -m-3 p-3 hover:bg-limestone/30 transition-colors"
+                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#FFFFFF]/5 transition-colors"
               >
-                <span className="w-10 h-10 border border-foreground/25 flex items-center justify-center shrink-0 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-colors">
+                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0 group-hover:border-[#D4A843] group-hover:bg-[#D4A843] group-hover:text-[#0A0A0A] transition-colors">
                   <Mail size={16} strokeWidth={1.5} />
                 </span>
                 <span>
@@ -97,9 +97,9 @@ export default function ContactSection() {
               </a>
               <a
                 href="tel:+254728846560"
-                className="group flex items-start gap-4 -m-3 p-3 hover:bg-limestone/30 transition-colors"
+                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#FFFFFF]/5 transition-colors"
               >
-                <span className="w-10 h-10 border border-foreground/25 flex items-center justify-center shrink-0 group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-colors">
+                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0 group-hover:border-[#D4A843] group-hover:bg-[#D4A843] group-hover:text-[#0A0A0A] transition-colors">
                   <Phone size={16} strokeWidth={1.5} />
                 </span>
                 <span>
@@ -115,7 +115,7 @@ export default function ContactSection() {
                 </span>
               </a>
               <div className="flex items-start gap-4 -m-3 p-3">
-                <span className="w-10 h-10 border border-foreground/25 flex items-center justify-center shrink-0">
+                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0">
                   <MapPin size={16} strokeWidth={1.5} />
                 </span>
                 <span>
@@ -133,7 +133,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="contact-block mt-10 pt-6 border-t border-foreground/15">
+            <div className="contact-block mt-10 pt-6 border-t border-[#2A2A2A]">
               <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
                 Follow
               </p>
@@ -143,7 +143,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on Facebook"
-                  className="w-10 h-10 border border-foreground/25 flex items-center justify-center hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -154,7 +154,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on X"
-                  className="w-10 h-10 border border-foreground/25 flex items-center justify-center hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -165,7 +165,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on Instagram"
-                  className="w-10 h-10 border border-foreground/25 flex items-center justify-center hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -178,7 +178,7 @@ export default function ContactSection() {
           </div>
 
           <div className="lg:col-span-7 contact-block">
-            <div className="relative w-full h-[280px] md:h-[360px] overflow-hidden bg-foreground/5 mb-8">
+            <div className="relative w-full h-[280px] md:h-[360px] overflow-hidden bg-[#FFFFFF]/5 mb-8">
               <Image
                 src="/images/pvc-foilwrap-and-high-gloss-handless-kitchen/02.jpg"
                 alt="Winterior Design showroom"
@@ -201,7 +201,7 @@ export default function ContactSection() {
 
             {submitted ? (
               <div className="border border-aged-brass/40 bg-[#141414] p-8 md:p-10 flex items-start gap-4">
-                <span className="w-10 h-10 bg-[#D4A843] text-charcoal flex items-center justify-center shrink-0">
+                <span className="w-10 h-10 bg-[#D4A843] text-[#0A0A0A] flex items-center justify-center shrink-0">
                   <Check size={18} strokeWidth={2} />
                 </span>
                 <div>
@@ -238,7 +238,7 @@ export default function ContactSection() {
                     placeholder="Your full name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -252,7 +252,7 @@ export default function ContactSection() {
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -265,7 +265,7 @@ export default function ContactSection() {
                     placeholder="+254 …"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -276,7 +276,7 @@ export default function ContactSection() {
                     name="service"
                     value={form.service}
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] outline-none transition-colors"
+                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] outline-none transition-colors"
                   >
                     <option value="" disabled className="bg-[#0A0A0A] text-warm-gray">
                       Choose a service
@@ -298,7 +298,7 @@ export default function ContactSection() {
                     placeholder="Tell us about the space, the result you want, and when you'd like to start."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="bg-transparent border-b border-foreground/25 focus:border-foreground py-2 font-body text-base text-[#FFFFFF] placeholder:text-warm-gray/70 outline-none resize-none transition-colors"
+                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none resize-none transition-colors"
                   />
                 </label>
                 <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-4 mt-4">
@@ -307,7 +307,7 @@ export default function ContactSection() {
                   </p>
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-foreground text-background px-5 py-3 hover:bg-[#D4A843] transition-colors"
+                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-[#D4A843] text-[#0A0A0A] px-5 py-3 hover:bg-[#E8C56D] transition-colors"
                   >
                     Send message
                     <ArrowUpRight
