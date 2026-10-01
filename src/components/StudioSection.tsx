@@ -111,9 +111,9 @@ export default function StudioSection() {
               <p className="font-body text-[10px] text-[#333333]/65 tracking-[0.4em] uppercase mb-5">
                 Philosophy
               </p>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-[#333333] tracking-[-0.03em] leading-[1.1] max-w-2xl">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium text-[#333333] tracking-[-0.03em] leading-[1.1] max-w-2xl">
                 For a house to be successful, the objects in it must
-                <span className="italic text-[#333333]/70"> communicate.</span>
+                <span className="italic text-[#333333]/85"> communicate.</span>
               </h2>
             </div>
 
@@ -127,13 +127,13 @@ export default function StudioSection() {
                     {step.n}
                   </span>
                   <div className="col-span-10 md:col-span-11">
-                    <h3 className="font-display text-2xl md:text-3xl font-light text-[#333333] tracking-tight leading-tight">
+                    <h3 className="font-display text-2xl md:text-3xl font-medium text-[#333333] tracking-tight leading-tight">
                       {step.title}
                     </h3>
-                    <p className="font-body text-sm md:text-[15px] text-[#333333]/65 leading-relaxed mt-3 max-w-2xl">
+                    <p className="font-body text-sm md:text-[15px] text-[#333333]/85 leading-relaxed mt-3 max-w-2xl">
                       {step.body}
                     </p>
-                    <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#333333]/70 mt-4">
+                    <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#333333]/80 mt-4">
                       {step.output}
                     </p>
                   </div>
@@ -169,14 +169,14 @@ export default function StudioSection() {
             </div>
 
             <div>
-              <p className="studio-materials font-body text-[11px] text-[#333333]/65 tracking-[0.3em] uppercase mb-5">
+              <p className="studio-materials font-body text-[11px] font-semibold text-[#333333]/85 tracking-[0.3em] uppercase mb-5">
                 What we work with
               </p>
               <ul className="flex flex-wrap gap-2">
                 {materials.map((material) => (
                   <li
                     key={material}
-                    className="studio-materials font-body text-xs text-charcoal bg-cream/80 px-4 py-2 rounded-full"
+                    className="studio-materials font-body text-xs font-medium text-[#333333] bg-white border border-[#C6C5CA] px-4 py-2 rounded-full hover:border-[#FF6600] hover:text-[#FF6600] transition-colors"
                   >
                     {material}
                   </li>
@@ -186,7 +186,7 @@ export default function StudioSection() {
 
             <Link
               href="/contact"
-              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-[#333333]/65 hover:text-[#333333] transition-colors tracking-[0.3em] uppercase"
+              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] font-semibold text-[#333333]/85 hover:text-[#FF6600] transition-colors tracking-[0.3em] uppercase"
             >
               <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground group-hover:w-12 transition-all" />
               Start a project
