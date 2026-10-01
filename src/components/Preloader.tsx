@@ -32,12 +32,12 @@ export default function Preloader() {
   if (isLoaded) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0A0A0A] flex items-center justify-center">
+    <div className="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
       <div className="flex flex-col items-center gap-6">
-        <div className="w-12 h-px bg-[#FFFFFF]/20 overflow-hidden">
-          <div className="h-full bg-[#D4A843] animate-[load_1s_ease-in-out_infinite]" />
+        <div className="w-12 h-px bg-[#C6C5CA] overflow-hidden">
+          <div className="h-full bg-[#FF6600] animate-[load_1s_ease-in-out_infinite]" />
         </div>
-        <p className="font-body text-[10px] text-[#FFFFFF]/50 tracking-[0.4em] uppercase">
+        <p className="font-body text-[10px] text-[#333333]/50 tracking-[0.4em] uppercase">
           Loading
         </p>
       </div>

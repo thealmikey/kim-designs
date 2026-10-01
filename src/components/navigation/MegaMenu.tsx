@@ -4,8 +4,8 @@ import Link from "next/link";
 import { projects, allCategories } from "@/lib/projects";
 
 const label = "font-body text-[10px] tracking-[0.2em] uppercase";
-const itemLabel = "font-body text-[13px] text-[#171716]";
-const countLabel = "font-body text-[11px] text-[#171716]/30 font-normal";
+const itemLabel = "font-body text-[13px] text-[#333333]";
+const countLabel = "font-body text-[11px] text-[#333333]/30 font-normal";
 
 interface MegaMenuProps {
   isOpen: boolean;
@@ -98,7 +98,7 @@ export default function MegaMenu({ isOpen, onClose, onItemHover }: MegaMenuProps
       />
 
       <div
-        className="absolute top-[calc(100%-4px)] left-0 right-0 bg-[#F5F1E9] border-b border-[#171716]/10 shadow-[0_20px_40px_-20px_rgba(23,23,22,0.3)] py-8 px-6 lg:px-16 z-50 animate-fadeIn"
+        className="absolute top-[calc(100%-4px)] left-0 right-0 bg-[#FFFFFF] border-b border-[#333333]/10 shadow-[0_20px_40px_-20px_rgba(23,23,22,0.3)] py-8 px-6 lg:px-16 z-50 animate-fadeIn"
         role="menu"
         aria-label="Work categories"
         onMouseEnter={onItemHover}
@@ -108,7 +108,7 @@ export default function MegaMenu({ isOpen, onClose, onItemHover }: MegaMenuProps
           {CATEGORIES.map((cat) => (
             <div key={cat.id} className="space-y-4">
               <div className="flex items-baseline justify-between">
-                <h3 className={`${label} text-[#A68A64] font-semibold`}>
+                <h3 className={`${label} text-[#FF6600] font-semibold`}>
                   {cat.label}
                 </h3>
                 <span className={`${countLabel} hidden sm:inline`}>
@@ -122,7 +122,7 @@ export default function MegaMenu({ isOpen, onClose, onItemHover }: MegaMenuProps
                     <Link
                       href={item.href}
                       role="menuitem"
-                      className={`${itemLabel} hover:text-[#A68A64] transition-colors flex items-center gap-2 py-2 px-3 rounded-sm hover:bg-[#171716]/5`}
+                      className={`${itemLabel} hover:text-[#FF6600] transition-colors flex items-center gap-2 py-2 px-3 rounded-sm hover:bg-[#333333]/5`}
                       onMouseEnter={onItemHover}
                       onClick={onClose}
                     >
@@ -137,7 +137,7 @@ export default function MegaMenu({ isOpen, onClose, onItemHover }: MegaMenuProps
                   <Link
                     href={cat.allHref}
                     role="menuitem"
-                    className={`${label} text-[#A68A64] hover:text-[#171716] transition-colors inline-flex items-center gap-1 pt-2`}
+                    className={`${label} text-[#FF6600] hover:text-[#333333] transition-colors inline-flex items-center gap-1 pt-2`}
                     onClick={onClose}
                   >
                     View all {cat.label} →

@@ -20,7 +20,7 @@ export default function CategoryBar() {
 
   return (
     <nav
-      className="bg-[#F5F1E9] border-b border-[#171716]/10 sticky top-0 z-40"
+      className="bg-[#FFFFFF] border-b border-[#333333]/10 sticky top-0 z-40"
       aria-label="Work categories"
       style={{ height: "56px", top: "88px" }}
     >
@@ -35,8 +35,8 @@ export default function CategoryBar() {
                 href={cat.href}
                 className={`relative flex items-center px-4 py-2 rounded-full text-[13px] font-body font-semibold tracking-[0.1em] uppercase transition-all duration-200 whitespace-nowrap ${
                   active
-                    ? "bg-[#171716] text-[#F5F1E9] shadow-[0_2px_8px_rgba(23,23,22,0.25)]"
-                    : "bg-[#F5F1E9] text-[#171716] border border-[#171716]/15 hover:bg-[#171716]/5 hover:border-[#A68A64]/50"
+                    ? "bg-[#333333] text-[#FFFFFF] shadow-[0_2px_8px_rgba(23,23,22,0.25)]"
+                    : "bg-[#FFFFFF] text-[#333333] border border-[#333333]/15 hover:bg-[#333333]/5 hover:border-[#FF6600]/50"
                 }`}
                 aria-current={active ? "page" : undefined}
               >

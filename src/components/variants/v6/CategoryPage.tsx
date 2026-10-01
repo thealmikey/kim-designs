@@ -43,7 +43,7 @@ function GalleryTile({
       <button
         type="button"
         onClick={() => onOpen(index)}
-        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#FFFFFF]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A843] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0A0A]"
+        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         aria-label={`Open ${project.title}`}
       >
         <Image
@@ -58,7 +58,7 @@ function GalleryTile({
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#171716]/80 via-[#171716]/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/80 via-[#333333]/15 to-transparent" />
 
         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
           <p className="font-body text-[10px] text-[#FFFFFF]/80 tracking-[0.3em] uppercase mb-1.5 font-semibold">
@@ -66,13 +66,13 @@ function GalleryTile({
           </p>
           <h3
             className="font-display text-2xl md:text-[1.7rem] font-light text-[#FFFFFF] tracking-tight leading-[1.05]"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
+            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
           >
             {project.title}
           </h3>
           <p
             className="font-display italic text-sm md:text-base text-[#FFFFFF]/80 mt-1"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
+            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
           >
             {project.subtitle}
           </p>
@@ -94,8 +94,8 @@ function GalleryTile({
         }
         className={`absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center transition-all shadow-sm ${
           isSelected
-            ? "bg-[#D4A843] text-[#0A0A0A]"
-            : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#D4A843] hover:text-[#0A0A0A]"
+            ? "bg-[#FF6600] text-[#FFFFFF]"
+            : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#FF6600] hover:text-[#FFFFFF]"
         }`}
       >
         {isSelected ? (
@@ -191,7 +191,7 @@ function SingleItemOverlay({
       aria-modal="true"
       aria-label={project.title}
     >
-      <div className="flex items-center justify-between px-5 md:px-8 py-4 border-b border-[#F5F1E9]/10">
+      <div className="flex items-center justify-between px-5 md:px-8 py-4 border-b border-[#FFFFFF]/10">
         <button
           type="button"
           onClick={onClose}
@@ -211,8 +211,8 @@ function SingleItemOverlay({
             aria-pressed={isSelected(project.id)}
             className={`${label} px-3 py-2 transition-colors ${
               isSelected(project.id)
-                ? "bg-[#D4A843] text-[#0A0A0A]"
-                : "border border-[#F5F1E9]/30 text-[#FFFFFF] hover:border-[#D4A843] hover:text-[#D4A843]"
+                ? "bg-[#FF6600] text-[#FFFFFF]"
+                : "border border-[#FFFFFF]/30 text-[#FFFFFF] hover:border-[#FF6600] hover:text-[#FF6600]"
             }`}
           >
             {isSelected(project.id) ? "Selected ✓" : "Add to selection"}
@@ -281,27 +281,27 @@ function SingleItemOverlay({
 
         {showDetails && (
           <div
-            className="absolute inset-x-0 bottom-0 max-h-[60vh] overflow-y-auto bg-[#0A0A0A]/95 backdrop-blur-md border-t border-[#F5F1E9]/15 p-5 md:p-8"
+            className="absolute inset-x-0 bottom-0 max-h-[60vh] overflow-y-auto bg-[#0A0A0A]/95 backdrop-blur-md border-t border-[#FFFFFF]/15 p-5 md:p-8"
             style={{
               transform: showDetails ? "translateY(0)" : "translateY(100%)",
               transition: "transform 400ms ease-out",
             }}
           >
-            <p className={`${label} text-[#D4A843] mb-3`}>
+            <p className={`${label} text-[#FF6600] mb-3`}>
               {project.category} · {project.location} · {project.year}
             </p>
             <h2
               className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF] mb-3"
               style={{
                 fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
-                fontFamily: "var(--font-cormorant), serif",
+                fontFamily: "var(--font-roboto), sans-serif",
               }}
             >
               {project.title}
             </h2>
             <p
               className="font-display italic text-[#FFFFFF]/85 text-base md:text-lg mb-4"
-              style={{ fontFamily: "var(--font-cormorant), serif" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif" }}
             >
               {project.subtitle}.
             </p>
@@ -323,7 +323,7 @@ function SingleItemOverlay({
       </div>
 
       {hasMultipleImages && (
-        <div className="border-t border-[#F5F1E9]/10 bg-[#0A0A0A]">
+        <div className="border-t border-[#FFFFFF]/10 bg-[#0A0A0A]">
           <div className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide px-4 md:px-8 py-3">
             {project.images.map((src, i) => (
               <button
@@ -332,7 +332,7 @@ function SingleItemOverlay({
                 onClick={() => setActiveImage(i)}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden border-2 transition-colors ${
                   i === activeImage
-                    ? "border-[#D4A843]"
+                    ? "border-[#FF6600]"
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
                 aria-label={`View image ${i + 1}`}
@@ -374,17 +374,17 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
   return (
     <section
       id="v6-gallery"
-      className="px-6 md:px-12 lg:px-16 pt-[calc(var(--nav-two-row-height)+3rem)] pb-20 md:pb-28 bg-[#0A0A0A] min-h-screen"
+      className="px-6 md:px-12 lg:px-16 pt-[calc(var(--nav-two-row-height)+3rem)] pb-20 md:pb-28 bg-white min-h-screen"
     >
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14">
         <div>
-          <p className={`${label} text-[#D4A843] mb-3`}>{title}</p>
+          <p className={`${label} text-[#FF6600] mb-3`}>{title}</p>
           <h2
-            className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#FFFFFF]"
+            className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#333333]"
             style={{
               fontSize: "clamp(2rem, 4.5vw, 4rem)",
-              fontFamily: "var(--font-cormorant), serif",
+              fontFamily: "var(--font-roboto), sans-serif",
             }}
           >
             {subtitle}
@@ -394,7 +394,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
 
       {/* Wood Kivu-style tab filter */}
       <div
-        className="flex flex-wrap items-center gap-x-1 mb-10 md:mb-14 border-b border-[#2A2A2A]"
+        className="flex flex-wrap items-center gap-x-1 mb-10 md:mb-14 border-b border-[#C6C5CA]"
         role="tablist"
         aria-label="Filter projects by category"
       >
@@ -408,8 +408,8 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
               aria-selected={isTabActive}
               className={`${label} px-5 py-4 -mb-px border-b-2 font-semibold transition-colors ${
                 isTabActive
-                  ? "border-[#D4A843] text-[#D4A843]"
-                  : "border-transparent text-[#FFFFFF]/55 hover:text-[#FFFFFF]"
+                  ? "border-[#FF6600] text-[#FF6600]"
+                  : "border-transparent text-[#333333]/55 hover:text-[#333333]"
               }`}
             >
               {c.label}
@@ -454,10 +454,10 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
 
       {/* Floating selection bar */}
       {hydrated && selected.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#D4A843] text-[#0A0A0A] border-t-2 border-[#D4A843] shadow-2xl">
+        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#FF6600] text-[#FFFFFF] border-t-2 border-[#FF6600] shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 md:py-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="bg-[#D4A843] text-[#0A0A0A] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
+              <span className="bg-[#FF6600] text-[#FFFFFF] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
                 {selected.length}
               </span>
               <p className="font-body text-xs md:text-sm text-[#FFFFFF]/90 truncate">
@@ -473,7 +473,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
               <button
                 type="button"
                 onClick={clear}
-                className="font-body text-[10px] tracking-[0.22em] uppercase font-semibold text-[#FFFFFF]/70 hover:text-[#FFFFFF] px-3 py-2 border border-[#F5F1E9]/25 hover:border-[#F5F1E9]"
+                className="font-body text-[10px] tracking-[0.22em] uppercase font-semibold text-[#FFFFFF]/70 hover:text-[#FFFFFF] px-3 py-2 border border-[#FFFFFF]/25 hover:border-[#FFFFFF]"
               >
                 Clear
               </button>
@@ -481,7 +481,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#D4A843] hover:bg-[#E8C56D] hover:text-[#0A0A0A] text-[#0A0A0A] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
+                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#FF6600] hover:bg-[#D95500] hover:text-[#FFFFFF] text-[#FFFFFF] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
               >
                 <span>WhatsApp</span>
                 <span aria-hidden>→</span>

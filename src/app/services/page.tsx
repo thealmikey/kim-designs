@@ -11,7 +11,7 @@ const offerings = [
 
 export default function ServicesPage() {
   return (
-    <main className="bg-[#0A0A0A]">
+    <main className="bg-white">
       <section className="relative w-full h-[88vh] min-h-[640px] overflow-hidden">
         <Image
           src="/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg"
@@ -32,46 +32,46 @@ export default function ServicesPage() {
           aria-hidden="true"
         />
 
-        <div className="relative z-10 h-full flex flex-col justify-between px-6 lg:px-16 py-28 md:py-32 text-[#FFFFFF]">
+        <div className="relative z-10 h-full flex flex-col justify-between px-6 lg:px-16 py-28 md:py-32 text-[#333333]">
           <div>
-            <p className="font-body text-[10px] text-[#D4A843] tracking-[0.4em] uppercase font-semibold">
+            <p className="font-body text-[10px] text-[#FF6600] tracking-[0.4em] uppercase font-semibold">
               How we do it
             </p>
           </div>
 
           <div className="max-w-4xl">
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] font-light text-[#FFFFFF] tracking-[-0.04em] leading-[0.95]">
+            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] font-light text-[#333333] tracking-[-0.04em] leading-[0.95]">
               What we
               <br />
-              <span className="italic text-[#FFFFFF]/80">do.</span>
+              <span className="italic text-[#333333]/80">do.</span>
             </h1>
             <ul className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2 max-w-2xl">
               {offerings.map((o) => (
                 <li
                   key={o}
-                  className="font-body text-sm md:text-[15px] text-[#FFFFFF]/85 flex items-baseline gap-2"
+                  className="font-body text-sm md:text-[15px] text-[#333333]/85 flex items-baseline gap-2"
                 >
-                  <span className="text-[#D4A843]">·</span> {o}
+                  <span className="text-[#FF6600]">·</span> {o}
                 </li>
               ))}
             </ul>
             <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-body font-bold">
               <Link
                 href="/contact"
-                className="bg-[#D4A843] text-[#0A0A0A] px-5 py-3 hover:bg-[#E8C56D] transition-colors"
+                className="bg-[#FF6600] text-[#FFFFFF] px-5 py-3 hover:bg-[#D95500] transition-colors"
               >
                 Start a Project
               </Link>
               <Link
                 href="/work"
-                className="border border-[#FFFFFF]/40 text-[#FFFFFF] px-5 py-3 hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-colors"
+                className="border border-[#C6C5CA] text-[#333333] px-5 py-3 hover:bg-[#333333] hover:text-[#FFFFFF] transition-colors"
               >
                 See Work
               </Link>
             </div>
           </div>
 
-          <div className="flex items-end justify-between text-[#FFFFFF]/60">
+          <div className="flex items-end justify-between text-[#333333]/60">
             <p className="font-body text-[10px] tracking-[0.3em] uppercase">
               Winterior Design · Nairobi
             </p>

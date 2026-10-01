@@ -51,7 +51,7 @@ export default function WorkInProgress() {
   return (
     <section
       ref={ref}
-      className="bg-[#0A0A0A] border-t border-[#2A2A2A]"
+      className="bg-white border-t border-[#C6C5CA]"
       aria-labelledby="wip-heading"
     >
       <div className="px-4 md:px-12 py-20 md:py-28">
@@ -62,9 +62,9 @@ export default function WorkInProgress() {
             </p>
             <h2
               id="wip-heading"
-              className="font-display text-3xl md:text-5xl lg:text-6xl font-light text-[#FFFFFF] tracking-[-0.03em] leading-[1.05]"
+              className="font-display text-3xl md:text-5xl lg:text-6xl font-light text-[#333333] tracking-[-0.03em] leading-[1.05]"
             >
-              Work in <span className="italic text-[#FFFFFF]/80">progress.</span>
+              Work in <span className="italic text-[#333333]/80">progress.</span>
             </h2>
           </div>
           <p className="font-body text-sm md:text-[15px] text-warm-gray max-w-md leading-relaxed">
@@ -94,7 +94,7 @@ export default function WorkInProgress() {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-2 left-2 md:bottom-3 md:left-3 font-body text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#FFFFFF]/85">
+              <figcaption className="absolute bottom-2 left-2 md:bottom-3 md:left-3 font-body text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#333333]/85">
                 In progress
               </figcaption>
             </figure>

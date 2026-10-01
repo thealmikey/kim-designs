@@ -93,9 +93,9 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0A0A0A] flex flex-col" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div className="fixed inset-0 z-50 bg-white flex flex-col" role="dialog" aria-modal="true" aria-label="Navigation menu">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-[#2A2A2A]">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-[#C6C5CA]">
         <Link
           href="/"
           onClick={onClose}
@@ -116,10 +116,10 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
             <span
               className="font-bold tracking-[0.04em] uppercase whitespace-nowrap"
               style={{
-                fontFamily: "var(--font-cinzel), serif",
+                fontFamily: "var(--font-roboto), sans-serif",
                 fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
                 lineHeight: 1,
-                color: "#FFFFFF",
+                color: "#333333",
               }}
             >
               WINTERIOR
@@ -127,11 +127,11 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
             <span
               className="font-semibold tracking-[0.32em] uppercase whitespace-nowrap"
               style={{
-                fontFamily: "var(--font-cinzel), serif",
+                fontFamily: "var(--font-roboto), sans-serif",
                 fontSize: "clamp(0.5rem, 1vw, 0.625rem)",
                 lineHeight: 1,
                 letterSpacing: "0.42em",
-                color: "#D4A843",
+                color: "#FF6600",
               }}
             >
               DESIGN
@@ -141,11 +141,11 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
 
         <button
           onClick={onClose}
-          className="md:hidden relative w-11 h-11 flex items-center justify-center text-[#FFFFFF]"
+          className="md:hidden relative w-11 h-11 flex items-center justify-center text-[#333333]"
           aria-label="Close menu"
         >
-          <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] rotate-45" />
-          <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] -rotate-45" />
+          <span className="block absolute w-6 h-[2px] bg-[#333333] rotate-45" />
+          <span className="block absolute w-6 h-[2px] bg-[#333333] -rotate-45" />
         </button>
       </header>
 
@@ -153,7 +153,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
       <nav className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
         {/* WORK section with expandable categories */}
         <section className="space-y-4">
-          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#D4A843] font-semibold">
+          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#FF6600] font-semibold">
             Work
           </h3>
           <div className="space-y-2">
@@ -163,18 +163,18 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
               const isActive = pathname.startsWith(cat.allHref);
 
               return (
-                <div key={cat.label} className="border-t border-[#2A2A2A] pt-4">
+                <div key={cat.label} className="border-t border-[#C6C5CA] pt-4">
                   <button
                     type="button"
                     onClick={() => handleCategoryClick(cat.label)}
                     className="flex items-center justify-between w-full text-left py-2"
                     aria-expanded={isExpanded}
                   >
-                    <span className={`font-display font-light text-xl tracking-tight transition-colors ${isActive ? "text-[#D4A843]" : "text-[#FFFFFF]"}`} style={{ fontFamily: "var(--font-cormorant), serif" }}>
+                    <span className={`font-display font-light text-xl tracking-tight transition-colors ${isActive ? "text-[#FF6600]" : "text-[#333333]"}`} style={{ fontFamily: "var(--font-roboto), sans-serif" }}>
                       {cat.label}
                     </span>
                     <span className="flex items-center gap-2">
-                      <span className="font-body text-[11px] text-[#FFFFFF]/40">
+                      <span className="font-body text-[11px] text-[#6F7072]">
                         {count}
                       </span>
                       <svg
@@ -184,7 +184,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
-                        className={`text-[#D4A843] transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                        className={`text-[#FF6600] transition-transform ${isExpanded ? "rotate-180" : ""}`}
                         aria-hidden="true"
                       >
                         <path d="M6 9l6 6 6-6" />
@@ -193,7 +193,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                   </button>
 
                   {isExpanded && (
-                    <ul className="ml-4 mt-2 space-y-1.5 border-l border-[#2A2A2A] pl-4 animate-fadeIn">
+                    <ul className="ml-4 mt-2 space-y-1.5 border-l border-[#C6C5CA] pl-4 animate-fadeIn">
                       {cat.items.map((item) => {
                         const isItemActive = pathname === item.href || pathname.startsWith(item.href + "?");
                         return (
@@ -201,10 +201,10 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                             <Link
                               href={item.href}
                               onClick={handleLinkClick}
-                              className={`font-body text-sm py-1.5 transition-colors ${isItemActive ? "text-[#D4A843] font-semibold" : "text-[#FFFFFF]/70 hover:text-[#D4A843]"} `}
+                              className={`font-body text-sm py-1.5 transition-colors ${isItemActive ? "text-[#FF6600] font-semibold" : "text-[#6F7072] hover:text-[#FF6600]"} `}
                             >
                               {item.label}
-                              <span className="font-body text-[10px] text-[#FFFFFF]/30 font-normal ml-2">
+                              <span className="font-body text-[10px] text-[#333333]/30 font-normal ml-2">
                                 ({getCount(cat.id)})
                               </span>
                             </Link>
@@ -215,7 +215,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                         <Link
                           href={cat.allHref}
                           onClick={handleLinkClick}
-                          className="font-body text-[11px] tracking-[0.15em] uppercase text-[#D4A843] hover:text-[#FFFFFF] transition-colors inline-flex items-center gap-1 py-2"
+                          className="font-body text-[11px] tracking-[0.15em] uppercase text-[#FF6600] hover:text-[#333333] transition-colors inline-flex items-center gap-1 py-2"
                         >
                           View all {cat.label} →
                         </Link>
@@ -229,8 +229,8 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
         </section>
 
         {/* ABOUT & CONTACT */}
-        <section className="space-y-4 border-t border-[#2A2A2A] pt-8">
-          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#D4A843] font-semibold">
+        <section className="space-y-4 border-t border-[#C6C5CA] pt-8">
+          <h3 className="font-body text-[11px] tracking-[0.25em] uppercase text-[#FF6600] font-semibold">
             Studio
           </h3>
           <ul className="space-y-3">
@@ -241,8 +241,8 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                   <Link
                     href={item.href}
                     onClick={handleLinkClick}
-                    className={`font-display font-light text-3xl tracking-tight transition-colors ${isActive ? "text-[#D4A843]" : "text-[#FFFFFF] hover:text-[#D4A843]"} `}
-                    style={{ fontFamily: "var(--font-cormorant), serif" }}
+                    className={`font-display font-light text-3xl tracking-tight transition-colors ${isActive ? "text-[#FF6600]" : "text-[#333333] hover:text-[#FF6600]"} `}
+                    style={{ fontFamily: "var(--font-roboto), sans-serif" }}
                   >
                     {item.label}
                   </Link>
@@ -253,34 +253,34 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
         </section>
 
         {/* Contact CTA */}
-        <section className="border-t border-[#2A2A2A] pt-8 space-y-3">
+        <section className="border-t border-[#C6C5CA] pt-8 space-y-3">
           <Link
             href="/contact"
             onClick={onClose}
-            className="block w-full text-center font-body text-[12px] tracking-[0.22em] uppercase font-bold bg-[#D4A843] text-[#0A0A0A] px-6 py-4 hover:bg-[#E8C56D] transition-colors"
+            className="block w-full text-center font-body text-[12px] tracking-[0.22em] uppercase font-bold bg-[#FF6600] text-[#FFFFFF] px-6 py-4 hover:bg-[#D95500] transition-colors"
           >
             Get a Quote →
           </Link>
         </section>
 
         {/* WhatsApp */}
-        <section className="border-t border-[#2A2A2A] pt-8">
+        <section className="border-t border-[#C6C5CA] pt-8">
           <a
             href="https://wa.me/254728846560"
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="block w-full text-center font-body text-[12px] tracking-[0.22em] uppercase font-semibold bg-transparent border border-[#D4A843] text-[#D4A843] px-6 py-4 hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
+            className="block w-full text-center font-body text-[12px] tracking-[0.22em] uppercase font-semibold bg-transparent border border-[#FF6600] text-[#FF6600] px-6 py-4 hover:bg-[#FF6600] hover:text-[#FFFFFF] transition-colors"
           >
             WhatsApp Us
           </a>
         </section>
 
         {/* Top contact info */}
-        <section className="border-t border-[#2A2A2A] pt-8">
-          <div className="flex flex-col gap-3 text-[13px] font-body text-[#FFFFFF]/70">
+        <section className="border-t border-[#C6C5CA] pt-8">
+          <div className="flex flex-col gap-3 text-[13px] font-body text-[#6F7072]">
             {TOP_CONTACT.map((item) => (
-              <a key={item.href} href={item.href} className="flex items-center gap-3 hover:text-[#D4A843] transition-colors" onClick={onClose}>
+              <a key={item.href} href={item.href} className="flex items-center gap-3 hover:text-[#FF6600] transition-colors" onClick={onClose}>
                 <span>{item.icon === "mail" ? "✉" : "📞"}</span>
                 <span>{item.label}</span>
               </a>
@@ -290,15 +290,15 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
       </nav>
 
       {/* Footer */}
-      <footer className="border-t border-[#2A2A2A] px-6 py-6">
-        <div className="flex flex-col sm:flex-row justify-between gap-4 text-xs font-body text-[#FFFFFF]/50">
+      <footer className="border-t border-[#C6C5CA] px-6 py-6">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 text-xs font-body text-[#333333]/50">
           <div className="flex flex-col gap-1">
             <span>info@winteriordesign.co.ke</span>
             <span>+254 728 846 560</span>
             <span>Enterprise Rd, Nairobi, Kenya</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="https://wa.me/254728846560" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4A843] transition-colors" onClick={onClose}>
+            <a href="https://wa.me/254728846560" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors" onClick={onClose}>
               WhatsApp
             </a>
           </div>

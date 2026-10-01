@@ -103,17 +103,17 @@ export default function StudioSection() {
   const featuredProjects = projects.slice(0, 3);
 
   return (
-    <section ref={sectionRef} className="bg-[#141414]">
+    <section ref={sectionRef} className="bg-[#F4F4F4]">
       <div className="px-4 md:px-12 py-20 md:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-7">
             <div className="studio-header">
-              <p className="font-body text-[10px] text-[#FFFFFF]/65 tracking-[0.4em] uppercase mb-5">
+              <p className="font-body text-[10px] text-[#333333]/65 tracking-[0.4em] uppercase mb-5">
                 Philosophy
               </p>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-[#FFFFFF] tracking-[-0.03em] leading-[1.1] max-w-2xl">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-[#333333] tracking-[-0.03em] leading-[1.1] max-w-2xl">
                 For a house to be successful, the objects in it must
-                <span className="italic text-[#FFFFFF]/70"> communicate.</span>
+                <span className="italic text-[#333333]/70"> communicate.</span>
               </h2>
             </div>
 
@@ -123,17 +123,17 @@ export default function StudioSection() {
                   key={step.n}
                   className="studio-step grid grid-cols-12 gap-4 md:gap-6 py-7 md:py-9 border-b border-foreground/15"
                 >
-                  <span className="col-span-2 md:col-span-1 font-body text-xs md:text-sm text-[#D4A843] tracking-[0.2em] tabular-nums pt-1">
+                  <span className="col-span-2 md:col-span-1 font-body text-xs md:text-sm text-[#FF6600] tracking-[0.2em] tabular-nums pt-1">
                     {step.n}
                   </span>
                   <div className="col-span-10 md:col-span-11">
-                    <h3 className="font-display text-2xl md:text-3xl font-light text-[#FFFFFF] tracking-tight leading-tight">
+                    <h3 className="font-display text-2xl md:text-3xl font-light text-[#333333] tracking-tight leading-tight">
                       {step.title}
                     </h3>
-                    <p className="font-body text-sm md:text-[15px] text-[#FFFFFF]/65 leading-relaxed mt-3 max-w-2xl">
+                    <p className="font-body text-sm md:text-[15px] text-[#333333]/65 leading-relaxed mt-3 max-w-2xl">
                       {step.body}
                     </p>
-                    <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#FFFFFF]/70 mt-4">
+                    <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#333333]/70 mt-4">
                       {step.output}
                     </p>
                   </div>
@@ -169,7 +169,7 @@ export default function StudioSection() {
             </div>
 
             <div>
-              <p className="studio-materials font-body text-[11px] text-[#FFFFFF]/65 tracking-[0.3em] uppercase mb-5">
+              <p className="studio-materials font-body text-[11px] text-[#333333]/65 tracking-[0.3em] uppercase mb-5">
                 What we work with
               </p>
               <ul className="flex flex-wrap gap-2">
@@ -186,7 +186,7 @@ export default function StudioSection() {
 
             <Link
               href="/contact"
-              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-[#FFFFFF]/65 hover:text-[#FFFFFF] transition-colors tracking-[0.3em] uppercase"
+              className="studio-materials group inline-flex items-center gap-3 font-body text-[11px] text-[#333333]/65 hover:text-[#333333] transition-colors tracking-[0.3em] uppercase"
             >
               <span className="w-8 h-px bg-warm-gray group-hover:bg-foreground group-hover:w-12 transition-all" />
               Start a project

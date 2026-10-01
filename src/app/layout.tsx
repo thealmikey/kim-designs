@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, Cinzel } from "next/font/google";
+import { Roboto, Open_Sans } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -13,23 +13,18 @@ import { SelectionProvider } from "@/components/variants/v5/SelectionContext";
 import SelectionBar from "@/components/variants/v5/SelectionBar";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "600", "800"],
 });
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
-});
 export const metadata: Metadata = {
   title: {
     default: process.env.NEXT_PUBLIC_SITE_NAME ?? "WINTERIOR DESIGN",
@@ -46,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${cinzel.variable} h-full antialiased`}
+      className={`${roboto.variable} ${openSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Preloader />

@@ -112,13 +112,13 @@ function GalleryTile({
         </span>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-          <p className="font-body text-[10px] text-cream/60 tracking-[0.3em] uppercase mb-1.5">
+          <p className="font-body text-[10px] text-[#FFFFFF]/60 tracking-[0.3em] uppercase mb-1.5">
             {project.category}
           </p>
-          <h2 className="font-display text-2xl md:text-3xl font-light text-cream tracking-tight leading-[1.05]">
+          <h2 className="font-display text-2xl md:text-3xl font-light text-[#FFFFFF] tracking-tight leading-[1.05]">
             {project.title}
           </h2>
-          <p className="font-display italic text-sm md:text-base text-cream/70 mt-1">
+          <p className="font-display italic text-sm md:text-base text-[#FFFFFF]/75 mt-1">
             {project.subtitle}
           </p>
         </div>
@@ -140,8 +140,8 @@ function GalleryTile({
         data-testid={`select-${project.id}`}
         className={`absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center transition-all ${
           isSelected
-            ? "bg-aged-brass text-charcoal"
-            : "bg-background/80 text-foreground hover:bg-aged-brass hover:text-charcoal"
+            ? "bg-aged-brass text-[#FFFFFF]"
+            : "bg-background/80 text-foreground hover:bg-aged-brass hover:text-[#FFFFFF]"
         }`}
       >
         {isSelected ? (

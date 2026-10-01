@@ -59,7 +59,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section ref={sectionRef} className="bg-[#0A0A0A]">
+    <section ref={sectionRef} className="bg-white">
       <div className="px-4 md:px-12 pt-[calc(var(--nav-two-row-height)+3rem)] pb-20 md:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           <div className="lg:col-span-5">
@@ -67,10 +67,10 @@ export default function ContactSection() {
               <p className="font-body text-[10px] text-warm-gray tracking-[0.4em] uppercase mb-4">
                 Contact
               </p>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-[#FFFFFF] tracking-[-0.03em] leading-[1.02]">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-[#333333] tracking-[-0.03em] leading-[1.02]">
                 Let&apos;s start
                 <br />
-                <span className="italic text-[#FFFFFF]/80">a project.</span>
+                <span className="italic text-[#333333]/80">a project.</span>
               </h1>
               <p className="font-body text-sm md:text-[15px] text-warm-gray leading-relaxed mt-5 max-w-md">
                 Tell us about the space and the result you want to live with.
@@ -81,59 +81,59 @@ export default function ContactSection() {
             <div className="contact-block mt-10 space-y-5">
               <a
                 href="mailto:info@winteriordesign.co.ke"
-                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#FFFFFF]/5 transition-colors"
+                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#F4F4F4] transition-colors"
               >
-                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0 group-hover:border-[#D4A843] group-hover:bg-[#D4A843] group-hover:text-[#0A0A0A] transition-colors">
+                <span className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center shrink-0 group-hover:border-[#FF6600] group-hover:bg-[#FF6600] group-hover:text-[#FFFFFF] transition-colors">
                   <Mail size={16} strokeWidth={1.5} />
                 </span>
                 <span>
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Email
                   </span>
-                  <span className="block font-display text-lg md:text-xl text-[#FFFFFF]">
+                  <span className="block font-display text-lg md:text-xl text-[#333333]">
                     info@winteriordesign.co.ke
                   </span>
                 </span>
               </a>
               <a
                 href="tel:+254728846560"
-                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#FFFFFF]/5 transition-colors"
+                className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#F4F4F4] transition-colors"
               >
-                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0 group-hover:border-[#D4A843] group-hover:bg-[#D4A843] group-hover:text-[#0A0A0A] transition-colors">
+                <span className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center shrink-0 group-hover:border-[#FF6600] group-hover:bg-[#FF6600] group-hover:text-[#FFFFFF] transition-colors">
                   <Phone size={16} strokeWidth={1.5} />
                 </span>
                 <span>
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Phone
                   </span>
-                  <span className="block font-display text-lg md:text-xl text-[#FFFFFF]">
+                  <span className="block font-display text-lg md:text-xl text-[#333333]">
                     +254 728 846 560
                   </span>
-                  <span className="block font-display text-base md:text-lg text-[#FFFFFF]/80">
+                  <span className="block font-display text-base md:text-lg text-[#333333]/80">
                     +254 755 164 654
                   </span>
                 </span>
               </a>
               <div className="flex items-start gap-4 -m-3 p-3">
-                <span className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center shrink-0">
+                <span className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center shrink-0">
                   <MapPin size={16} strokeWidth={1.5} />
                 </span>
                 <span>
                   <span className="block font-body text-[10px] tracking-[0.3em] uppercase text-warm-gray mb-1">
                     Showroom
                   </span>
-                  <span className="block font-body text-sm text-[#FFFFFF]/85 leading-relaxed">
+                  <span className="block font-body text-sm text-[#333333]/85 leading-relaxed">
                     Enterprise Road, Opp Hillocks Hotel
                     <br />
                     Industrial Area, Nairobi
                     <br />
-                    <span className="text-[#FFFFFF]/70">P.O. Box 39254-00623</span>
+                    <span className="text-[#333333]/70">P.O. Box 39254-00623</span>
                   </span>
                 </span>
               </div>
             </div>
 
-            <div className="contact-block mt-10 pt-6 border-t border-[#2A2A2A]">
+            <div className="contact-block mt-10 pt-6 border-t border-[#C6C5CA]">
               <p className="font-body text-[10px] text-warm-gray tracking-[0.3em] uppercase mb-3">
                 Follow
               </p>
@@ -143,7 +143,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on Facebook"
-                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
+                  className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center hover:border-[#FF6600] hover:bg-[#FF6600] hover:text-[#FFFFFF] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -154,7 +154,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on X"
-                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
+                  className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center hover:border-[#FF6600] hover:bg-[#FF6600] hover:text-[#FFFFFF] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -165,7 +165,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Winterior Design on Instagram"
-                  className="w-10 h-10 border border-[#2A2A2A] flex items-center justify-center hover:border-[#D4A843] hover:bg-[#D4A843] hover:text-[#0A0A0A] transition-colors"
+                  className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center hover:border-[#FF6600] hover:bg-[#FF6600] hover:text-[#FFFFFF] transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -178,7 +178,7 @@ export default function ContactSection() {
           </div>
 
           <div className="lg:col-span-7 contact-block">
-            <div className="relative w-full h-[280px] md:h-[360px] overflow-hidden bg-[#FFFFFF]/5 mb-8">
+            <div className="relative w-full h-[280px] md:h-[360px] overflow-hidden bg-[#F4F4F4] mb-8">
               <Image
                 src="/images/pvc-foilwrap-and-high-gloss-handless-kitchen/02.jpg"
                 alt="Winterior Design showroom"
@@ -190,22 +190,22 @@ export default function ContactSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-charcoal/40 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-4 md:bottom-5 md:left-6">
-                <p className="font-body text-[10px] text-[#FFFFFF]/70 tracking-[0.3em] uppercase">
+                <p className="font-body text-[10px] text-[#333333]/70 tracking-[0.3em] uppercase">
                   Visit
                 </p>
-                <p className="font-display text-lg md:text-xl text-[#FFFFFF] tracking-tight">
+                <p className="font-display text-lg md:text-xl text-[#333333] tracking-tight">
                   Our Showroom · Mon–Sat
                 </p>
               </div>
             </div>
 
             {submitted ? (
-              <div className="border border-aged-brass/40 bg-[#141414] p-8 md:p-10 flex items-start gap-4">
-                <span className="w-10 h-10 bg-[#D4A843] text-[#0A0A0A] flex items-center justify-center shrink-0">
+              <div className="border border-aged-brass/40 bg-[#F4F4F4] p-8 md:p-10 flex items-start gap-4">
+                <span className="w-10 h-10 bg-[#FF6600] text-[#FFFFFF] flex items-center justify-center shrink-0">
                   <Check size={18} strokeWidth={2} />
                 </span>
                 <div>
-                  <p className="font-display text-2xl text-[#FFFFFF] mb-2">
+                  <p className="font-display text-2xl text-[#333333] mb-2">
                     Thank you.
                   </p>
                   <p className="font-body text-sm text-warm-gray leading-relaxed">
@@ -213,7 +213,7 @@ export default function ContactSection() {
                     48 hours. In the meantime, reach us directly on{" "}
                     <a
                       href="tel:+254728846560"
-                      className="underline decoration-[#D4A843] underline-offset-4 hover:text-[#FFFFFF]"
+                      className="underline decoration-[#FF6600] underline-offset-4 hover:text-[#333333]"
                     >
                       +254 728 846 560
                     </a>
@@ -238,7 +238,7 @@ export default function ContactSection() {
                     placeholder="Your full name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] placeholder:text-[#333333]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -252,7 +252,7 @@ export default function ContactSection() {
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] placeholder:text-[#333333]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -265,7 +265,7 @@ export default function ContactSection() {
                     placeholder="+254 …"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none transition-colors"
+                    className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] placeholder:text-[#333333]/40 outline-none transition-colors"
                   />
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-1">
@@ -276,15 +276,15 @@ export default function ContactSection() {
                     name="service"
                     value={form.service}
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
-                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] outline-none transition-colors"
+                    className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] outline-none transition-colors"
                   >
-                    <option value="" disabled className="bg-[#0A0A0A] text-warm-gray">
+                    <option value="" disabled className="bg-white text-warm-gray">
                       Choose a service
                     </option>
-                    <option value="kitchen" className="bg-[#0A0A0A]">Kitchen</option>
-                    <option value="wardrobe" className="bg-[#0A0A0A]">Wardrobe</option>
-                    <option value="bath" className="bg-[#0A0A0A]">Bath Vanity</option>
-                    <option value="shop" className="bg-[#0A0A0A]">Shop Fit-Out</option>
+                    <option value="kitchen" className="bg-white">Kitchen</option>
+                    <option value="wardrobe" className="bg-white">Wardrobe</option>
+                    <option value="bath" className="bg-white">Bath Vanity</option>
+                    <option value="shop" className="bg-white">Shop Fit-Out</option>
                   </select>
                 </label>
                 <label className="flex flex-col gap-2 md:col-span-2">
@@ -298,7 +298,7 @@ export default function ContactSection() {
                     placeholder="Tell us about the space, the result you want, and when you'd like to start."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="bg-transparent border-b border-[#2A2A2A] focus:border-[#D4A843] py-2 font-body text-base text-[#FFFFFF] placeholder:text-[#FFFFFF]/40 outline-none resize-none transition-colors"
+                    className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] placeholder:text-[#333333]/40 outline-none resize-none transition-colors"
                   />
                 </label>
                 <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-4 mt-4">
@@ -307,7 +307,7 @@ export default function ContactSection() {
                   </p>
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-[#D4A843] text-[#0A0A0A] px-5 py-3 hover:bg-[#E8C56D] transition-colors"
+                    className="group inline-flex items-center gap-3 font-body text-[11px] tracking-[0.3em] uppercase bg-[#FF6600] text-[#FFFFFF] px-5 py-3 hover:bg-[#D95500] transition-colors"
                   >
                     Send message
                     <ArrowUpRight

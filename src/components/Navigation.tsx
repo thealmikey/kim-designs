@@ -66,16 +66,16 @@ export default function Navigation() {
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#0A0A0A]/98 backdrop-blur-lg border-b border-[#2A2A2A]"
-            : "bg-[#0A0A0A] border-b border-transparent"
+            ? "bg-white/98 backdrop-blur-lg border-b border-[#C6C5CA] shadow-[0_2px_16px_rgba(51,51,51,0.06)]"
+            : "bg-white border-b border-transparent"
         }`}
         style={{ height: "var(--nav-two-row-height)" }}
       >
         {/* Top Bar */}
-        <div className="hidden md:flex items-center justify-between px-6 h-[var(--topbar-height)] bg-[#000000] border-b border-[#2A2A2A]">
-          <div className="flex items-center gap-6 text-[12px] font-body text-[#FFFFFF]/70">
+        <div className="hidden md:flex items-center justify-between px-6 h-[var(--topbar-height)] bg-white border-b border-[#C6C5CA]">
+          <div className="flex items-center gap-6 text-[12px] font-body text-[#6F7072]">
             {TOP_CONTACT.map((item) => (
-              <a key={item.href} href={item.href} className="flex items-center gap-2 hover:text-[#D4A843] transition-colors">
+              <a key={item.href} href={item.href} className="flex items-center gap-2 hover:text-[#FF6600] transition-colors">
                 <span>{item.icon === "mail" ? "✉" : "📞"}</span>
                 <span>{item.label}</span>
               </a>
@@ -86,7 +86,7 @@ export default function Navigation() {
               href="https://wa.me/254728846560"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#D4A843] text-[#0A0A0A] font-body text-[11px] font-semibold tracking-[0.1em] uppercase hover:bg-[#E8C56D] transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#FF6600] text-[#FFFFFF] font-body text-[11px] font-semibold tracking-[0.1em] uppercase hover:bg-[#D95500] transition-colors"
             >
               <span>💬</span>
               <span>WhatsApp Us</span>
@@ -95,7 +95,7 @@ export default function Navigation() {
               href="https://www.instagram.com/woodkivuinteriors/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center border border-[#2A2A2A] hover:border-[#D4A843] hover:bg-[#1A1A1A] transition-colors"
+              className="w-8 h-8 flex items-center justify-center border border-[#C6C5CA] text-[#333333] hover:border-[#FF6600] hover:bg-[#FFF1E8] transition-colors"
               aria-label="Instagram"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -127,10 +127,10 @@ export default function Navigation() {
               <span
                 className="font-bold tracking-[0.04em] uppercase whitespace-nowrap"
                 style={{
-                  fontFamily: "var(--font-cinzel), serif",
+                  fontFamily: "var(--font-roboto), sans-serif",
                   fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
                   lineHeight: 1,
-                  color: "#FFFFFF",
+                  color: "#333333",
                 }}
               >
                 WINTERIOR
@@ -138,11 +138,11 @@ export default function Navigation() {
               <span
                 className="font-semibold tracking-[0.32em] uppercase whitespace-nowrap"
                 style={{
-                  fontFamily: "var(--font-cinzel), serif",
+                  fontFamily: "var(--font-roboto), sans-serif",
                   fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)",
                   lineHeight: 1,
                   letterSpacing: "0.42em",
-                  color: "#D4A843",
+                  color: "#FF6600",
                 }}
               >
                 DESIGN
@@ -159,13 +159,13 @@ export default function Navigation() {
                   key={item.label}
                   href={item.href}
                   className={`relative font-body text-[13px] tracking-[0.15em] uppercase font-bold transition-colors duration-200 py-2 ${
-                    active ? "text-[#D4A843]" : "text-[#FFFFFF]/90 hover:text-[#D4A843]"
+                    active ? "text-[#FF6600]" : "text-[#333333]/90 hover:text-[#FF6600]"
                   }`}
                 >
                   {item.label}
                   <span
                     aria-hidden
-                    className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#D4A843] origin-left transition-transform duration-300 ${
+                    className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF6600] origin-left transition-transform duration-300 ${
                       active ? "scale-x-100" : "scale-x-0"
                     }`}
                   />
@@ -177,12 +177,12 @@ export default function Navigation() {
           {/* Mobile Hamburger - far right */}
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-[#FFFFFF] z-50"
+            className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-[#333333] z-50"
             aria-label="Open menu"
           >
-            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF]" />
-            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] translate-y-[-6px]" />
-            <span className="block absolute w-6 h-[2px] bg-[#FFFFFF] translate-y-[6px]" />
+            <span className="block absolute w-6 h-[2px] bg-[#333333]" />
+            <span className="block absolute w-6 h-[2px] bg-[#333333] translate-y-[-6px]" />
+            <span className="block absolute w-6 h-[2px] bg-[#333333] translate-y-[6px]" />
           </button>
         </nav>
       </header>

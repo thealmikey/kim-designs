@@ -100,7 +100,7 @@ function MobileSnapCarousel({
     <div className="lg:hidden">
       {/* Index badge */}
       <div className="flex items-center justify-between mb-4 px-1">
-        <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#D4A843] font-bold">
+        <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#FF6600] font-bold">
           ← Swipe →
         </p>
         <p className="font-body text-[11px] tracking-[0.3em] uppercase text-[#FFFFFF]/70 font-semibold tabular-nums">
@@ -134,7 +134,7 @@ function MobileSnapCarousel({
               <button
                 type="button"
                 onClick={() => onOpen(i)}
-                className="relative block w-full aspect-[4/5] overflow-hidden bg-[#FFFFFF]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A843]"
+                className="relative block w-full aspect-[4/5] overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600]"
                 aria-label={`Open ${project.title}`}
                 aria-current={focused ? "true" : undefined}
               >
@@ -157,13 +157,13 @@ function MobileSnapCarousel({
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-left">
                   <h3
                     className="font-display text-3xl font-light text-[#FFFFFF] tracking-tight leading-[1.05]"
-                    style={{ fontFamily: "var(--font-cormorant), serif" }}
+                    style={{ fontFamily: "var(--font-roboto), sans-serif" }}
                   >
                     {project.title}
                   </h3>
                   <p
                     className="font-display italic text-base text-[#FFFFFF]/85 mt-1"
-                    style={{ fontFamily: "var(--font-cormorant), serif" }}
+                    style={{ fontFamily: "var(--font-roboto), sans-serif" }}
                   >
                     {project.subtitle}
                   </p>
@@ -189,8 +189,8 @@ function MobileSnapCarousel({
                 }
                 className={`absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center transition-all shadow-md ${
                   isSelected(project.id)
-                    ? "bg-[#D4A843] text-[#0A0A0A]"
-                    : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#D4A843] hover:text-[#0A0A0A]"
+                    ? "bg-[#FF6600] text-[#FFFFFF]"
+                    : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#FF6600] hover:text-[#FFFFFF]"
                 }`}
               >
                 {isSelected(project.id) ? (
@@ -219,7 +219,7 @@ function MobileSnapCarousel({
                 className="pointer-events-none absolute inset-0 transition-all duration-500"
                 style={{
                   boxShadow: focused
-                    ? "0 20px 50px -10px rgba(23,23,22,0.35), 0 0 0 3px #D4A843"
+                    ? "0 20px 50px -10px rgba(23,23,22,0.35), 0 0 0 3px #FF6600"
                     : "0 0 0 0px transparent",
                 }}
               />
@@ -255,7 +255,7 @@ function MobileSnapCarousel({
               className="h-1.5 rounded-full transition-all duration-500"
               style={{
                 width: focused ? "32px" : "6px",
-                background: focused ? "#D4A843" : "rgba(23,23,22,0.25)",
+                background: focused ? "#FF6600" : "rgba(23,23,22,0.25)",
               }}
             />
           );
@@ -266,7 +266,7 @@ function MobileSnapCarousel({
       {active && (
         <p
           className="mt-3 font-display italic text-center text-sm text-[#FFFFFF]/60"
-          style={{ fontFamily: "var(--font-cormorant), serif" }}
+          style={{ fontFamily: "var(--font-roboto), sans-serif" }}
         >
           Currently viewing: <span className="not-italic font-semibold text-[#FFFFFF]">{active.title}</span>
         </p>
@@ -321,7 +321,7 @@ function GalleryTile({
       <button
         type="button"
         onClick={() => onOpen(index)}
-        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#FFFFFF]/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A843] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0A0A]"
+        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         aria-label={`Open ${project.title}`}
       >
         {inView && (
@@ -351,13 +351,13 @@ function GalleryTile({
           </p>
           <h3
             className="font-display text-2xl md:text-[1.7rem] font-light text-[#FFFFFF] tracking-tight leading-[1.05]"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
+            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
           >
             {project.title}
           </h3>
           <p
             className="font-display italic text-sm md:text-base text-[#FFFFFF]/80 mt-1"
-            style={{ fontFamily: "var(--font-cormorant), serif" }}
+            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
           >
             {project.subtitle}
           </p>
@@ -379,8 +379,8 @@ function GalleryTile({
         }
         className={`absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center transition-all shadow-sm ${
           isSelected
-            ? "bg-[#D4A843] text-[#0A0A0A]"
-            : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#D4A843] hover:text-[#0A0A0A]"
+            ? "bg-[#FF6600] text-[#FFFFFF]"
+            : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#FF6600] hover:text-[#FFFFFF]"
         }`}
       >
         {isSelected ? (
@@ -495,8 +495,8 @@ function SingleItemOverlay({
             aria-pressed={isSelected(project.id)}
             className={`${label} px-3 py-2 transition-colors ${
               isSelected(project.id)
-                ? "bg-[#D4A843] text-[#0A0A0A]"
-                : "border border-[#FFFFFF]/30 text-[#FFFFFF] hover:border-[#D4A843] hover:text-[#D4A843]"
+                ? "bg-[#FF6600] text-[#FFFFFF]"
+                : "border border-[#FFFFFF]/30 text-[#FFFFFF] hover:border-[#FF6600] hover:text-[#FF6600]"
             }`}
           >
             {isSelected(project.id) ? "Selected ✓" : "Add to selection"}
@@ -514,7 +514,7 @@ function SingleItemOverlay({
             className="absolute left-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-start pl-3 md:pl-6"
             aria-label={`Previous: ${prev.title}`}
           >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#D4A843] text-[#0A0A0A] px-3 py-2 text-xs font-body tracking-widest uppercase">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#FF6600] text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
               ← {prev.title}
             </span>
           </button>
@@ -526,7 +526,7 @@ function SingleItemOverlay({
             className="absolute right-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-end pr-3 md:pr-6"
             aria-label={`Next: ${next.title}`}
           >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#D4A843] text-[#0A0A0A] px-3 py-2 text-xs font-body tracking-widest uppercase">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#FF6600] text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
               {next.title} →
             </span>
           </button>
@@ -573,21 +573,21 @@ function SingleItemOverlay({
               transition: "transform 400ms ease-out",
             }}
           >
-            <p className={`${label} text-[#D4A843] mb-3`}>
+            <p className={`${label} text-[#FF6600] mb-3`}>
               {project.category} · {project.location} · {project.year}
             </p>
             <h2
               className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF] mb-3"
               style={{
                 fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
-                fontFamily: "var(--font-cormorant), serif",
+                fontFamily: "var(--font-roboto), sans-serif",
               }}
             >
               {project.title}
             </h2>
             <p
               className="font-display italic text-[#FFFFFF]/85 text-base md:text-lg mb-4"
-              style={{ fontFamily: "var(--font-cormorant), serif" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif" }}
             >
               {project.subtitle}.
             </p>
@@ -624,7 +624,7 @@ function SingleItemOverlay({
                 onClick={() => setActiveImage(i)}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden border-2 transition-colors ${
                   i === activeImage
-                    ? "border-[#D4A843]"
+                    ? "border-[#FF6600]"
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
                 aria-label={`View image ${i + 1}`}
@@ -682,17 +682,17 @@ export default function V6GallerySection() {
   return (
     <section
       id="v6-gallery"
-      className="px-6 md:px-8 lg:px-12 py-16 md:py-24 bg-[#0A0A0A]"
+      className="px-6 md:px-8 lg:px-12 py-16 md:py-24 bg-white"
     >
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-10">
         <div>
-          <p className={`${label} text-[#D4A843] mb-3`}>We Transform Your Home</p>
+          <p className={`${label} text-[#FF6600] mb-3`}>We Transform Your Home</p>
           <h2
-            className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#FFFFFF]"
+            className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#333333]"
             style={{
               fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              fontFamily: "var(--font-cormorant), serif",
+              fontFamily: "var(--font-roboto), sans-serif",
             }}
           >
             Explore finished kitchens
@@ -704,7 +704,7 @@ export default function V6GallerySection() {
 
       {/* Filter tabs - woodkivu style */}
       <div
-        className="flex flex-wrap items-center gap-x-1 mb-8 md:mb-10 border-b border-[#2A2A2A]"
+        className="flex flex-wrap items-center gap-x-1 mb-8 md:mb-10 border-b border-[#C6C5CA]"
         role="tablist"
         aria-label="Browse projects by category"
       >
@@ -718,7 +718,7 @@ export default function V6GallerySection() {
               aria-selected={isTabActive}
               className={`${label} px-5 py-4 -mb-px border-b-2 font-semibold transition-colors ${
                 isTabActive
-                  ? "border-[#D4A843] text-[#D4A843]"
+                  ? "border-[#FF6600] text-[#FF6600]"
                   : "border-transparent text-[#FFFFFF]/55 hover:text-[#FFFFFF]"
               }`}
             >
@@ -776,17 +776,17 @@ export default function V6GallerySection() {
       </div>
 
       {projects.length === 0 && (
-        <p className="text-center font-body text-sm text-[#FFFFFF]/60 py-12">
+        <p className="text-center font-body text-sm text-[#333333]/60 py-12">
           No projects in this category yet.
         </p>
       )}
 
       {/* Floating selection bar (local copy styled for v6, also appears site-wide via root layout) */}
       {hydrated && selected.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#D4A843] text-[#0A0A0A] border-t-2 border-[#D4A843] shadow-2xl">
+        <div className="fixed inset-x-0 bottom-0 z-[55] bg-[#FF6600] text-[#FFFFFF] border-t-2 border-[#FF6600] shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 md:py-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="bg-[#D4A843] text-[#0A0A0A] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
+              <span className="bg-[#FF6600] text-[#FFFFFF] font-body text-xs font-bold px-2.5 py-1 tabular-nums">
                 {selected.length}
               </span>
               <p className="font-body text-xs md:text-sm text-[#FFFFFF]/90 truncate">
@@ -810,7 +810,7 @@ export default function V6GallerySection() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#D4A843] hover:bg-[#E8C56D] hover:text-[#0A0A0A] text-[#0A0A0A] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
+                className="font-body text-[10px] tracking-[0.22em] uppercase font-bold bg-[#FF6600] hover:bg-[#D95500] hover:text-[#FFFFFF] text-[#FFFFFF] px-4 py-2.5 inline-flex items-center gap-2 transition-colors"
               >
                 <span>WhatsApp</span>
                 <span aria-hidden>→</span>

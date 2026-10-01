@@ -18,7 +18,7 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className={`fixed bottom-5 left-5 z-[70] flex items-center gap-3 bg-[#25D366] text-[#0A0A0A] pl-3 pr-4 py-3 shadow-2xl transition-all duration-300 ${
+      className={`fixed bottom-5 left-5 z-[70] flex items-center gap-3 bg-[#25D366] text-[#FFFFFF] pl-3 pr-4 py-3 shadow-2xl transition-all duration-300 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
       }`}
     >
