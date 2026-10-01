@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { projects } from "@/lib/projects";
 import V6GallerySection from "./V6GallerySection";
-import VideoRail from "./VideoRail";
+import VideoShowcase from "./VideoShowcase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -79,25 +80,19 @@ function Counter({ to, suffix = "" }: { to: string; suffix?: string }) {
 export default function AtelierIndex() {
   const root = useRef<HTMLDivElement>(null);
   const [heroIndex, setHeroIndex] = useState(0);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
+  const goToSlide = (next: number) =>
+    setHeroIndex(Math.min(Math.max(next, 0), SERVICES.length - 1));
+
+  // Auto-advance. Keyed on heroIndex so the timer restarts whenever a slide
+  // changes — including manual navigation — giving the visitor a full
+  // interval to read the slide they picked.
   useEffect(() => {
     const id = window.setInterval(() => {
-      setHeroIndex((i) => (i + 1) % Math.min(4, projects.length));
+      setHeroIndex((i) => (i + 1) % SERVICES.length);
     }, 6000);
     return () => window.clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      setMouse({
-        x: (e.clientX / window.innerWidth - 0.5) * 2,
-        y: (e.clientY / window.innerHeight - 0.5) * 2,
-      });
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [heroIndex]);
 
   const prefersReducedMotion = useRef(false);
   useEffect(() => {
@@ -178,7 +173,15 @@ export default function AtelierIndex() {
         </div>
 
         <div className="absolute inset-0 flex items-center px-6 lg:px-16 z-10">
-          <div className="w-full max-w-4xl">
+          <div className="relative w-full max-w-4xl">
+            {/* Localised scrim. The full-bleed gradient above leaves the middle
+                of the slide uncovered, so light photos wash out the copy.
+                This sits behind the text block only and fades out to the right,
+                rather than dimming the whole photograph. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-y-8 -left-8 right-0 bg-gradient-to-r from-[#000000]/65 via-[#000000]/45 to-transparent"
+            />
             {SERVICES.map((service, i) => (
               <div
                 key={service.id}
@@ -204,15 +207,38 @@ export default function AtelierIndex() {
           </div>
         </div>
 
+        {/* Hero arrows — omitted at each end so there is nowhere to go. */}
+        {heroIndex > 0 && (
+          <button
+            type="button"
+            onClick={() => goToSlide(heroIndex - 1)}
+            aria-label="Previous slide"
+            className="hidden md:flex absolute left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full border border-[#FFFFFF]/35 text-[#FFFFFF] bg-[#000000]/25 backdrop-blur-sm transition-colors hover:bg-[#FF6600] hover:border-[#FF6600] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600]"
+          >
+            <ChevronLeft className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
+          </button>
+        )}
+        {heroIndex < SERVICES.length - 1 && (
+          <button
+            type="button"
+            onClick={() => goToSlide(heroIndex + 1)}
+            aria-label="Next slide"
+            className="hidden md:flex absolute right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full border border-[#FFFFFF]/35 text-[#FFFFFF] bg-[#000000]/25 backdrop-blur-sm transition-colors hover:bg-[#FF6600] hover:border-[#FF6600] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600]"
+          >
+            <ChevronRight className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
+          </button>
+        )}
+
         {/* Hero pagination */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-10">
           {SERVICES.map((_, i) => (
             <button
               key={i}
               type="button"
-              onClick={() => setHeroIndex(i)}
+              onClick={() => goToSlide(i)}
               aria-label={`View slide ${i + 1}`}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              aria-current={heroIndex === i}
+              className={`w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] ${
                 heroIndex === i ? "bg-[#FF6600] w-6" : "bg-[#FFFFFF]/40 hover:bg-[#FFFFFF]/80"
               }`}
             />
@@ -227,6 +253,9 @@ export default function AtelierIndex() {
           </div>
         </div>
       </section>
+
+      {/* ============ VIDEO SHOWCASE ============ */}
+      <VideoShowcase />
 
       {/* ============ SERVICES GRID ============ */}
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-white">
@@ -315,9 +344,6 @@ export default function AtelierIndex() {
 
       {/* ============ PORTFOLIO/GALLERY ============ */}
       <V6GallerySection />
-
-      {/* ============ SHORT VIDEO RAIL ============ */}
-      <VideoRail />
 
       {/* ============ BEFORE & AFTER ============ */}
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#F4F4F4]">

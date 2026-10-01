@@ -1,5 +1,5 @@
 /**
- * Short-form video content for the homepage video rail.
+ * Short-form video content for the homepage video showcase.
  *
  * To publish a new video:
  *   1. Drop a compressed MP4 (H.264 video + AAC audio, ~720p) into
@@ -9,13 +9,11 @@
  *   3. Append an entry below. Nothing else needs to change.
  *
  * Nothing here is fetched by the browser until a visitor taps a card, so it is
- * safe to list many videos here.
+ * safe to list several videos here.
  */
 
-export type VideoOrientation = "portrait" | "landscape" | "square";
-
 export interface StudioVideo {
-  /** Stable unique id. Used as React key and for list navigation. */
+  /** Stable unique id. Used as React key. */
   id: string;
   /** Short title shown on the card. */
   title: string;
@@ -33,52 +31,7 @@ export interface StudioVideo {
   duration?: string;
 }
 
-/**
- * Card heights are presentation, not content, so they live in VideoRail.
- * `width`/`height` here are what let each card derive its own proportions
- * without cropping the footage.
- */
 export const videos: StudioVideo[] = [
-  {
-    id: "construction-site-01",
-    title: "Site progress",
-    category: "Construction",
-    src: "/videos/construction-site-01.mp4",
-    poster: "/images/wardrobe-installation-process/01.jpg",
-    width: 478,
-    height: 850,
-    duration: "0:15",
-  },
-  {
-    id: "construction-site-02",
-    title: "Fitting in progress",
-    category: "Construction",
-    src: "/videos/construction-site-02.mp4",
-    poster: "/images/wardrobe-installation-process/02.jpg",
-    width: 478,
-    height: 850,
-    duration: "0:13",
-  },
-  {
-    id: "construction-site-03",
-    title: "Finishing touches",
-    category: "Construction",
-    src: "/videos/construction-site-03.mp4",
-    poster: "/images/melanin-finish-mahogany/01.jpg",
-    width: 478,
-    height: 850,
-    duration: "0:25",
-  },
-  {
-    id: "construction-site-04",
-    title: "Almost there",
-    category: "Construction",
-    src: "/videos/construction-site-04.mp4",
-    poster: "/images/spray-paint-kitchen/01.jpg",
-    width: 720,
-    height: 1280,
-    duration: "0:10",
-  },
   {
     id: "clip-01",
     title: "A walk through",

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
 import { projects, type Project, type ProjectCategory } from "@/lib/projects";
-import { allCategories } from "@/lib/projects";
+import { allCategories, categoryHref } from "@/lib/projects";
 
 const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.22em] uppercase";
@@ -713,7 +713,7 @@ export default function V6GallerySection() {
           return (
             <Link
               key={c.id}
-              href={c.id === "all" ? "/v6/work" : `/${c.id.toLowerCase().replace(" ", "-")}`}
+              href={categoryHref(c.id)}
               role="tab"
               aria-selected={isTabActive}
               className={`${label} px-5 py-4 -mb-px border-b-2 font-semibold transition-colors ${

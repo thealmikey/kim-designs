@@ -405,3 +405,23 @@ export const allCategories: { id: "all" | ProjectCategory; label: string }[] = [
   { id: "Bath Vanity", label: "Bath Vanities" },
   { id: "Shop Fit-Out", label: "Shop Fit-Outs" },
 ];
+
+/**
+ * Canonical route for each category.
+ *
+ * These must not be derived from the category id — the labels are singular
+ * ("Kitchen", "Bath Vanity") while the routes are plural ("/kitchens",
+ * "/bath-vanities"), so slugifying the id produced 404s for every filter
+ * except All Work. Keep this map in step with src/app/<route>/page.tsx.
+ */
+export const categoryRoutes: Record<ProjectCategory, string> = {
+  Kitchen: "/kitchens",
+  Wardrobe: "/wardrobes",
+  "Bath Vanity": "/bath-vanities",
+  "Shop Fit-Out": "/shop-fit-outs",
+};
+
+export const allWorkRoute = "/v6/work";
+
+export const categoryHref = (id: "all" | ProjectCategory): string =>
+  id === "all" ? allWorkRoute : categoryRoutes[id];
