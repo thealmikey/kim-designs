@@ -10,6 +10,7 @@ import {
   allCategories,
   categoryHref,
 } from "@/lib/projects";
+import { imageAspectRatio } from "@/lib/image-dims";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
 
 const label = "font-body text-[11px] tracking-[0.3em] uppercase";
@@ -25,165 +26,34 @@ interface CategoryPageProps {
   projects: Project[];
 }
 
-// Tailwind's scanner only sees class names written literally in the source,
-// so every span this component can emit is spelled out here.
-const SPAN_BASE = { 1: "col-span-1", 2: "col-span-2", 3: "col-span-3" } as const;
-const SPAN_SM = { 1: "sm:col-span-1", 2: "sm:col-span-2" } as const;
-const SPAN_LG = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" } as const;
-
-const COLS = { base: 1, sm: 2, lg: 3 } as const;
-
-type Span = { base: 1 | 2 | 3; sm: 1 | 2; lg: 1 | 2 | 3 };
-
 /**
- * Widens the tiles on the final row so it fills its columns exactly.
- *
- * The categories hold 1, 7 and 8 projects, so a plain 1/2/3-column grid
- * always ended with one or two empty cells — the dead space after the last
- * image. Every tile is a fixed 4:5 box, so varied heights cannot absorb the
- * gap; the columns themselves have to take up the slack.
+ * Column count is capped at the number of photos, so a two-photo collection
+ * uses two columns instead of leaving two empty ones. Tailwind only sees
+ * class names written literally in source, so each option is spelled out here.
  */
-function finalRowSpans(total: number): Record<number, Span> {
-  const spans: Record<number, Span> = {};
-
-  const set = (index: number, bp: keyof Span, span: 1 | 2 | 3) => {
-    const cur = spans[index] ?? { base: 1, sm: 1, lg: 1 };
-    if (bp === "base") cur.base = span;
-    else if (bp === "sm") cur.sm = span as 1 | 2;
-    else cur.lg = span;
-    spans[index] = cur;
-  };
-
-  (Object.keys(COLS) as (keyof typeof COLS)[]).forEach((bp) => {
-    const cols = COLS[bp];
-    const rest = total % cols;
-    if (total <= cols || rest === 0) return;
-    const start = total - rest;
-    for (let j = 0; j < rest; j += 1) {
-      // All but the last tile stay one column; the last absorbs the remainder.
-      set(start + j, bp, (j === rest - 1 ? cols - rest + 1 : 1) as 1 | 2 | 3);
-    }
-  });
-
-  return spans;
-}
-
-function GalleryTile({
-  project,
-  index,
-  priority,
-  onOpen,
-  isSelected,
-  onToggle,
-  className = "",
-}: {
-  project: Project;
-  index: number;
-  priority: boolean;
-  onOpen: (i: number) => void;
-  isSelected: boolean;
-  onToggle: (id: string) => void;
-  className?: string;
-}) {
-  return (
-    <article
-      data-index={index}
-      data-project-id={project.id}
-      className={`relative group ${className}`}
-    >
-      <button
-        type="button"
-        onClick={() => onOpen(index)}
-        className="relative block w-full aspect-[4/5] overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-        aria-label={`Open ${project.title}`}
-      >
-        <Image
-          src={project.images[0]}
-          alt={`${project.title} — ${project.subtitle}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04]"
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
-          decoding="async"
-          placeholder="blur"
-          blurDataURL={BLUR_DATA_URL}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/80 via-[#333333]/15 to-transparent" />
-
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-          <p className="font-body text-[10px] text-[#FFFFFF]/80 tracking-[0.3em] uppercase mb-1.5 font-semibold">
-            {project.category}
-          </p>
-          <h3
-            className="font-display text-2xl md:text-[1.7rem] font-light text-[#FFFFFF] tracking-tight leading-[1.05]"
-            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
-          >
-            {project.title}
-          </h3>
-          <p
-            className="font-display italic text-sm md:text-base text-[#FFFFFF]/80 mt-1"
-            style={{ fontFamily: "var(--font-roboto), sans-serif" }}
-          >
-            {project.subtitle}
-          </p>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onToggle(project.id);
-        }}
-        aria-pressed={isSelected}
-        aria-label={
-          isSelected
-            ? `Remove ${project.title} from selection`
-            : `Add ${project.title} to selection`
-        }
-        className={`absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center transition-all shadow-sm ${
-          isSelected
-            ? "bg-[#FF6600] text-[#FFFFFF]"
-            : "bg-[#0A0A0A]/95 text-[#FFFFFF] hover:bg-[#FF6600] hover:text-[#FFFFFF]"
-        }`}
-      >
-        {isSelected ? (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8.5L6.5 12L13 4.5"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="square"
-            />
-          </svg>
-        ) : (
-          <span className="font-body text-xl leading-none font-light">+</span>
-        )}
-      </button>
-    </article>
-  );
+function masonryClass(count: number): string {
+  if (count <= 1) return "columns-1";
+  if (count === 2) return "columns-2";
+  if (count === 3) return "columns-2 md:columns-3";
+  return "columns-2 md:columns-3 lg:columns-4";
 }
 
 function SingleItemOverlay({
   slug,
   onClose,
   filtered,
+  initialIndex = 0,
+  onNavigate,
 }: {
   slug: string;
   onClose: () => void;
   filtered: Project[];
+  initialIndex?: number;
+  onNavigate?: (slug: string) => void;
 }) {
   const project = projects.find((p) => p.id === slug);
   const { toggle, isSelected } = useSelection();
-  const [activeImage, setActiveImage] = useState(0);
+  const [activeImage, setActiveImage] = useState(initialIndex);
   const [showDetails, setShowDetails] = useState(false);
   const mainRef = useRef<HTMLButtonElement>(null);
   const touchStartX = useRef<number | null>(null);
@@ -195,21 +65,22 @@ function SingleItemOverlay({
   const next = total > 1 ? filtered[(currentIndex + 1) % total] : null;
   const hasMultipleImages = project ? project.images.length > 1 : false;
 
-  const navigate = useCallback(
+  // The host owns project changes so the URL stays on the current category page.
+// Previously this pushed /v6/work and dispatched an event that only the
+// homepage gallery listens for, so prev/next did nothing on a category page.
+const navigate = useCallback(
     (target: Project) => {
       interactedRef.current = true;
-      setActiveImage(0);
-      setShowDetails(false);
-      window.history.pushState({}, "", `/v6/work?p=${target.id}`);
-      window.dispatchEvent(new CustomEvent("v6-gallery-open", { detail: target.id }));
+      onNavigate?.(target.id);
+      if (!onNavigate) {
+        setActiveImage(0);
+        setShowDetails(false);
+        window.history.pushState({}, "", `/v6/work?p=${target.id}`);
+        window.dispatchEvent(new CustomEvent("v6-gallery-open", { detail: target.id }));
+      }
     },
-    []
+    [onNavigate]
   );
-
-  useEffect(() => {
-    setActiveImage(0);
-    setShowDetails(false);
-  }, [slug]);
 
   useEffect(() => {
     if (!project) return;
@@ -407,19 +278,38 @@ function SingleItemOverlay({
 export default function CategoryPage({ category, title, subtitle, projects: allProjects }: CategoryPageProps) {
   const { toggle, isSelected, selected, hydrated, whatsappLink, clear } = useSelection();
   const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const [openIndex, setOpenIndex] = useState(0);
 
   const filtered = useMemo(
     () => allProjects.filter((p) => p.category === category),
     [category, allProjects]
   );
 
-  const spans = useMemo(() => finalRowSpans(filtered.length), [filtered.length]);
+  const totalImages = useMemo(
+    () => filtered.reduce((sum, p) => sum + p.images.length, 0),
+    [filtered]
+  );
 
   const closeOverlay = useCallback(() => {
     setOpenSlug(null);
+    setOpenIndex(0);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.delete("p");
+      url.searchParams.delete("i");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, []);
+
+  // Stepping between projects from inside the overlay keeps the visitor on
+  // this category page and deep-links to the photo they land on.
+  const handleNavigate = useCallback((slug: string) => {
+    setOpenSlug(slug);
+    setOpenIndex(0);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("p", slug);
+      url.searchParams.delete("i");
       window.history.replaceState({}, "", url.toString());
     }
   }, []);
@@ -430,7 +320,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
       className="px-6 md:px-12 lg:px-16 pt-[calc(var(--nav-two-row-height)+3rem)] pb-20 md:pb-28 bg-white min-h-screen"
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
         <div>
           <p className={`${label} text-[#FF6600] mb-3`}>{title}</p>
           <h2
@@ -443,6 +333,10 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
             {subtitle}
           </h2>
         </div>
+        <p className={`${label} text-[#333333]/55 tabular-nums shrink-0`}>
+          {filtered.length} project{filtered.length === 1 ? "" : "s"} ·{" "}
+          {totalImages} photo{totalImages === 1 ? "" : "s"}
+        </p>
       </div>
 
       {/* Winterior-style tab filter */}
@@ -471,40 +365,91 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
         })}
       </div>
 
-      {/* Grid */}
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-        role="grid"
-        aria-label="Project gallery"
-      >
-        {filtered.map((project, i) => {
-          const span = spans[i];
-          return (
-            <GalleryTile
-              key={project.id}
-              project={project}
-              index={i}
-              priority={i < 3}
-              className={
-                span
-                  ? `${SPAN_BASE[span.base]} ${SPAN_SM[span.sm]} ${SPAN_LG[span.lg]}`
-                  : ""
-              }
-              onOpen={(idx) => {
-                const target = filtered[idx];
-                if (!target) return;
-                if (typeof window !== "undefined") {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("p", target.id);
-                  window.history.pushState({}, "", url.toString());
-                }
-                setOpenSlug(target.id);
-              }}
-              isSelected={isSelected(project.id)}
-              onToggle={toggle}
-            />
-          );
-        })}
+      {/* Every image in the category, laid out inline.
+          Previously each project was a single 4:5 tile, so Bath Vanity showed
+          one image for a seven-photo collection and the rest were only
+          reachable by opening the project view. Each project still keeps its
+          own heading so the collections stay distinguishable, but all of its
+          photographs now sit on the page itself. */}
+      <div className="space-y-14 md:space-y-20">
+        {filtered.map((project) => (
+          <section key={project.id} aria-labelledby={`grp-${project.id}`}>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#C6C5CA] pb-3 mb-5 md:mb-6">
+              <h3
+                id={`grp-${project.id}`}
+                className="font-display text-xl md:text-2xl font-medium text-[#333333] tracking-[-0.01em]"
+                style={{ fontFamily: "var(--font-roboto), sans-serif" }}
+              >
+                {project.title}
+              </h3>
+              <div className="flex items-center gap-4">
+                <span className={`${label} text-[#333333]/55 tabular-nums`}>
+                  {project.images.length} photo
+                  {project.images.length === 1 ? "" : "s"}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => toggle(project.id)}
+                  aria-pressed={isSelected(project.id)}
+                  className={`${label} px-2.5 py-1 text-[10px] tracking-[0.18em] uppercase transition-colors ${
+                    isSelected(project.id)
+                      ? "bg-[#FF6600] text-[#FFFFFF]"
+                      : "border border-[#C6C5CA] text-[#333333]/70 hover:border-[#FF6600] hover:text-[#FF6600]"
+                  }`}
+                >
+                  {isSelected(project.id) ? "Selected ✓" : "Select"}
+                </button>
+              </div>
+            </div>
+
+            {/* Multi-column masonry: every column is filled to the full width
+                of the page, so there is no empty band at the right edge, and
+                each photo keeps its own aspect ratio instead of being cropped
+                to a fixed box. Column count is capped at the photo count so a
+                short collection does not leave whole columns empty. */}
+            <div className={masonryClass(project.images.length)}>
+              {project.images.map((src, i) => (
+                <figure key={src + i} className="mb-3 md:mb-4 break-inside-avoid">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpenSlug(project.id);
+                        setOpenIndex(i);
+                        if (typeof window !== "undefined") {
+                          const url = new URL(window.location.href);
+                          url.searchParams.set("p", project.id);
+                          url.searchParams.set("i", String(i));
+                          window.history.replaceState({}, "", url.toString());
+                        }
+                      }}
+                      className="group relative block w-full overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                      style={{ aspectRatio: imageAspectRatio(src) }}
+                      aria-label={`Open ${project.title}, photo ${i + 1}`}
+                    >
+                      <Image
+                        src={src}
+                        alt={`${project.title} — photo ${i + 1}`}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        loading={i < 4 ? "eager" : "lazy"}
+                        fetchPriority={i < 2 ? "high" : "auto"}
+                        decoding="async"
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA_URL}
+                      />
+                      <span className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/15 transition-colors duration-300" />
+                      <span className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#FFFFFF]/92 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span aria-hidden className="text-[#333333] text-sm leading-none">
+                          ↗
+                        </span>
+                      </span>
+                    </button>
+                  </figure>
+                ))}
+            </div>
+          </section>
+        ))}
       </div>
 
       {filtered.length === 0 && (
@@ -555,9 +500,14 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
       {/* Full-screen single-item overlay */}
       {openSlug && (
         <SingleItemOverlay
+          // Remounting on change re-seeds activeImage from initialIndex, so
+          // there is no effect needed to reset it.
+          key={`${openSlug}:${openIndex}`}
           slug={openSlug}
           onClose={closeOverlay}
           filtered={filtered}
+          initialIndex={openIndex}
+          onNavigate={handleNavigate}
         />
       )}
     </section>
