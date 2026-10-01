@@ -358,7 +358,7 @@ export const projects: Project[] = [
     year: "2025",
     location: "Nairobi, Kenya",
     materials: ["Quartz", "Brushed Brass", "Soft-close Drawers", "Travertine"],
-    images: Array.from({ length: 6 }, (_, i) =>
+    images: Array.from({ length: 7 }, (_, i) =>
       img("bath-vanities", i + 1)
     ),
     featured: true,
