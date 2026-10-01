@@ -53,20 +53,23 @@ const SERVICES = [
 const ABOUT_CONTENT = {
   title: "Winterior Design Creative Solutions by Professional Designers",
   body: "Your kitchen and interiors are an expression of who you are, and its design should match your space and feel. Winterior Design closely collaborates with clients to evolve every concept. Whether you have traditional tastes or desire a modern feel, we design your dream kitchen to suit your taste and budget.",
+  // Short by design: these sit on top of a photograph in a narrow
+  // three-up strip, so a full sentence wrapped over four or five lines and
+  // was unreadable against the image. The claims are unchanged, condensed.
   features: [
     {
       title: "Reasonable Prices",
-      description: "We design kitchens and other interior fittings that fulfill needs of all people and offer it at affordable and fair prices",
+      description: "Affordable and fairly priced.",
       image: "/images/bath-vanities/01.jpg",
     },
     {
       title: "Exclusive design",
-      description: "Mixture of imagination, experience and professionalism is the secret of our design!",
+      description: "Imagination, experience, professionalism.",
       image: "/images/better-wardrobes/01.jpg",
     },
     {
       title: "Professional Team",
-      description: "We are proud of our amicable, professional and always developing team!",
+      description: "Amicable, professional, always developing.",
       image: "/images/high-gloss-handless-kitchen/01.jpg",
     },
   ],
@@ -322,22 +325,25 @@ export default function AtelierIndex() {
             </p>
           </div>
           <div className="lg:col-span-7 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
-            {ABOUT_CONTENT.features.map((feature, i) => (
-              <div key={feature.title} className="relative aspect-[4/3] overflow-hidden bg-[#F4F4F4] wk-scale-in">
-                <Image
-                  src={feature.image}
-                  alt={feature.title}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-2 font-semibold">{feature.title}</p>
-                  <p className="font-body text-sm text-[#FFFFFF]/80 leading-relaxed">{feature.description}</p>
+{ABOUT_CONTENT.features.map((feature) => (
+                <div key={feature.title} className="group relative aspect-[4/3] overflow-hidden bg-[#F4F4F4] wk-scale-in">
+                  <Image
+                    src={feature.image}
+                    alt=""
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                  />
+                  {/* Carries further up the frame than before: the caption can
+                      now wrap to two lines, and via-transparent left that text
+                      sitting on bare photograph. */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/85 via-[#000000]/45 to-[#000000]/5" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-1.5 font-bold">{feature.title}</p>
+                    <p className="font-body text-[13px] text-[#FFFFFF]/95 leading-snug font-medium">{feature.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>
