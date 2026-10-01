@@ -123,7 +123,8 @@ export const projects: Project[] = [
     year: "2024",
     location: "Nairobi, Kenya",
     materials: ["Mahogany", "Melanin Finish", "Brass Fittings"],
-    images: Array.from({ length: 7 }, (_, i) => img("wardropes", i + 1)),
+    // 04, 06 and 07 duplicated glossy-wardrobe-led-mirror; removed.
+    images: [1, 2, 3, 5].map((n) => img("wardropes", n)),
     featured: true,
     tags: [
       "wardrobe",
@@ -272,9 +273,8 @@ export const projects: Project[] = [
     year: "2024",
     location: "Nairobi, Kenya",
     materials: ["Installation"],
-    images: Array.from({ length: 2 }, (_, i) =>
-      img("wardrobe-installation-process", i + 1)
-    ),
+    // 02 was byte-identical to classic-wardrobe-with-mirror/01.jpg.
+    images: [img("wardrobe-installation-process", 1)],
     featured: false,
     tags: [
       "process",
@@ -338,7 +338,8 @@ export const projects: Project[] = [
     year: "2024",
     location: "Nairobi, Kenya",
     materials: ["Melanin Board", "Integrated Handles"],
-    images: Array.from({ length: 6 }, (_, i) => img("handless-melanin", i + 1)),
+    // 01 and 05 each had a re-encoded twin (02, 06); both removed.
+    images: [1, 3, 4, 5].map((n) => img("handless-melanin", n)),
     featured: false,
     tags: [
       "kitchen",
@@ -411,26 +412,6 @@ export const projects: Project[] = [
       "cabinetry",
       "worktop",
       "Nairobi kitchen design",
-    ],
-  },
-  {
-    id: "closets-2026",
-    title: "Closets & Wardrobes",
-    subtitle: "Full Height Storage",
-    category: "Wardrobe",
-    description:
-      "Sixteen photographs of a closet build from bare room to loaded shelves — hanging sections, drawer banks and shelving fitted to the alcove. Every internal division is measured to the space it fills.",
-    year: "2026",
-    location: "Nairobi, Kenya",
-    materials: ["Melamin", "Soft-close Runners", "Brushed Handles", "LED Strip"],
-    images: Array.from({ length: 16 }, (_, i) => img("closets", i + 1)),
-    featured: true,
-    tags: [
-      "wardrobe",
-      "closet",
-      "walk-in closet",
-      "storage",
-      "Nairobi wardrobe design",
     ],
   },
 ];

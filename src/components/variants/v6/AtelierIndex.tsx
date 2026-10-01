@@ -24,7 +24,7 @@ const SERVICES = [
     id: "wardrobes",
     title: "Tailored",
     subtitle: "WARDROBES",
-    image: "/images/closets/05.jpg",
+    image: "/images/better-wardrobes/08.jpg",
     href: "/wardrobes",
   },
   {
@@ -38,7 +38,7 @@ const SERVICES = [
     id: "walk-in-closets",
     title: "Custom",
     subtitle: "WALK-IN CLOSETS",
-    image: "/images/closets/10.jpg",
+    image: "/images/classic-wardrobe/10.jpg",
     href: "/wardrobes",
   },
   {

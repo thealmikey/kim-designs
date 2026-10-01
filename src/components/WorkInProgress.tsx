@@ -7,12 +7,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Eight entries fill the grid exactly: the hero tile spans two columns, so
-// 1 x 2 + 7 x 1 = 9 cells = 3 x 3 at md, and 8 x 1 = 2 x 4 on mobile.
-// Six entries left two empty cells and dead space after the last tile.
+// Seven entries fill the grid exactly: the hero tile spans two columns, so
+// 1 x 2 + 6 x 1 = 8 cells = 2 x 4. Six entries left two empty cells and dead
+// space after the last tile.
+// A seventh was dropped with wardrobe-installation-process/02.jpg, which was
+// byte-identical to classic-wardrobe-with-mirror/01.jpg and therefore repeated
+// a photo the visitor had already seen on the wardrobe pages.
 const wipImages = [
   { src: "/images/wardrobe-installation-process/01.jpg", alt: "Wardrobe installation — framing" },
-  { src: "/images/wardrobe-installation-process/02.jpg", alt: "Wardrobe installation — door fitting" },
   { src: "/images/classic-wardrobe/01.jpg", alt: "Classic wardrobe — site mockup" },
   { src: "/images/classic-wardrobe/02.jpg", alt: "Classic wardrobe — carcass assembly" },
   { src: "/images/classic-wardrobe/04.jpg", alt: "Classic wardrobe — mid build" },
