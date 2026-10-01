@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -46,6 +53,12 @@ const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
 const ZOOM_STEP = 0.5;
 const CLICK_ZOOM = 2.5;
+
+// Layout effect on the client, plain effect on the server. The canvas must be
+// measured before the browser paints, otherwise the first frame shows the
+// photo at its intrinsic pixel size.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function JustifiedGallery({
   project,
@@ -188,9 +201,10 @@ const navigate = useCallback(
   const activeSrc = project?.images[activeImage];
 
   // Measure the canvas so the photo can be scaled to the largest size that
-  // still fits. Without this the intrinsic pixel size would be used and the
-  // image would sit tiny in the middle of a large screen.
-  useEffect(() => {
+  // still fits. This runs as a layout effect so the fitted size is applied
+  // before paint; a plain effect let one frame render at intrinsic size,
+  // which looked like the photo opened already zoomed in.
+  useIsomorphicLayoutEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
     const measure = () =>
@@ -200,6 +214,8 @@ const navigate = useCallback(
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+
+  const measured = viewport.w > 0 && viewport.h > 0;
 
   // Fit scale: the factor that makes the photo exactly fill the canvas at
   // zoom 1, so it uses all available space without being cropped.
@@ -448,16 +464,26 @@ const navigate = useCallback(
                 : "Zoom in"
             }
           >
-            <Image
-              src={activeSrc ?? ""}
-              alt={`${project.title} — photo ${activeImage + 1}`}
-              width={display.w || undefined}
-              height={display.h || undefined}
-              priority
-              unoptimized
-              className="block h-auto w-auto select-none"
-              draggable={false}
-            />
+            {/* Nothing is painted until the canvas is measured. Rendering
+                early would draw the photo at its intrinsic pixel size, which
+                overflows the canvas and reads as already zoomed in. */}
+            {measured && activeSrc ? (
+              <Image
+                src={activeSrc}
+                alt={`${project.title} — photo ${activeImage + 1}`}
+                width={display.w}
+                height={display.h}
+                priority
+                unoptimized
+                className="block h-auto w-auto select-none"
+                draggable={false}
+              />
+            ) : (
+              <span
+                className="block bg-[#1A1A1A]"
+                style={{ width: display.w || 1, height: display.h || 1 }}
+              />
+            )}
           </button>
 
           {next && (
