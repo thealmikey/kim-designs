@@ -10,7 +10,7 @@ import {
   allCategories,
   categoryHref,
 } from "@/lib/projects";
-import { imageAspectRatio } from "@/lib/image-dims";
+import { imageSize } from "@/lib/image-dims";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
 
 const label = "font-body text-[11px] tracking-[0.3em] uppercase";
@@ -27,15 +27,76 @@ interface CategoryPageProps {
 }
 
 /**
- * Column count is capped at the number of photos, so a two-photo collection
- * uses two columns instead of leaving two empty ones. Tailwind only sees
- * class names written literally in source, so each option is spelled out here.
+ * Justified rows, with no JavaScript.
+ *
+ * Every tile sets flex-grow to its own aspect ratio and a flex-basis of
+ * `ratio * row-height`. The browser hands the leftover width to the tiles in
+ * proportion to those ratios, so a tile settles at width = ratio * H and,
+ * with aspect-ratio still applied, every tile on the row ends up exactly the
+ * same height. Each row therefore fills the full width edge to edge while
+ * every photo keeps its true proportions - nothing is cropped, stretched,
+ * or left in an empty cell.
+ *
+ * Replaces two earlier attempts that could not satisfy that combination:
+ * finalRowSpans stretched a single trailing tile to double width, which made
+ * it display at a different scale from its neighbours, and multi-column
+ * masonry left ragged column bottoms in arbitrary fill order.
  */
-function masonryClass(count: number): string {
-  if (count <= 1) return "columns-1";
-  if (count === 2) return "columns-2";
-  if (count === 3) return "columns-2 md:columns-3";
-  return "columns-2 md:columns-3 lg:columns-4";
+function JustifiedGallery({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: (imageIndex: number) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-3 md:gap-4 [--row-h:200px] md:[--row-h:260px] lg:[--row-h:320px]">
+      {project.images.map((src, i) => {
+        const [w, h] = imageSize(src);
+        const ratio = w / h;
+        return (
+          <figure
+            key={src + i}
+            className="relative"
+            style={{
+              flexGrow: ratio,
+              flexBasis: `calc(${(ratio * 100).toFixed(2)} * var(--row-h) / 100)`,
+              aspectRatio: `${w} / ${h}`,
+              // Caps how far a short final row can be stretched, so the last
+              // band cannot balloon out of scale with the rows above it.
+              maxWidth: `calc(${(ratio * 130).toFixed(2)} * var(--row-h) / 100)`,
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => onOpen(i)}
+              className="group relative block h-full w-full overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              aria-label={`Open ${project.title}, photo ${i + 1}`}
+            >
+              <Image
+                src={src}
+                alt={`${project.title} — photo ${i + 1}`}
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                loading={i < 4 ? "eager" : "lazy"}
+                fetchPriority={i < 2 ? "high" : "auto"}
+                decoding="async"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
+              />
+              <span className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/15 transition-colors duration-300" />
+              <span className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#FFFFFF]/92 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span aria-hidden className="text-[#333333] text-sm leading-none">
+                  ↗
+                </span>
+              </span>
+            </button>
+          </figure>
+        );
+      })}
+    </div>
+  );
 }
 
 function SingleItemOverlay({
@@ -402,52 +463,19 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
               </div>
             </div>
 
-            {/* Multi-column masonry: every column is filled to the full width
-                of the page, so there is no empty band at the right edge, and
-                each photo keeps its own aspect ratio instead of being cropped
-                to a fixed box. Column count is capped at the photo count so a
-                short collection does not leave whole columns empty. */}
-            <div className={masonryClass(project.images.length)}>
-              {project.images.map((src, i) => (
-                <figure key={src + i} className="mb-3 md:mb-4 break-inside-avoid">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setOpenSlug(project.id);
-                        setOpenIndex(i);
-                        if (typeof window !== "undefined") {
-                          const url = new URL(window.location.href);
-                          url.searchParams.set("p", project.id);
-                          url.searchParams.set("i", String(i));
-                          window.history.replaceState({}, "", url.toString());
-                        }
-                      }}
-                      className="group relative block w-full overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                      style={{ aspectRatio: imageAspectRatio(src) }}
-                      aria-label={`Open ${project.title}, photo ${i + 1}`}
-                    >
-                      <Image
-                        src={src}
-                        alt={`${project.title} — photo ${i + 1}`}
-                        fill
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        loading={i < 4 ? "eager" : "lazy"}
-                        fetchPriority={i < 2 ? "high" : "auto"}
-                        decoding="async"
-                        placeholder="blur"
-                        blurDataURL={BLUR_DATA_URL}
-                      />
-                      <span className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/15 transition-colors duration-300" />
-                      <span className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#FFFFFF]/92 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span aria-hidden className="text-[#333333] text-sm leading-none">
-                          ↗
-                        </span>
-                      </span>
-                    </button>
-                  </figure>
-                ))}
-            </div>
+            <JustifiedGallery
+              project={project}
+              onOpen={(i) => {
+                setOpenSlug(project.id);
+                setOpenIndex(i);
+                if (typeof window !== "undefined") {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("p", project.id);
+                  url.searchParams.set("i", String(i));
+                  window.history.replaceState({}, "", url.toString());
+                }
+              }}
+            />
           </section>
         ))}
       </div>
