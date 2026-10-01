@@ -25,6 +25,49 @@ interface CategoryPageProps {
   projects: Project[];
 }
 
+// Tailwind's scanner only sees class names written literally in the source,
+// so every span this component can emit is spelled out here.
+const SPAN_BASE = { 1: "col-span-1", 2: "col-span-2", 3: "col-span-3" } as const;
+const SPAN_SM = { 1: "sm:col-span-1", 2: "sm:col-span-2" } as const;
+const SPAN_LG = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" } as const;
+
+const COLS = { base: 1, sm: 2, lg: 3 } as const;
+
+type Span = { base: 1 | 2 | 3; sm: 1 | 2; lg: 1 | 2 | 3 };
+
+/**
+ * Widens the tiles on the final row so it fills its columns exactly.
+ *
+ * The categories hold 1, 7 and 8 projects, so a plain 1/2/3-column grid
+ * always ended with one or two empty cells — the dead space after the last
+ * image. Every tile is a fixed 4:5 box, so varied heights cannot absorb the
+ * gap; the columns themselves have to take up the slack.
+ */
+function finalRowSpans(total: number): Record<number, Span> {
+  const spans: Record<number, Span> = {};
+
+  const set = (index: number, bp: keyof Span, span: 1 | 2 | 3) => {
+    const cur = spans[index] ?? { base: 1, sm: 1, lg: 1 };
+    if (bp === "base") cur.base = span;
+    else if (bp === "sm") cur.sm = span as 1 | 2;
+    else cur.lg = span;
+    spans[index] = cur;
+  };
+
+  (Object.keys(COLS) as (keyof typeof COLS)[]).forEach((bp) => {
+    const cols = COLS[bp];
+    const rest = total % cols;
+    if (total <= cols || rest === 0) return;
+    const start = total - rest;
+    for (let j = 0; j < rest; j += 1) {
+      // All but the last tile stay one column; the last absorbs the remainder.
+      set(start + j, bp, (j === rest - 1 ? cols - rest + 1 : 1) as 1 | 2 | 3);
+    }
+  });
+
+  return spans;
+}
+
 function GalleryTile({
   project,
   index,
@@ -32,6 +75,7 @@ function GalleryTile({
   onOpen,
   isSelected,
   onToggle,
+  className = "",
 }: {
   project: Project;
   index: number;
@@ -39,12 +83,13 @@ function GalleryTile({
   onOpen: (i: number) => void;
   isSelected: boolean;
   onToggle: (id: string) => void;
+  className?: string;
 }) {
   return (
     <article
       data-index={index}
       data-project-id={project.id}
-      className="relative group"
+      className={`relative group ${className}`}
     >
       <button
         type="button"
@@ -368,6 +413,8 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
     [category, allProjects]
   );
 
+  const spans = useMemo(() => finalRowSpans(filtered.length), [filtered.length]);
+
   const closeOverlay = useCallback(() => {
     setOpenSlug(null);
     if (typeof window !== "undefined") {
@@ -430,26 +477,34 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
         role="grid"
         aria-label="Project gallery"
       >
-        {filtered.map((project, i) => (
-          <GalleryTile
-            key={project.id}
-            project={project}
-            index={i}
-            priority={i < 3}
-            onOpen={(idx) => {
-              const target = filtered[idx];
-              if (!target) return;
-              if (typeof window !== "undefined") {
-                const url = new URL(window.location.href);
-                url.searchParams.set("p", target.id);
-                window.history.pushState({}, "", url.toString());
+        {filtered.map((project, i) => {
+          const span = spans[i];
+          return (
+            <GalleryTile
+              key={project.id}
+              project={project}
+              index={i}
+              priority={i < 3}
+              className={
+                span
+                  ? `${SPAN_BASE[span.base]} ${SPAN_SM[span.sm]} ${SPAN_LG[span.lg]}`
+                  : ""
               }
-              setOpenSlug(target.id);
-            }}
-            isSelected={isSelected(project.id)}
-            onToggle={toggle}
-          />
-        ))}
+              onOpen={(idx) => {
+                const target = filtered[idx];
+                if (!target) return;
+                if (typeof window !== "undefined") {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("p", target.id);
+                  window.history.pushState({}, "", url.toString());
+                }
+                setOpenSlug(target.id);
+              }}
+              isSelected={isSelected(project.id)}
+              onToggle={toggle}
+            />
+          );
+        })}
       </div>
 
       {filtered.length === 0 && (

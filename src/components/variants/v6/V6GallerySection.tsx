@@ -685,11 +685,11 @@ export default function V6GallerySection() {
       className="px-6 md:px-8 lg:px-12 py-16 md:py-24 bg-white"
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-10">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8 md:mb-10">
         <div>
           <p className={`${label} text-[#FF6600] mb-3`}>We Transform Your Home</p>
           <h2
-            className="font-display font-light tracking-[-0.02em] leading-[1.02] text-[#333333]"
+            className="font-display font-medium tracking-[-0.01em] leading-[1.02] text-[#333333]"
             style={{
               fontSize: "clamp(2rem, 4vw, 3.5rem)",
               fontFamily: "var(--font-roboto), sans-serif",
@@ -699,6 +699,20 @@ export default function V6GallerySection() {
             <br />
             from some of our customers.
           </h2>
+        </div>
+        {/* Balances the heading so the row has no empty right edge. */}
+        <div className="md:text-right md:max-w-xs shrink-0">
+          <p className="font-body text-sm text-[#333333]/85 leading-relaxed">
+            A look at the kitchens we have delivered. Filter by category, or open
+            any project to see the full photo set.
+          </p>
+          <Link
+            href="/v6/work"
+            className="inline-flex items-center gap-2 mt-4 font-body text-[11px] font-bold tracking-[0.2em] uppercase text-[#FF6600] hover:text-[#E25800] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-4"
+          >
+            View all projects
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
 

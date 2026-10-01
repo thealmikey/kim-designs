@@ -7,11 +7,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Eight entries fill the grid exactly: the hero tile spans two columns, so
+// 1 x 2 + 7 x 1 = 9 cells = 3 x 3 at md, and 8 x 1 = 2 x 4 on mobile.
+// Six entries left two empty cells and dead space after the last tile.
 const wipImages = [
   { src: "/images/wardrobe-installation-process/01.jpg", alt: "Wardrobe installation — framing" },
   { src: "/images/wardrobe-installation-process/02.jpg", alt: "Wardrobe installation — door fitting" },
   { src: "/images/classic-wardrobe/01.jpg", alt: "Classic wardrobe — site mockup" },
+  { src: "/images/classic-wardrobe/02.jpg", alt: "Classic wardrobe — carcass assembly" },
   { src: "/images/classic-wardrobe/04.jpg", alt: "Classic wardrobe — mid build" },
+  { src: "/images/classic-wardrobe/05.jpg", alt: "Classic wardrobe — shelving set" },
   { src: "/images/classic-wardrobe/08.jpg", alt: "Classic wardrobe — door adjustment" },
   { src: "/images/under-stairs-wardrobe/01.jpg", alt: "Under-stairs wardrobe — fitting" },
 ];
@@ -81,7 +86,10 @@ export default function WorkInProgress() {
               className={`wip-tile relative overflow-hidden bg-foreground/5 ${
                 i === 0
                   ? "col-span-2 md:col-span-2 aspect-[16/9]"
-                  : "col-span-1 aspect-square"
+                  : i === wipImages.length - 1
+                    ? // Closes the 2-column mobile grid on a full-width row.
+                      "col-span-2 md:col-span-1 aspect-square"
+                    : "col-span-1 aspect-square"
               }`}
             >
               <Image
@@ -89,7 +97,13 @@ export default function WorkInProgress() {
                 alt={img.alt}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 50vw, 33vw"
+                sizes={
+                  i === 0
+                    ? "(max-width: 768px) 100vw, 66vw"
+                    : i === wipImages.length - 1
+                      ? "(max-width: 768px) 100vw, 33vw"
+                      : "(max-width: 768px) 50vw, 33vw"
+                }
                 loading="lazy"
                 decoding="async"
               />

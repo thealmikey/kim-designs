@@ -15,31 +15,38 @@ gsap.registerPlugin(ScrollTrigger);
 const SERVICES = [
   {
     id: "kitchens",
-    title: "COMPLETELY SYNERGIZED",
-    subtitle: "KITCHEN FITTING",
+    title: "Bespoke",
+    subtitle: "KITCHENS",
     image: "/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg",
     href: "/kitchens",
   },
   {
-    id: "classic-solid-wood",
-    title: "CLASSIC SOLID WOOD",
-    subtitle: "KITCHENS",
-    image: "/images/classic-wardrobe/01.jpg",
-    href: "/kitchens?style=classic",
-  },
-  {
-    id: "spray-paint",
-    title: "SPRAY PAINT",
-    subtitle: "KITCHENS",
-    image: "/images/spray-paint-kitchen/01.jpg",
-    href: "/kitchens?style=spray-paint",
-  },
-  {
     id: "wardrobes",
-    title: "CUSTOM WARDROBES",
-    subtitle: "WALK-IN CLOSETS",
-    image: "/images/wardropes/01.jpg",
+    title: "Tailored",
+    subtitle: "WARDROBES",
+    image: "/images/classic-wardrobe/01.jpg",
     href: "/wardrobes",
+  },
+  {
+    id: "bath-vanities",
+    title: "Premium",
+    subtitle: "VANITIES",
+    image: "/images/bath-vanities/01.jpg",
+    href: "/bath-vanities",
+  },
+  {
+    id: "walk-in-closets",
+    title: "Custom",
+    subtitle: "WALK-IN CLOSETS",
+    image: "/images/walk-in-closet/01.jpg",
+    href: "/wardrobes",
+  },
+  {
+    id: "gypsum-ceilings",
+    title: "Decorative",
+    subtitle: "GYPSUM CEILINGS",
+    image: "/images/gypsum-ceilings/01.jpeg",
+    href: "/contact",
   },
 ];
 
@@ -192,7 +199,7 @@ export default function AtelierIndex() {
                 <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-3 font-semibold wk-fade">
                   {service.title}
                 </p>
-                <h1 className="font-display font-light leading-[1.0] tracking-[-0.02em] text-[#FFFFFF] wk-fade" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
+                <h1 className="font-display font-medium leading-[1.0] tracking-[-0.01em] text-[#FFFFFF] wk-fade" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
                   {service.subtitle}
                 </h1>
                 <Link
@@ -259,31 +266,42 @@ export default function AtelierIndex() {
 
       {/* ============ SERVICES GRID ============ */}
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-white">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
           {SERVICES.map((service) => (
             <Link
               key={service.id}
               href={service.href}
-              className="group relative aspect-[4/3] overflow-hidden bg-[#F4F4F4] wk-scale-in"
+              className="group flex flex-col bg-[#F4F4F4] overflow-hidden wk-scale-in"
             >
-              <Image
-                src={service.image}
-                alt={service.title}
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-1.5 font-semibold">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#EAEAEA]">
+                <Image
+                  src={service.image}
+                  alt={service.subtitle}
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.05]"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                />
+              </div>
+              {/* Caption sits below the photograph so the image is never
+                  overlaid and no empty band is left under it. */}
+              <div className="flex flex-1 flex-col p-4 md:p-5">
+                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-1.5 font-bold">
                   {service.title}
                 </p>
-                <h3 className="font-display font-light text-2xl md:text-[1.7rem] text-[#FFFFFF] tracking-tight leading-[1.05]" style={{ fontFamily: "var(--font-roboto), sans-serif" }}>
+                <h3
+                  className="font-display font-medium text-lg md:text-xl text-[#333333] leading-[1.15]"
+                  style={{ fontFamily: "var(--font-roboto), sans-serif" }}
+                >
                   {service.subtitle}
                 </h3>
-                <span className="absolute bottom-5 right-5 inline-flex items-center gap-2 px-4 py-2 bg-[#FF6600] text-[#FFFFFF] font-body text-[10px] font-bold tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                  ENQUIRE
-                  <span aria-hidden>→</span>
+                <span className="mt-auto pt-4 inline-flex items-center gap-2 font-body text-[10px] font-bold tracking-[0.2em] uppercase text-[#FF6600]">
+                  Enquire
+                  <span
+                    aria-hidden
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
                 </span>
               </div>
             </Link>
@@ -296,10 +314,10 @@ export default function AtelierIndex() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           <div className="lg:col-span-5 wk-fade">
             <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-3 font-bold">About Us</p>
-            <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#333333] mb-6" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+            <h2 className="font-display font-medium leading-[1.05] tracking-[-0.01em] text-[#333333] mb-6" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
               {ABOUT_CONTENT.title}
             </h2>
-            <p className="font-body text-base md:text-lg text-[#333333]/75 leading-relaxed max-w-md">
+            <p className="font-body text-base md:text-lg text-[#333333]/85 leading-relaxed max-w-md">
               {ABOUT_CONTENT.body}
             </p>
           </div>
@@ -328,7 +346,7 @@ export default function AtelierIndex() {
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-white">
         <div className="text-center wk-fade mb-12 md:mb-16">
           <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-3 font-bold">Our Process</p>
-          <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#333333]" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+          <h2 className="font-display font-medium leading-[1.05] tracking-[-0.01em] text-[#333333]" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
             Creating your space together
           </h2>
         </div>
@@ -336,7 +354,7 @@ export default function AtelierIndex() {
           {PROCESS_STEPS.map((step, i) => (
             <div key={i} className="wk-fade text-center p-6 md:p-8 border border-[#C6C5CA] hover:border-[#FF6600]/50 transition-colors">
               <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-3 font-semibold">{step.step}</p>
-              <p className="font-body text-base md:text-lg text-[#333333]/80 leading-relaxed">{step.title}</p>
+              <p className="font-body text-base md:text-lg text-[#333333]/90 leading-relaxed">{step.title}</p>
             </div>
           ))}
         </div>
@@ -349,10 +367,10 @@ export default function AtelierIndex() {
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#F4F4F4]">
         <div className="text-center wk-fade mb-12 md:mb-16">
           <p className="font-body text-[10px] tracking-[0.3em] uppercase text-[#FF6600] mb-3 font-bold">Before & After</p>
-          <h2 className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#333333]" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
+          <h2 className="font-display font-medium leading-[1.05] tracking-[-0.01em] text-[#333333]" style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}>
             A modern approach to design
           </h2>
-          <p className="font-body text-base md:text-lg text-[#333333]/75 leading-relaxed max-w-2xl mx-auto mt-6">
+          <p className="font-body text-base md:text-lg text-[#333333]/85 leading-relaxed max-w-2xl mx-auto mt-6">
             Work with an experienced designer to create your one-of-a-kind kitchen, backed by a perfect fit guarantee.
           </p>
         </div>

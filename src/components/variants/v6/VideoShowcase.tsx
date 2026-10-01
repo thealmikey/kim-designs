@@ -135,7 +135,7 @@ export default function VideoShowcase() {
         <div
           ref={railRef}
           onScroll={syncBounds}
-          className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2 -mx-6 px-6 lg:-mx-16 lg:px-16"
+          className="flex justify-between overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2 -mx-6 px-6 lg:-mx-16 lg:px-16"
           style={{ gap: CARD_GAP }}
         >
           {videos.map((v, i) => (
