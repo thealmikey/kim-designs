@@ -42,6 +42,11 @@ interface CategoryPageProps {
  * it display at a different scale from its neighbours, and multi-column
  * masonry left ragged column bottoms in arbitrary fill order.
  */
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 5;
+const ZOOM_STEP = 0.5;
+const CLICK_ZOOM = 2.5;
+
 function JustifiedGallery({
   project,
   onOpen,
@@ -70,8 +75,8 @@ function JustifiedGallery({
             <button
               type="button"
               onClick={() => onOpen(i)}
-              className="group relative block h-full w-full overflow-hidden bg-[#F4F4F4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-              aria-label={`Open ${project.title}, photo ${i + 1}`}
+              className="group relative block h-full w-full overflow-hidden bg-[#F4F4F4] cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6600] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              aria-label={`Zoom ${project.title}, photo ${i + 1}`}
             >
               <Image
                 src={src}
@@ -85,11 +90,19 @@ function JustifiedGallery({
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
               />
-              <span className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/15 transition-colors duration-300" />
-              <span className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#FFFFFF]/92 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span aria-hidden className="text-[#333333] text-sm leading-none">
-                  ↗
-                </span>
+              <span className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/20 transition-colors duration-300" />
+              {/* Magnifier badge: states that the tile zooms rather than
+                  following a link, so the click is not a surprise. */}
+              <span className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#FFFFFF]/92 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 text-[#333333] fill-none stroke-current stroke-[2]"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+                  <path d="M11 8v6M8 11h6" strokeLinecap="round" />
+                </svg>
               </span>
             </button>
           </figure>
@@ -116,26 +129,55 @@ function SingleItemOverlay({
   const { toggle, isSelected } = useSelection();
   const [activeImage, setActiveImage] = useState(initialIndex);
   const [showDetails, setShowDetails] = useState(false);
-  const mainRef = useRef<HTMLButtonElement>(null);
+  // Zoom 1 means "fill the viewport as much as this photo's ratio allows".
+  const [zoom, setZoom] = useState(MIN_ZOOM);
+  const [viewport, setViewport] = useState({ w: 0, h: 0 });
+  const viewportRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
-  const interactedRef = useRef(false);
+  const drag = useRef<{
+    x: number;
+    y: number;
+    left: number;
+    top: number;
+    moved: boolean;
+  } | null>(null);
 
   const currentIndex = filtered.findIndex((p) => p.id === slug);
   const total = filtered.length;
   const prev = total > 1 ? filtered[(currentIndex - 1 + total) % total] : null;
   const next = total > 1 ? filtered[(currentIndex + 1) % total] : null;
   const hasMultipleImages = project ? project.images.length > 1 : false;
+  // View reset lives with the handlers that change the photo rather than in an
+// effect, which would only fire after the change had already rendered.
+const resetView = useCallback(() => {
+  setZoom(MIN_ZOOM);
+  const el = viewportRef.current;
+  if (el) {
+    el.scrollLeft = 0;
+    el.scrollTop = 0;
+  }
+}, []);
+
+const goToImage = useCallback(
+  (next: number) => {
+    const len = project?.images.length ?? 1;
+    setActiveImage(Math.min(Math.max(next, 0), len - 1));
+    resetView();
+  },
+  [project, resetView]
+);
+
 
   // The host owns project changes so the URL stays on the current category page.
 // Previously this pushed /v6/work and dispatched an event that only the
 // homepage gallery listens for, so prev/next did nothing on a category page.
 const navigate = useCallback(
     (target: Project) => {
-      interactedRef.current = true;
       onNavigate?.(target.id);
       if (!onNavigate) {
         setActiveImage(0);
         setShowDetails(false);
+        resetView();
         window.history.pushState({}, "", `/v6/work?p=${target.id}`);
         window.dispatchEvent(new CustomEvent("v6-gallery-open", { detail: target.id }));
       }
@@ -143,19 +185,93 @@ const navigate = useCallback(
     [onNavigate]
   );
 
+  const activeSrc = project?.images[activeImage];
+
+  // Measure the canvas so the photo can be scaled to the largest size that
+  // still fits. Without this the intrinsic pixel size would be used and the
+  // image would sit tiny in the middle of a large screen.
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const measure = () =>
+      setViewport({ w: el.clientWidth, h: el.clientHeight });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Fit scale: the factor that makes the photo exactly fill the canvas at
+  // zoom 1, so it uses all available space without being cropped.
+  const fit = useMemo(() => {
+    if (!activeSrc || !viewport.w || !viewport.h) return 1;
+    const [nw, nh] = imageSize(activeSrc);
+    return Math.min(viewport.w / nw, viewport.h / nh);
+  }, [activeSrc, viewport.w, viewport.h]);
+
+  const display = useMemo(() => {
+    if (!activeSrc) return { w: 0, h: 0 };
+    const [nw, nh] = imageSize(activeSrc);
+    const s = fit * zoom;
+    return { w: Math.round(nw * s), h: Math.round(nh * s) };
+  }, [activeSrc, fit, zoom]);
+
+  const isZoomed = zoom > MIN_ZOOM + 0.001;
+
+  // Zoom keeping the current centre point fixed, so the detail being
+  // inspected stays put instead of jumping to the corner.
+  const applyZoom = useCallback((next: number) => {
+    const el = viewportRef.current;
+    const clamped = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, next));
+    if (el && clamped > MIN_ZOOM) {
+      const cx = (el.scrollLeft + el.clientWidth / 2) / (el.scrollWidth || 1);
+      const cy = (el.scrollTop + el.clientHeight / 2) / (el.scrollHeight || 1);
+      setZoom(clamped);
+      requestAnimationFrame(() => {
+        el.scrollLeft = cx * el.scrollWidth - el.clientWidth / 2;
+        el.scrollTop = cy * el.scrollHeight - el.clientHeight / 2;
+      });
+    } else {
+      setZoom(clamped);
+      // Back to fit: drop the scroll offsets so flex centring applies again.
+      if (el) {
+        el.scrollLeft = 0;
+        el.scrollTop = 0;
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (!project) return;
-    const p = project;
     function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      // Zoom keys take priority over navigation while inspecting detail.
+      if (e.key === "+" || e.key === "=") {
+        e.preventDefault();
+        applyZoom(zoom + ZOOM_STEP);
+        return;
+      }
+      if (e.key === "-" || e.key === "_") {
+        e.preventDefault();
+        applyZoom(zoom - ZOOM_STEP);
+        return;
+      }
+      if (e.key === "0") {
+        e.preventDefault();
+        applyZoom(MIN_ZOOM);
+        return;
+      }
       if (e.key === "ArrowRight" && hasMultipleImages) {
         e.preventDefault();
-        setActiveImage((i) => Math.min(p.images.length - 1, i + 1));
+        goToImage(activeImage + 1);
       }
       if (e.key === "ArrowLeft" && hasMultipleImages) {
         e.preventDefault();
-        setActiveImage((i) => Math.max(0, i - 1));
+        goToImage(activeImage - 1);
       }
-      if (e.key === "Escape") onClose();
     }
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -163,7 +279,7 @@ const navigate = useCallback(
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [project, hasMultipleImages, onClose]);
+  }, [project, hasMultipleImages, onClose, applyZoom, zoom, goToImage, activeImage]);
 
   if (!project) return null;
 
@@ -183,11 +299,61 @@ const navigate = useCallback(
           <span aria-hidden>←</span>
           <span>Back to gallery</span>
         </button>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
           <p className={`${label} text-[#FFFFFF]/60 tabular-nums hidden md:block`}>
             {String(currentIndex + 1).padStart(2, "0")} /{" "}
             {String(total).padStart(2, "0")}
           </p>
+
+          {/* Zoom controls. Always visible rather than hover-only, so the
+              affordance is discoverable without hunting for it. */}
+          <div
+            className="flex items-center border border-[#FFFFFF]/30"
+            role="group"
+            aria-label="Zoom controls"
+          >
+            <button
+              type="button"
+              onClick={() => applyZoom(zoom - ZOOM_STEP)}
+              disabled={!isZoomed}
+              className={`${label} w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-[#FF6600] enabled:hover:text-[#FFFFFF]`}
+              aria-label="Zoom out"
+            >
+              <span aria-hidden>−</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => applyZoom(MIN_ZOOM)}
+              disabled={!isZoomed}
+              className={`${label} w-14 md:w-16 h-9 md:h-10 flex items-center justify-center text-[11px] tabular-nums border-x border-[#FFFFFF]/30 disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:bg-[#FFFFFF]/10`}
+              aria-label="Reset zoom to fit"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
+            <button
+              type="button"
+              onClick={() => applyZoom(zoom + ZOOM_STEP)}
+              disabled={zoom >= MAX_ZOOM}
+              className={`${label} w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-[#FF6600] enabled:hover:text-[#FFFFFF]`}
+              aria-label="Zoom in"
+            >
+              <span aria-hidden>+</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowDetails((v) => !v)}
+            aria-pressed={showDetails}
+            className={`${label} px-3 py-2 border transition-colors ${
+              showDetails
+                ? "bg-[#FFFFFF] text-[#0A0A0A] border-[#FFFFFF]"
+                : "border-[#FFFFFF]/30 text-[#FFFFFF] hover:border-[#FF6600] hover:text-[#FF6600]"
+            }`}
+          >
+            Details
+          </button>
+
           <button
             type="button"
             onClick={() => toggle(project.id)}
@@ -203,64 +369,108 @@ const navigate = useCallback(
         </div>
       </div>
 
-      <div className="relative flex-1 flex items-center justify-center overflow-hidden">
-        {prev && (
-          <button
-            type="button"
-            onClick={() => navigate(prev)}
-            className="absolute left-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-start pl-3 md:pl-6"
-            aria-label={`Previous: ${prev.title}`}
-          >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#000000]/70 text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
-              ← {prev.title}
-            </span>
-          </button>
-        )}
-        {next && (
-          <button
-            type="button"
-            onClick={() => navigate(next)}
-            className="absolute right-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-end pr-3 md:pr-6"
-            aria-label={`Next: ${next.title}`}
-          >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#000000]/70 text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
-              {next.title} →
-            </span>
-          </button>
-        )}
-
-        <button
-          ref={mainRef}
-          type="button"
-          onClick={() => setShowDetails((v) => !v)}
-          onTouchStart={(e) => {
-            touchStartX.current = e.touches[0].clientX;
+      <div
+          ref={viewportRef}
+          onWheel={(e) => {
+            // Ctrl/Cmd + wheel zooms, matching browser and map conventions.
+            if (!(e.ctrlKey || e.metaKey)) return;
+            e.preventDefault();
+            applyZoom(zoom + (e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP));
           }}
-          onTouchEnd={(e) => {
-            if (touchStartX.current == null) return;
-            const dx = e.changedTouches[0].clientX - touchStartX.current;
-            if (Math.abs(dx) > 50 && hasMultipleImages) {
-              if (dx < 0)
-                setActiveImage((i) =>
-                  Math.min(project.images.length - 1, i + 1)
-                );
-              else setActiveImage((i) => Math.max(0, i - 1));
-            }
-            touchStartX.current = null;
+          onPointerDown={(e) => {
+            if (!isZoomed || e.button !== 0) return;
+            const el = viewportRef.current;
+            if (!el) return;
+            drag.current = {
+              x: e.clientX,
+              y: e.clientY,
+              left: el.scrollLeft,
+              top: el.scrollTop,
+              moved: false,
+            };
+            el.setPointerCapture(e.pointerId);
           }}
-          className="relative w-full h-full"
-          aria-label={showDetails ? "Hide project details" : "Show project details"}
-          aria-expanded={showDetails}
+          onPointerMove={(e) => {
+            const d = drag.current;
+            const el = viewportRef.current;
+            if (!d || !el) return;
+            el.scrollLeft = d.left - (e.clientX - d.x);
+            el.scrollTop = d.top - (e.clientY - d.y);
+            d.moved = true;
+          }}
+          onPointerUp={(e) => {
+            const el = viewportRef.current;
+            if (el?.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+            drag.current = null;
+          }}
+          onPointerCancel={() => {
+            drag.current = null;
+          }}
+          className={`relative flex-1 min-h-0 flex overflow-auto overscroll-contain ${
+            isZoomed ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"
+          }`}
+          style={{ scrollbarWidth: isZoomed ? "thin" : "none" }}
         >
-          <Image
-            src={project.images[activeImage]}
-            alt={`${project.title} — image ${activeImage + 1}`}
-            fill
-            priority
-            className="object-contain"
-            sizes="100vw"
-          />
-        </button>
+          {prev && (
+            <button
+              type="button"
+              onClick={() => navigate(prev)}
+              className="sticky left-3 top-1/2 z-10 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-[#0A0A0A]/70 hover:bg-[#FF6600] text-[#FFFFFF] flex items-center justify-center self-start backdrop-blur-sm transition-colors"
+              aria-label={`Previous project: ${prev.title}`}
+            >
+              <span aria-hidden>←</span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => {
+              if (drag.current?.moved) return;
+              applyZoom(isZoomed ? MIN_ZOOM : CLICK_ZOOM);
+            }}
+            onDoubleClick={() => applyZoom(CLICK_ZOOM)}
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current == null) return;
+              const dx = e.changedTouches[0].clientX - touchStartX.current;
+              if (Math.abs(dx) > 50 && hasMultipleImages) {
+                if (dx < 0) goToImage(activeImage + 1);
+                else goToImage(activeImage - 1);
+              }
+              touchStartX.current = null;
+            }}
+            className="shrink-0 m-auto"
+            aria-label={
+              isZoomed
+                ? `Zoom out, currently ${Math.round(zoom * 100)}%`
+                : "Zoom in"
+            }
+          >
+            <Image
+              src={activeSrc ?? ""}
+              alt={`${project.title} — photo ${activeImage + 1}`}
+              width={display.w || undefined}
+              height={display.h || undefined}
+              priority
+              unoptimized
+              className="block h-auto w-auto select-none"
+              draggable={false}
+            />
+          </button>
+
+          {next && (
+            <button
+              type="button"
+              onClick={() => navigate(next)}
+              className="sticky right-3 top-1/2 z-10 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-[#0A0A0A]/70 hover:bg-[#FF6600] text-[#FFFFFF] flex items-center justify-center self-start backdrop-blur-sm transition-colors"
+              aria-label={`Next project: ${next.title}`}
+            >
+              <span aria-hidden>→</span>
+            </button>
+          )}
+        </div>
 
         {showDetails && (
           <div
@@ -303,8 +513,6 @@ const navigate = useCallback(
             </ul>
           </div>
         )}
-      </div>
-
       {hasMultipleImages && (
         <div className="border-t border-[#FFFFFF]/10 bg-[#0A0A0A]">
           <div className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide px-4 md:px-8 py-3">
@@ -312,7 +520,7 @@ const navigate = useCallback(
               <button
                 key={src + i}
                 type="button"
-                onClick={() => setActiveImage(i)}
+                onClick={() => goToImage(i)}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden border-2 transition-colors ${
                   i === activeImage
                     ? "border-[#FF6600]"
