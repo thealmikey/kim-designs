@@ -393,6 +393,46 @@ export const projects: Project[] = [
       "Nairobi wardrobe design",
     ],
   },
+  {
+    id: "kitchen-site-2026",
+    title: "Kitchen Fit-Out",
+    subtitle: "Cabinetry & Countertops",
+    category: "Kitchen",
+    description:
+      "A full kitchen installation from carcass build through to the finished run — base and wall units, worktop, and the hardware that gets used every day. Photographed on site as the work went in.",
+    year: "2026",
+    location: "Nairobi, Kenya",
+    materials: ["Melamin", "Worktop", "Soft-close Hinges", "Brushed Handles"],
+    images: Array.from({ length: 3 }, (_, i) => img("kitchen", i + 1)),
+    featured: true,
+    tags: [
+      "kitchen",
+      "kitchen fitting",
+      "cabinetry",
+      "worktop",
+      "Nairobi kitchen design",
+    ],
+  },
+  {
+    id: "closets-2026",
+    title: "Closets & Wardrobes",
+    subtitle: "Full Height Storage",
+    category: "Wardrobe",
+    description:
+      "Sixteen photographs of a closet build from bare room to loaded shelves — hanging sections, drawer banks and shelving fitted to the alcove. Every internal division is measured to the space it fills.",
+    year: "2026",
+    location: "Nairobi, Kenya",
+    materials: ["Melamin", "Soft-close Runners", "Brushed Handles", "LED Strip"],
+    images: Array.from({ length: 16 }, (_, i) => img("closets", i + 1)),
+    featured: true,
+    tags: [
+      "wardrobe",
+      "closet",
+      "walk-in closet",
+      "storage",
+      "Nairobi wardrobe design",
+    ],
+  },
 ];
 
 export const projectById = (id: string) =>

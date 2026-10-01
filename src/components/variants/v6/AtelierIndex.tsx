@@ -17,14 +17,14 @@ const SERVICES = [
     id: "kitchens",
     title: "Bespoke",
     subtitle: "KITCHENS",
-    image: "/images/pvc-foilwrap-and-high-gloss-handless-kitchen/01.jpg",
+    image: "/images/kitchen/01.jpg",
     href: "/kitchens",
   },
   {
     id: "wardrobes",
     title: "Tailored",
     subtitle: "WARDROBES",
-    image: "/images/classic-wardrobe/01.jpg",
+    image: "/images/closets/05.jpg",
     href: "/wardrobes",
   },
   {
@@ -38,7 +38,7 @@ const SERVICES = [
     id: "walk-in-closets",
     title: "Custom",
     subtitle: "WALK-IN CLOSETS",
-    image: "/images/walk-in-closet/01.jpg",
+    image: "/images/closets/10.jpg",
     href: "/wardrobes",
   },
   {
