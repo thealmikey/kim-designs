@@ -189,14 +189,14 @@ export default function ContactSection() {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-charcoal/40 via-transparent to-transparent" />
-              <div className="absolute bottom-3 left-4 md:bottom-5 md:left-6">
-                <p className="font-body text-[10px] text-[#333333]/70 tracking-[0.3em] uppercase">
-                  Visit
-                </p>
-                <p className="font-display text-lg md:text-xl text-[#333333] tracking-tight">
-                  Our Showroom · Mon–Sat
-                </p>
-              </div>
+                <div className="absolute bottom-3 left-4 md:bottom-5 md:left-6 bg-[#0A0A0A]/55 backdrop-blur-md border-l-2 border-[#FF6600] pl-4 pr-5 py-3 md:pl-5 md:pr-6 md:py-4">
+                  <p className="font-body text-[10px] font-bold text-[#FF6600] tracking-[0.3em] uppercase mb-1.5">
+                    Visit
+                  </p>
+                  <p className="font-display text-lg md:text-xl text-[#FFFFFF] tracking-tight">
+                    Our Showroom · Mon–Sat
+                  </p>
+                </div>
             </div>
 
             {submitted ? (

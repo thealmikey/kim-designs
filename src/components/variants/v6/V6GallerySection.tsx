@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelection } from "@/components/variants/v5/SelectionContext";
 import { projects, type Project, type ProjectCategory } from "@/lib/projects";
 import { allCategories, categoryHref } from "@/lib/projects";
+import PhotoViewer from "@/components/variants/v6/PhotoViewer";
 
 const label = "font-body text-[11px] tracking-[0.3em] uppercase";
 const meta = "font-body text-[11px] tracking-[0.22em] uppercase";
@@ -406,245 +407,6 @@ function GalleryTile({
   );
 }
 
-function SingleItemOverlay({
-  slug,
-  onClose,
-}: {
-  slug: string;
-  onClose: () => void;
-}) {
-  const project = projects.find((p) => p.id === slug);
-  const { toggle, isSelected } = useSelection();
-  const [activeImage, setActiveImage] = useState(0);
-  const [showDetails, setShowDetails] = useState(false);
-  const mainRef = useRef<HTMLButtonElement>(null);
-  const touchStartX = useRef<number | null>(null);
-  const interactedRef = useRef(false);
-
-  const currentIndex = projects.findIndex((p) => p.id === slug);
-  const total = projects.length;
-  const prev = total > 1 ? projects[(currentIndex - 1 + total) % total] : null;
-  const next = total > 1 ? projects[(currentIndex + 1) % total] : null;
-  const hasMultipleImages = project ? project.images.length > 1 : false;
-
-  const navigate = useCallback(
-    (target: (typeof projects)[number]) => {
-      interactedRef.current = true;
-      setActiveImage(0);
-      setShowDetails(false);
-      window.history.pushState({}, "", `/v6/work?p=${target.id}`);
-      window.dispatchEvent(new CustomEvent("v6-gallery-open", { detail: target.id }));
-    },
-    []
-  );
-
-  useEffect(() => {
-    setActiveImage(0);
-    setShowDetails(false);
-  }, [slug]);
-
-  useEffect(() => {
-    if (!project) return;
-    const p = project;
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "ArrowRight" && hasMultipleImages) {
-        e.preventDefault();
-        setActiveImage((i) => Math.min(p.images.length - 1, i + 1));
-      }
-      if (e.key === "ArrowLeft" && hasMultipleImages) {
-        e.preventDefault();
-        setActiveImage((i) => Math.max(0, i - 1));
-      }
-      if (e.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [project, hasMultipleImages, onClose]);
-
-  if (!project) return null;
-
-  return (
-    <div
-      className="fixed inset-0 z-[60] bg-[#1A1916] text-[#FFFFFF] flex flex-col"
-      role="dialog"
-      aria-modal="true"
-      aria-label={project.title}
-    >
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-5 md:px-8 py-4 border-b border-[#FFFFFF]/10">
-        <button
-          type="button"
-          onClick={onClose}
-          className={`${label} text-[#FFFFFF]/85 hover:text-[#FFFFFF] inline-flex items-center gap-2`}
-        >
-          <span aria-hidden>←</span>
-          <span>Back to gallery</span>
-        </button>
-        <div className="flex items-center gap-4">
-          <p className={`${label} text-[#FFFFFF]/60 tabular-nums hidden md:block`}>
-            {String(currentIndex + 1).padStart(2, "0")} /{" "}
-            {String(total).padStart(2, "0")}
-          </p>
-          <button
-            type="button"
-            onClick={() => toggle(project.id)}
-            aria-pressed={isSelected(project.id)}
-            className={`${label} px-3 py-2 transition-colors ${
-              isSelected(project.id)
-                ? "bg-[#FF6600] text-[#FFFFFF]"
-                : "border border-[#FFFFFF]/30 text-[#FFFFFF] hover:border-[#FF6600] hover:text-[#FF6600]"
-            }`}
-          >
-            {isSelected(project.id) ? "Selected ✓" : "Add to selection"}
-          </button>
-        </div>
-      </div>
-
-      {/* Main image */}
-      <div className="relative flex-1 flex items-center justify-center overflow-hidden">
-        {/* Edge-tap zones */}
-        {prev && (
-          <button
-            type="button"
-            onClick={() => navigate(prev)}
-            className="absolute left-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-start pl-3 md:pl-6"
-            aria-label={`Previous: ${prev.title}`}
-          >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#FF6600] text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
-              ← {prev.title}
-            </span>
-          </button>
-        )}
-        {next && (
-          <button
-            type="button"
-            onClick={() => navigate(next)}
-            className="absolute right-0 top-0 bottom-0 w-[18%] z-10 group flex items-center justify-end pr-3 md:pr-6"
-            aria-label={`Next: ${next.title}`}
-          >
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#FF6600] text-[#FFFFFF] px-3 py-2 text-xs font-body tracking-widest uppercase">
-              {next.title} →
-            </span>
-          </button>
-        )}
-
-        <button
-          ref={mainRef}
-          type="button"
-          onClick={() => setShowDetails((v) => !v)}
-          onTouchStart={(e) => {
-            touchStartX.current = e.touches[0].clientX;
-          }}
-          onTouchEnd={(e) => {
-            if (touchStartX.current == null) return;
-            const dx = e.changedTouches[0].clientX - touchStartX.current;
-            if (Math.abs(dx) > 50 && hasMultipleImages) {
-              if (dx < 0)
-                setActiveImage((i) =>
-                  Math.min(project.images.length - 1, i + 1)
-                );
-              else setActiveImage((i) => Math.max(0, i - 1));
-            }
-            touchStartX.current = null;
-          }}
-          className="relative w-full h-full"
-          aria-label={showDetails ? "Hide project details" : "Show project details"}
-          aria-expanded={showDetails}
-        >
-          <Image
-            src={project.images[activeImage]}
-            alt={`${project.title} — image ${activeImage + 1}`}
-            fill
-            priority
-            className="object-contain"
-            sizes="100vw"
-          />
-        </button>
-
-        {showDetails && (
-          <div
-            className="absolute inset-x-0 bottom-0 max-h-[60vh] overflow-y-auto bg-[#1A1916]/95 backdrop-blur-md border-t border-[#FFFFFF]/15 p-5 md:p-8"
-            style={{
-              transform: showDetails ? "translateY(0)" : "translateY(100%)",
-              transition: "transform 400ms ease-out",
-            }}
-          >
-            <p className={`${label} text-[#FF6600] mb-3`}>
-              {project.category} · {project.location} · {project.year}
-            </p>
-            <h2
-              className="font-display font-light leading-[1.05] tracking-[-0.02em] text-[#FFFFFF] mb-3"
-              style={{
-                fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
-                fontFamily: "var(--font-roboto), sans-serif",
-              }}
-            >
-              {project.title}
-            </h2>
-            <p
-              className="font-display italic text-[#FFFFFF]/85 text-base md:text-lg mb-4"
-              style={{ fontFamily: "var(--font-roboto), sans-serif" }}
-            >
-              {project.subtitle}.
-            </p>
-            <p className="font-body text-sm md:text-base text-[#FFFFFF]/85 leading-relaxed max-w-2xl mb-5">
-              {project.description}
-            </p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              {project.materials.map((m) => (
-                <li
-                  key={m}
-                  className={`${label} text-[#FFFFFF]/70`}
-                >
-                  {m}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Thumbnail strip */}
-      {hasMultipleImages && (
-        <div className="border-t border-[#FFFFFF]/10 bg-[#1A1916]">
-          <div
-            className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide px-4 md:px-8 py-3"
-            ref={(el) => {
-              /* no-op, will attach via ref below */
-            }}
-          >
-            {project.images.map((src, i) => (
-              <button
-                key={src + i}
-                type="button"
-                onClick={() => setActiveImage(i)}
-                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden border-2 transition-colors ${
-                  i === activeImage
-                    ? "border-[#FF6600]"
-                    : "border-transparent opacity-60 hover:opacity-100"
-                }`}
-                aria-label={`View image ${i + 1}`}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="80px"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function V6GallerySection() {
   const { toggle, isSelected, selected, hydrated, whatsappLink, clear } = useSelection();
   const [openSlug, setOpenSlug] = useState<string | null>(null);
@@ -675,6 +437,19 @@ export default function V6GallerySection() {
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.delete("p");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, []);
+
+  // Prev/next inside the viewer. The overlay used to pushState to
+  // "/v6/work?p=..." itself, which rewrote the address bar to a different
+  // route while the visitor was still on the homepage. URL sync belongs to
+  // the host, the same way it works on the category pages.
+  const handleNavigate = useCallback((slug: string) => {
+    setOpenSlug(slug);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("p", slug);
       window.history.replaceState({}, "", url.toString());
     }
   }, []);
@@ -834,11 +609,15 @@ export default function V6GallerySection() {
         </div>
       )}
 
-      {/* Full-screen single-item overlay */}
+      {/* Full-screen photo viewer. Shares one implementation with the
+          category pages so fit and zoom behave identically on both. */}
       {openSlug && (
-        <SingleItemOverlay
+        <PhotoViewer
+          key={openSlug}
           slug={openSlug}
           onClose={closeOverlay}
+          projects={projects}
+          onNavigate={handleNavigate}
         />
       )}
     </section>
