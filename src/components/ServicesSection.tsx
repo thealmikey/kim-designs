@@ -71,14 +71,23 @@ export default function ServicesSection() {
   return (
     <section ref={sectionRef} className="bg-white py-24 md:py-32">
       <div className="px-6 md:px-12">
-        <div className="services-header mb-16 md:mb-24">
-          <p className="font-body text-[10px] text-[#333333]/65 tracking-[0.4em] uppercase mb-4">
-            Expertise
+{/* Balances the heading across the full width. Previously this was a lone
+            left-aligned block, so the right half of the row sat empty. */}
+        <div className="services-header flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-24">
+          <div>
+            <p className="font-body text-[10px] text-[#FF6600] tracking-[0.4em] uppercase mb-4 font-bold">
+              Expertise
+            </p>
+            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-medium text-[#333333] tracking-[-0.01em] leading-[1.05]">
+              What we<br />
+              <span className="italic text-[#333333]/80">do</span>
+            </h2>
+          </div>
+          <p className="font-body text-sm md:text-[15px] text-[#333333]/85 leading-relaxed md:max-w-md md:text-right shrink-0">
+            Four disciplines, one studio. We design, build and install every
+            piece ourselves, so the drawing you approve is the joinery that
+            reaches your site.
           </p>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-light text-[#333333] tracking-tight leading-[1.05]">
-            What we<br />
-            <span className="italic text-[#333333]/70">do</span>
-          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#C6C5CA]">
@@ -88,12 +97,12 @@ export default function ServicesSection() {
               className="service-item bg-white p-8 md:p-12 lg:p-16 group hover:bg-[#F4F4F4] transition-colors duration-700"
             >
               <div className="flex items-start justify-between mb-6">
-                <span className="font-body text-[10px] text-[#333333]/40 tracking-[0.3em]">
+                <span className="font-body text-[10px] text-[#333333]/55 tracking-[0.3em]">
                   {service.number}
                 </span>
                 <Link
                   href="/contact"
-                  className="font-body text-[10px] text-[#333333]/65 group-hover:text-[#333333] tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-2 group-hover:translate-x-0"
+                  className="font-body text-[10px] text-[#333333]/75 group-hover:text-[#FF6600] tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-2 group-hover:translate-x-0"
                 >
                   Inquire
                 </Link>
