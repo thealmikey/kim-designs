@@ -39,19 +39,16 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="max-w-4xl">
-            {/* The copy sits over a photograph, so it needs a dependable base.
-                Previously the text was #333333 under a dark scrim, which made
-                it unreadable. The panel's accent bar is pulled out to the
-                page gutter and its own padding returns the text to the
-                content edge. */}
-            <div className="bg-[#0A0A0A]/60 backdrop-blur-md border-l-2 border-[#FF6600] p-6 md:p-10 -ml-6 lg:-ml-16">
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] font-medium text-[#FFFFFF] tracking-[-0.02em] leading-[0.95]">
-                What we
-                <br />
-                <span className="italic text-[#FFFFFF]/90">do.</span>
+          {/* w-fit makes the panel hug its content instead of holding a fixed
+              max-w-4xl, which left the right half of the row empty. The
+              heading carries no forced line break so it sets on one line when
+              there is room and wraps gently when there is not. */}
+          <div className="bg-[#0A0A0A]/60 backdrop-blur-md border-l-2 border-[#FF6600] -ml-6 lg:-ml-16 w-fit max-w-[calc(100%+3rem)]">
+            <div className="px-6 md:px-8 lg:px-10 py-6 md:py-8">
+              <h1 className="font-display text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] font-medium text-[#FFFFFF] tracking-[-0.02em] leading-[0.95]">
+                What we do<span className="italic text-[#FFFFFF]/90">.</span>
               </h1>
-              <ul className="mt-7 md:mt-9 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2 max-w-2xl">
+              <ul className="mt-6 md:mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5">
                 {offerings.map((o) => (
                   <li
                     key={o}
@@ -61,7 +58,7 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-7 md:mt-9 flex flex-wrap items-center gap-3 text-[11px] tracking-[0.2em] uppercase font-body font-bold">
+              <div className="mt-6 md:mt-7 flex flex-wrap items-center gap-3 text-[11px] tracking-[0.2em] uppercase font-body font-bold">
                 <Link
                   href="/contact"
                   className="bg-[#FF6600] text-[#FFFFFF] px-5 py-3 hover:bg-[#D95500] transition-colors"
@@ -78,8 +75,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="flex items-end justify-between text-[#FFFFFF]/70">
-            <p className="font-body text-[10px] tracking-[0.3em] uppercase">
+          <div className="flex items-end justify-between text-[#FFFFFF]/70">            <p className="font-body text-[10px] tracking-[0.3em] uppercase">
               Winterior Design · Nairobi
             </p>
             <p className="font-body text-[10px] tracking-[0.3em] uppercase hidden md:block">
