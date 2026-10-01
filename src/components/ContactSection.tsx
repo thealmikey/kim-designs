@@ -96,7 +96,7 @@ export default function ContactSection() {
                 </span>
               </a>
               <a
-                href="tel:+254728846560"
+                href="tel:0728846560"
                 className="group flex items-start gap-4 -m-3 p-3 hover:bg-[#F4F4F4] transition-colors"
               >
                 <span className="w-10 h-10 border border-[#C6C5CA] flex items-center justify-center shrink-0 group-hover:border-[#FF6600] group-hover:bg-[#FF6600] group-hover:text-[#FFFFFF] transition-colors">
@@ -107,10 +107,10 @@ export default function ContactSection() {
                     Phone
                   </span>
                   <span className="block font-display text-lg md:text-xl text-[#333333]">
-                    +254 728 846 560
+                    0728 846 560
                   </span>
                   <span className="block font-display text-base md:text-lg text-[#333333]/80">
-                    +254 755 164 654
+                    0737 825 013
                   </span>
                 </span>
               </a>
@@ -212,10 +212,10 @@ export default function ContactSection() {
                     We&apos;ve received your message and will respond within
                     48 hours. In the meantime, reach us directly on{" "}
                     <a
-                      href="tel:+254728846560"
+                      href="tel:0728846560"
                       className="underline decoration-[#FF6600] underline-offset-4 hover:text-[#333333]"
                     >
-                      +254 728 846 560
+                      0728 846 560
                     </a>
                     .
                   </p>
@@ -262,7 +262,7 @@ export default function ContactSection() {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="+254 …"
+                    placeholder="07…"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     className="bg-transparent border-b border-[#C6C5CA] focus:border-[#FF6600] py-2 font-body text-base text-[#333333] placeholder:text-[#333333]/40 outline-none transition-colors"

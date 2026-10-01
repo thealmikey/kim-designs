@@ -16,7 +16,7 @@ const NAV_ITEMS = [
 
 const TOP_CONTACT = [
   { href: "mailto:info@winteriordesign.co.ke", label: "info@winteriordesign.co.ke", icon: "mail" },
-  { href: "tel:+254728846560", label: "+254 728 846 560", icon: "phone" },
+  { href: "tel:0728846560", label: "0728 846 560", icon: "phone" },
 ];
 
 export default function Navigation() {

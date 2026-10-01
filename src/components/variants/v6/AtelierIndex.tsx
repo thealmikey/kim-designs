@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/lib/projects";
 import V6GallerySection from "./V6GallerySection";
+import VideoRail from "./VideoRail";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +43,7 @@ const SERVICES = [
 ];
 
 const ABOUT_CONTENT = {
-  title: "Wood Kivu Creative Solutions by Professional Designers",
+  title: "Winterior Design Creative Solutions by Professional Designers",
   body: "Your kitchen and interiors are an expression of who you are, and its design should match your space and feel. Winterior Design closely collaborates with clients to evolve every concept. Whether you have traditional tastes or desire a modern feel, we design your dream kitchen to suit your taste and budget.",
   features: [
     {
@@ -314,6 +315,9 @@ export default function AtelierIndex() {
 
       {/* ============ PORTFOLIO/GALLERY ============ */}
       <V6GallerySection />
+
+      {/* ============ SHORT VIDEO RAIL ============ */}
+      <VideoRail />
 
       {/* ============ BEFORE & AFTER ============ */}
       <section className="px-6 lg:px-16 py-16 md:py-24 bg-[#F4F4F4]">

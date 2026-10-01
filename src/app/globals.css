@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Surfaces — Woodkivu-derived light palette */
+  /* Surfaces — Winterior light palette */
   --color-background: #FFFFFF;
   --color-foreground: #333333;
   --color-card: #F4F4F4;
   --color-card-hover: #EAEAEA;
   --color-divider: #C6C5CA;
 
-  /* Accent — Woodkivu primary orange */
+  /* Accent — Winterior primary orange */
   --color-gold: #FF6600;
   --color-gold-hover: #D95500;
   --color-gold-light: #FFF1E8;
@@ -29,21 +29,6 @@
   --nav-height: 80px;
   --nav-two-row-height: 120px;
   --topbar-height: 40px;
-}
-
-html.custom-cursor-active,
-html.custom-cursor-active body {
-  cursor: none;
-}
-
-html.custom-cursor-active a,
-html.custom-cursor-active button,
-html.custom-cursor-active [role="button"],
-html.custom-cursor-active input,
-html.custom-cursor-active textarea,
-html.custom-cursor-active select,
-html.custom-cursor-active label {
-  cursor: none;
 }
 
 :root {

@@ -65,7 +65,7 @@ const NAV_ITEMS = [
 
 const TOP_CONTACT = [
   { href: "mailto:info@winteriordesign.co.ke", label: "info@winteriordesign.co.ke", icon: "mail" },
-  { href: "tel:+254728846560", label: "+254 728 846 560", icon: "phone" },
+  { href: "tel:0728846560", label: "0728 846 560", icon: "phone" },
 ];
 
 function getCount(categoryId: string) {
@@ -294,7 +294,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
         <div className="flex flex-col sm:flex-row justify-between gap-4 text-xs font-body text-[#333333]/50">
           <div className="flex flex-col gap-1">
             <span>info@winteriordesign.co.ke</span>
-            <span>+254 728 846 560</span>
+            <span>0728 846 560</span>
             <span>Enterprise Rd, Nairobi, Kenya</span>
           </div>
           <div className="flex items-center gap-4">

@@ -12,8 +12,8 @@ const quickLinks = [
 
 const contactLinks = [
   { href: "mailto:info@winteriordesign.co.ke", label: "info@winteriordesign.co.ke" },
-  { href: "tel:+254728846560", label: "+254 728 846 560" },
-  { href: "tel:+254755164654", label: "+254 755 164 654" },
+  { href: "tel:0728846560", label: "0728 846 560" },
+  { href: "tel:0737825013", label: "0737 825 013" },
 ];
 
 const socialLinks = [

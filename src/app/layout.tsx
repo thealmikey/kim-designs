@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto, Open_Sans } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
@@ -46,7 +45,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Preloader />
         <ScrollToTop />
-        <CustomCursor />
         <Navigation />
         <SmoothScrollProvider>
           <SelectionProvider>

@@ -392,7 +392,7 @@ export default function CategoryPage({ category, title, subtitle, projects: allP
         </div>
       </div>
 
-      {/* Wood Kivu-style tab filter */}
+      {/* Winterior-style tab filter */}
       <div
         className="flex flex-wrap items-center gap-x-1 mb-10 md:mb-14 border-b border-[#C6C5CA]"
         role="tablist"

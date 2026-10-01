@@ -702,7 +702,7 @@ export default function V6GallerySection() {
         </div>
       </div>
 
-      {/* Filter tabs - woodkivu style */}
+      {/* Filter tabs - Winterior style */}
       <div
         className="flex flex-wrap items-center gap-x-1 mb-8 md:mb-10 border-b border-[#C6C5CA]"
         role="tablist"
